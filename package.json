@@ -1,0 +1,36 @@
+{
+  "name": "ziwei-master",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "harness:registration": "node scripts/harness/check-regressions.mjs",
+    "harness:quick": "npm run harness:registration && npm run typecheck && npm test",
+    "harness": "npm run harness:quick && npm run build",
+    "test": "tsx scripts/regression/pan-integrity.test.ts && tsx scripts/regression/dst-cn.test.ts && tsx scripts/regression/clock-adjust.test.ts && tsx scripts/regression/sizhu-lichun-boundary.test.ts && tsx scripts/regression/hongluan-tianxi.test.ts && tsx scripts/regression/famous-hour-consistency.test.ts && tsx scripts/regression/iztro-time-index-boundary.test.ts && tsx scripts/regression/solar-date-exists.test.ts && tsx scripts/regression/gender-validation.test.ts && tsx scripts/regression/natal-dual-sihua-same-palace.test.ts && tsx scripts/regression/neutral-naming.test.ts && tsx scripts/regression/leap-policy-validation.test.ts && tsx scripts/regression/form-true-solar-day.test.ts && tsx scripts/regression/birthform-birthinfo-consistency.test.ts && tsx scripts/regression/heming-refresh.test.ts && tsx scripts/regression/heming-stream.test.ts && tsx scripts/regression/patterns-sihua-bonus.test.ts && tsx scripts/regression/vn-lunar.test.ts && tsx scripts/regression/vn-terms.test.ts && tsx scripts/regression/vn-compare.test.ts && tsx scripts/regression/interpret-reasoning-off.test.ts && tsx scripts/regression/heming-route.test.ts && tsx scripts/regression/heming-history.test.ts && tsx scripts/regression/ai-chart-tools.test.ts && tsx scripts/regression/ai-agent-loop.test.ts && tsx scripts/regression/ai-prompt-tools-match.test.ts"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.0",
+    "iztro": "^2.5.8",
+    "lunar-javascript": "^1.7.3",
+    "next": "^16.4.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5"
+  }
+}

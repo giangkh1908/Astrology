@@ -1,0 +1,36 @@
+name: 程序问题 / Bug report
+description: 代码跑不起来、报错、页面显示异常
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请确认已按 README 安装 Node 22 和 Python 3.11+，并启动 FastAPI 和前端。排盘不需要 API Key；AI 功能需要在 backend/.env 中配置供应商密钥。请勿在 issue 中粘贴密钥。
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. npm.cmd ci
+        2. npm.cmd run setup
+        3. npm.cmd run dev
+        4. 打开 /chart，选 …… 点 ……
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果（报错信息、截图）
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: 运行环境
+      placeholder: 例：Windows 11 / Node 22 / Python 3.11 / Chrome 140
