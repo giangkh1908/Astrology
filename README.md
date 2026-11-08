@@ -49,4 +49,4 @@ Xem [hướng dẫn kiểm thử](docs/harness/README.md) để biết phạm vi
 
 ## Bản quyền và nguồn dữ liệu
 
-Mã nguồn dựa trên dự án Tử Vi mã nguồn mở được cấp phép MIT; xem thông báo bản quyền và điều khoản trong [NOTICE](NOTICE). Một số tài liệu và dữ liệu có điều khoản riêng: xem [DATASET-LICENSE](DATASET-LICENSE) và [giấy phép tài liệu Thiên Kỷ](docs/tianji-ziwei/LICENSE.md) trước khi sử dụng.
+Mã nguồn dựa trên dự án Tử Vi mã nguồn mở được cấp phép MIT; xem thông báo bản quyền và điều khoản trong [NOTICE](NOTICE). Tài liệu Thiên Kỷ trong dự án có [điều khoản riêng](docs/tianji-ziwei/LICENSE.md).
