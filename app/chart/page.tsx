@@ -57,7 +57,7 @@ export default function ChartPage() {
         </p>
         <BirthForm onSubmit={submit} />
         {loading && <p>Đang lập lá số…</p>}
-        {error && <p role="alert">Kh?ng th? l?p l? s?. Vui l?ng ki?m tra l?i ng?y sinh v? gi? sinh.</p>}
+        {error && <p role="alert">Không thể lập lá số. Vui lòng kiểm tra lại ngày sinh và giờ sinh.</p>}
       </main>
     );
   }

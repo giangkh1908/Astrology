@@ -106,6 +106,7 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
   const describe = (branch: number, extra?: Record<string, unknown>) => ({
     địa_chi: viBranch(branch),
     cung_gốc: viPalace(palaceAt(branch)?.name ?? ''),
+    ...(branch === chart().shenGongBranch ? { có_cung_an_thân: true } : {}),
     chính_tinh: majorStars(branch),
     ...extra,
   });
@@ -282,6 +283,7 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
             vai_trò,
             địa_chi: viBranch(b),
             cung_gốc: viPalace(p?.name ?? ''),
+            ...(b === chart().shenGongBranch ? { có_cung_an_thân: true } : {}),
             cung_đại_hạn: layer === 'goc' ? undefined : layerPalace(h.decadal, b),
             cung_lưu_niên: layer === 'luu_nien' ? layerPalace(h.yearly, b) : undefined,
             sao: p?.stars.map(s => ({
