@@ -3,20 +3,24 @@ import { NextRequest } from 'next/server';
 import { createMemoryChatStore } from '../../lib/store/memory-chat-store';
 import { disabledChatStore, setChatStoreForTest } from '../../lib/store';
 
-// API admin: đổi version prompt. Bảo vệ hai lớp: proxy + route tự kiểm phiên; POST phải cùng nguồn (chống CSRF).
+// API admin: đổi version prompt. Chỉ tài khoản admin (khác tài khoản trang chính).
+// Bảo vệ hai lớp: proxy + route tự kiểm phiên; POST phải cùng nguồn (chống CSRF).
 async function main() {
   process.env.AUTH_USERNAME = 'tester';
   process.env.AUTH_PASSWORD = 'fake-password-123';
+  process.env.ADMIN_USERNAME = 'boss';
+  process.env.ADMIN_PASSWORD = 'fake-admin-password-456';
   process.env.AUTH_SECRET = 'x'.repeat(40);
-  const { createSessionToken, readAuthConfig, SESSION_COOKIE } = await import('../../lib/auth/session');
-  const token = await createSessionToken(readAuthConfig()!);
+  const { ADMIN_COOKIE, createSessionToken, readAdminConfig, readAuthConfig, SESSION_COOKIE } = await import('../../lib/auth/session');
+  const token = await createSessionToken(readAdminConfig()!);
+  const userToken = await createSessionToken(readAuthConfig()!);
   const { GET, POST } = await import('../../app/api/admin/prompt-version/route');
   const { proxy } = await import('../../proxy');
 
   const ORIGIN = 'http://localhost';
-  const req = (method: 'GET' | 'POST', opts: { body?: unknown; cookie?: boolean; origin?: string | null } = {}) => {
+  const req = (method: 'GET' | 'POST', opts: { body?: unknown; cookie?: boolean; userCookie?: boolean; origin?: string | null } = {}) => {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (opts.cookie !== false) headers.cookie = `${SESSION_COOKIE}=${token}`;
+    if (opts.cookie !== false) headers.cookie = opts.userCookie ? `${SESSION_COOKIE}=${userToken}` : `${ADMIN_COOKIE}=${token}`;
     if (opts.origin !== null) headers.origin = opts.origin ?? ORIGIN;
     return new NextRequest(`${ORIGIN}/api/admin/prompt-version`, { method, headers, ...(opts.body !== undefined ? { body: JSON.stringify(opts.body) } : {}) });
   };
@@ -30,6 +34,15 @@ async function main() {
   // Route tự kiểm phiên (phòng khi proxy bị bỏ qua / sai matcher).
   assert.equal((await GET(req('GET', { cookie: false }))).status, 401);
   assert.equal((await POST(req('POST', { cookie: false, body: { version: 'v1' } }))).status, 401);
+
+  // Phiên tài khoản trang chính không vào được admin (cả proxy lẫn route).
+  assert.equal((await proxy(req('GET', { userCookie: true }))).status, 401);
+  assert.equal((await GET(req('GET', { userCookie: true }))).status, 401);
+  assert.equal((await POST(req('POST', { userCookie: true, body: { version: 'v1' } }))).status, 401);
+  // Cookie admin đặt nhầm tên cookie thường cũng không được (scope nằm trong chữ ký).
+  const swapped = new NextRequest(`${ORIGIN}/api/admin/prompt-version`, { headers: { cookie: `${ADMIN_COOKIE}=${userToken}` } });
+  assert.equal((await GET(swapped)).status, 401);
+  assert.equal((await proxy(req('GET'))).headers.get('x-middleware-next'), '1');
 
   // Đổi version hợp lệ.
   const ok = await POST(req('POST', { body: { version: 'v1' } }));

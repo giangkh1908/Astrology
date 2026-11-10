@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { getChatStore } from '@/lib/store';
 import { PAGE_SIZE, type ChartSummary } from '@/lib/store/chat-store';
-import { describeBirth, formatDateTime } from '../format';
-import { requireAdminPage } from '../guard';
-import { DbDisabled, DbError, Pager, pageOf } from '../ui';
-import s from '../admin.module.css';
+import { describeBirth, formatDateTime } from '@/app/admin/format';
+import { requireAdminPage } from '@/app/admin/guard';
+import { DbDisabled, DbError, Pager, pageOf } from '@/app/admin/ui';
+import s from '@/app/admin/admin.module.css';
 
 export const dynamic = 'force-dynamic';
 

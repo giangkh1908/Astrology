@@ -1,18 +1,26 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { readAuthConfig, safeNextPath, SESSION_COOKIE, verifySessionToken } from '@/lib/auth/session';
+import { ADMIN_COOKIE, readAdminConfig, readAuthConfig, safeNextPath, SESSION_COOKIE, verifySessionToken } from '@/lib/auth/session';
 
-/** Chặn toàn bộ trang và API khi chưa đăng nhập; chỉ /login và /api/auth/* mở. */
+const isAdminPath = (p: string) => p === '/admin' || p.startsWith('/admin/') || p === '/api/admin' || p.startsWith('/api/admin/');
+
+/**
+ * Chặn toàn bộ trang và API khi chưa đăng nhập. Mở: /login, /admin/login, /api/auth/*.
+ * Khu /admin và /api/admin chỉ nhận tài khoản admin; phần còn lại nhận tài khoản thường.
+ */
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  if (pathname === '/login' || pathname.startsWith('/api/auth/')) return NextResponse.next();
+  if (pathname === '/login' || pathname === '/admin/login' || pathname.startsWith('/api/auth/')) return NextResponse.next();
 
-  const ok = await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, readAuthConfig());
+  const admin = isAdminPath(pathname);
+  const ok = admin
+    ? await verifySessionToken(request.cookies.get(ADMIN_COOKIE)?.value, readAdminConfig())
+    : await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, readAuthConfig());
   if (ok) return NextResponse.next();
 
   if (pathname.startsWith('/api/')) {
     return NextResponse.json({ error: 'Chưa đăng nhập.' }, { status: 401 });
   }
-  const url = new URL('/login', request.url);
+  const url = new URL(admin ? '/admin/login' : '/login', request.url);
   url.searchParams.set('next', safeNextPath(pathname + search));
   return NextResponse.redirect(url);
 }

@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { PROMPT_VERSIONS } from '@/lib/prompts';
 import { getChatStore } from '@/lib/store';
 import { PAGE_SIZE, type LogFilter, type RequestLog } from '@/lib/store/chat-store';
-import { formatDateTime } from '../format';
-import { requireAdminPage } from '../guard';
-import { DbDisabled, DbError, Pager, pageOf } from '../ui';
+import { formatDateTime } from '@/app/admin/format';
+import { requireAdminPage } from '@/app/admin/guard';
+import { DbDisabled, DbError, Pager, pageOf } from '@/app/admin/ui';
 import { LogRow } from './LogRow';
-import s from '../admin.module.css';
+import s from '@/app/admin/admin.module.css';
 
 export const dynamic = 'force-dynamic';
 

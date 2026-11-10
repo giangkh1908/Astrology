@@ -7,6 +7,8 @@ async function main() {
   process.env.AUTH_USERNAME = 'tester';
   process.env.AUTH_PASSWORD = 'fake-password-123';
   process.env.AUTH_SECRET = 'x'.repeat(40);
+  process.env.ADMIN_USERNAME = 'boss';
+  process.env.ADMIN_PASSWORD = 'fake-admin-password-456';
 
   const s = await import('../../lib/auth/session');
   const config = s.readAuthConfig()!;
@@ -93,6 +95,47 @@ async function main() {
   const okOut = await out('http://localhost');
   assert.equal(okOut.status, 200);
   assert.match(okOut.headers.get('set-cookie') ?? '', /Max-Age=0/i);
+
+  // Tài khoản admin tách biệt: token mỗi bên không dùng được cho bên kia, kể cả khi trùng username.
+  const adminConfig = s.readAdminConfig()!;
+  assert.equal(adminConfig.scope, 'admin');
+  assert.equal(s.readAdminConfig({ AUTH_SECRET: 'x'.repeat(40) }), null, 'thiếu ADMIN_* → không ai vào admin');
+  const adminToken = await s.createSessionToken(adminConfig, now);
+  assert.equal(await s.verifySessionToken(adminToken, adminConfig, now), true);
+  assert.equal(await s.verifySessionToken(adminToken, config, now), false, 'token admin không mở trang chính');
+  assert.equal(await s.verifySessionToken(token, adminConfig, now), false, 'token thường không mở admin');
+  const sameName = { ...adminConfig, username: config.username };
+  assert.equal(await s.verifySessionToken(token, sameName, now), false, 'trùng username vẫn tách scope');
+  assert.equal(s.checkCredentials('tester', 'fake-password-123', adminConfig), false, 'mật khẩu thường không đăng nhập admin');
+  assert.equal(s.safeNextPath('/admin/login?next=/x'), '/');
+
+  // Proxy: khu /admin dùng cookie admin, trang chính dùng cookie thường.
+  const reqC = (path: string, cookie: string) => new NextRequest(`http://localhost${path}`, { headers: { cookie } });
+  const userCookie = `${s.SESSION_COOKIE}=${decodeURIComponent(cookieValue)}`;
+  const adminCookie = `${s.ADMIN_COOKIE}=${await s.createSessionToken(adminConfig)}`;
+  const adminNoAuth = await proxy(reqC('/admin/logs?x=1', userCookie));
+  assert.equal(adminNoAuth.status, 307, 'tài khoản thường bị đẩy sang đăng nhập admin');
+  const aloc = new URL(adminNoAuth.headers.get('location')!);
+  assert.equal(aloc.pathname, '/admin/login');
+  assert.equal(aloc.searchParams.get('next'), '/admin/logs?x=1');
+  assert.equal((await proxy(reqC('/admin', adminCookie))).headers.get('x-middleware-next'), '1');
+  assert.equal((await proxy(reqC('/api/admin/prompt-version', userCookie))).status, 401);
+  assert.equal((await proxy(reqC('/chart', adminCookie))).status, 307, 'cookie admin không mở trang chính');
+  assert.equal((await proxy(req('/admin/login'))).headers.get('x-middleware-next'), '1');
+  assert.equal((await proxy(req('/api/auth/admin/login'))).headers.get('x-middleware-next'), '1');
+
+  // Route đăng nhập admin.
+  const { POST: adminLogin } = await import('../../app/api/auth/admin/login/route');
+  const callAdmin = (body: unknown) => adminLogin(new Request('http://localhost/api/auth/admin/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+  }));
+  assert.equal((await callAdmin({ username: 'tester', password: 'fake-password-123' })).status, 401, 'tài khoản thường không vào admin');
+  const adminOk = await callAdmin({ username: 'boss', password: 'fake-admin-password-456' });
+  assert.equal(adminOk.status, 200);
+  assert.match(adminOk.headers.get('set-cookie') ?? '', new RegExp(`^${s.ADMIN_COOKIE}=.+HttpOnly`, 'i'));
+  const { POST: adminLogout } = await import('../../app/api/auth/admin/logout/route');
+  const aout = await adminLogout(new Request('http://localhost/api/auth/admin/logout', { method: 'POST', headers: { origin: 'http://localhost' } }));
+  assert.match(aout.headers.get('set-cookie') ?? '', new RegExp(`^${s.ADMIN_COOKIE}=;.*Max-Age=0`, 'i'));
 
   // Thiếu cấu hình → chặn tất cả, login trả 503.
   delete process.env.AUTH_SECRET;

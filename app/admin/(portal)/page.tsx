@@ -1,11 +1,11 @@
 import { PROMPT_VERSIONS } from '@/lib/prompts';
 import { getChatStore } from '@/lib/store';
 import { resolvePromptVersion, type VersionUsage } from '@/lib/store/chat-store';
-import { formatDateTime } from './format';
-import { requireAdminPage } from './guard';
+import { formatDateTime } from '@/app/admin/format';
+import { requireAdminPage } from '@/app/admin/guard';
 import { PromptPicker } from './PromptPicker';
-import { DbDisabled } from './ui';
-import s from './admin.module.css';
+import { DbDisabled } from '@/app/admin/ui';
+import s from '@/app/admin/admin.module.css';
 
 export const dynamic = 'force-dynamic';
 

@@ -5,10 +5,10 @@ import { generateChart } from '@/lib/ziwei/algorithm';
 import type { BirthInfo } from '@/lib/ziwei/types';
 import { getChatStore } from '@/lib/store';
 import { UUID_RE, type ChatStore } from '@/lib/store/chat-store';
-import { describeBirth, formatDateTime, threadLabel } from '../../format';
-import { requireAdminPage } from '../../guard';
-import { DbDisabled, DbError, StatusBadge } from '../../ui';
-import s from '../../admin.module.css';
+import { describeBirth, formatDateTime, threadLabel } from '@/app/admin/format';
+import { requireAdminPage } from '@/app/admin/guard';
+import { DbDisabled, DbError, StatusBadge } from '@/app/admin/ui';
+import s from '@/app/admin/admin.module.css';
 
 export const dynamic = 'force-dynamic';
 

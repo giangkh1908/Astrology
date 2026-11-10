@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import s from './admin.module.css';
+import s from '@/app/admin/admin.module.css';
 
 /** Nút chọn version prompt; đổi xong tải lại dữ liệu trang. */
 export function PromptPicker({ version, active, disabled }: { version: string; active: boolean; disabled: boolean }) {

@@ -1,15 +1,21 @@
 /**
- * Đăng nhập một tài khoản duy nhất lấy từ biến môi trường.
+ * Đăng nhập bằng tài khoản lấy từ biến môi trường. Có hai tài khoản tách biệt:
  *
- * AUTH_USERNAME / AUTH_PASSWORD: tài khoản duy nhất được phép đăng nhập.
+ * AUTH_USERNAME / AUTH_PASSWORD: tài khoản dùng trang chính (scope 'user', cookie tv_session).
+ * ADMIN_USERNAME / ADMIN_PASSWORD: tài khoản trang quản trị /admin (scope 'admin', cookie tv_admin).
+ * Scope nằm trong phần được ký nên cookie của tài khoản này không dùng được cho tài khoản kia.
  * AUTH_SECRET: chuỗi ngẫu nhiên (>= 32 ký tự) để ký cookie phiên bằng HMAC-SHA256.
  * Thiếu biến nào thì từ chối mọi đăng nhập (fail closed).
  * Chỉ dùng Web Crypto nên chạy được cả trong proxy lẫn route handler.
  */
 export const SESSION_COOKIE = 'tv_session';
+export const ADMIN_COOKIE = 'tv_admin';
 export const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30; // 30 ngày
 
+export type AuthScope = 'user' | 'admin';
+
 export interface AuthConfig {
+  scope: AuthScope;
   username: string;
   password: string;
   secret: string;
@@ -20,7 +26,16 @@ export function readAuthConfig(env: Record<string, string | undefined> = process
   const password = env.AUTH_PASSWORD;
   const secret = env.AUTH_SECRET;
   if (!username || !password || !secret || secret.length < 32) return null;
-  return { username, password, secret };
+  return { scope: 'user', username, password, secret };
+}
+
+/** Tài khoản admin: ADMIN_USERNAME / ADMIN_PASSWORD, ký bằng cùng AUTH_SECRET. Thiếu → không ai vào được /admin. */
+export function readAdminConfig(env: Record<string, string | undefined> = process.env): AuthConfig | null {
+  const username = env.ADMIN_USERNAME?.trim();
+  const password = env.ADMIN_PASSWORD;
+  const secret = env.AUTH_SECRET;
+  if (!username || !password || !secret || secret.length < 32) return null;
+  return { scope: 'admin', username, password, secret };
 }
 
 const encoder = new TextEncoder();
@@ -41,7 +56,7 @@ function constantTimeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-const encodeUser = (username: string) => toBase64Url(encoder.encode(username));
+const encodeUser = (config: AuthConfig) => toBase64Url(encoder.encode(`${config.scope}:${config.username}`));
 
 async function sign(payload: string, secret: string): Promise<string> {
   const key = await crypto.subtle.importKey('raw', encoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
@@ -57,10 +72,10 @@ export function checkCredentials(username: unknown, password: unknown, config: A
   return userOk && passOk;
 }
 
-/** Token dạng `<username base64url>.<hạn unix giây>.<chữ ký>` (base64url không chứa dấu chấm). */
+/** Token dạng `<base64url(scope:username)>.<hạn unix giây>.<chữ ký>` (base64url không chứa dấu chấm). */
 export async function createSessionToken(config: AuthConfig, nowMs = Date.now()): Promise<string> {
   const exp = Math.floor(nowMs / 1000) + SESSION_TTL_SECONDS;
-  const payload = `${encodeUser(config.username)}.${exp}`;
+  const payload = `${encodeUser(config)}.${exp}`;
   return `${payload}.${await sign(payload, config.secret)}`;
 }
 
@@ -72,20 +87,8 @@ export async function verifySessionToken(token: string | undefined, config: Auth
   const exp = Number(expRaw);
   if (!Number.isInteger(exp) || exp * 1000 <= nowMs) return false;
   // Đổi AUTH_USERNAME thì phiên cũ hết hiệu lực; đổi AUTH_SECRET thì mọi phiên hết hiệu lực.
-  if (!constantTimeEqual(user, encodeUser(config.username))) return false;
+  if (!constantTimeEqual(user, encodeUser(config))) return false;
   return constantTimeEqual(mac, await sign(`${user}.${expRaw}`, config.secret));
 }
 
-/**
- * Chỉ cho chuyển hướng về đường dẫn nội bộ, chống open redirect (`//evil.com`, `/\evil.com`,
- * và `/<tab>/evil.com` — trình duyệt bỏ tab/xuống dòng khi parse URL nên thành `//evil.com`).
- */
-export function safeNextPath(next: unknown): string {
-  if (typeof next !== 'string' || !next.startsWith('/') || /[\u0000-\u001f\u007f\\]/.test(next)) return '/';
-  const base = 'http://local.invalid';
-  let url: URL;
-  try { url = new URL(next, base); } catch { return '/'; }
-  if (url.origin !== base) return '/';
-  const path = url.pathname + url.search + url.hash;
-  return path.startsWith('/login') ? '/' : path;
-}
+export { safeNextPath } from './next-path';

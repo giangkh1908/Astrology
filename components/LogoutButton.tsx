@@ -1,14 +1,13 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-/** Nút đăng xuất + link Quản trị cố định góc dưới phải; ẩn ở trang /login, link Quản trị ẩn khi đang ở /admin. */
+/** Nút đăng xuất tài khoản trang chính, cố định góc dưới phải; ẩn ở /login và khu /admin (admin có nút riêng). */
 export function LogoutButton() {
   const pathname = usePathname();
   const [pending, setPending] = useState(false);
-  if (pathname === '/login') return null;
+  if (pathname === '/login' || pathname === '/admin' || pathname.startsWith('/admin/')) return null;
 
   async function logout() {
     setPending(true);
@@ -19,15 +18,14 @@ export function LogoutButton() {
     }
   }
 
-  const pill: React.CSSProperties = { padding: '6px 12px', fontSize: '12px', borderRadius: '999px', border: '1px solid var(--bdr-med)', background: 'var(--bg-card)', color: 'var(--tx-2)', boxShadow: 'var(--sh-sm)', cursor: 'pointer', textDecoration: 'none', lineHeight: 1.4 };
-  const inAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
-
   return (
-    <div style={{ position: 'fixed', right: '12px', bottom: '12px', zIndex: 50, display: 'flex', gap: '8px' }}>
-      {!inAdmin && <Link href="/admin" style={pill}>Quản trị</Link>}
-      <button type="button" onClick={logout} disabled={pending} style={pill}>
-        {pending ? 'Đang thoát…' : 'Đăng xuất'}
-      </button>
-    </div>
+    <button
+      type="button"
+      onClick={logout}
+      disabled={pending}
+      style={{ position: 'fixed', right: '12px', bottom: '12px', zIndex: 50, padding: '6px 12px', fontSize: '12px', borderRadius: '999px', border: '1px solid var(--bdr-med)', background: 'var(--bg-card)', color: 'var(--tx-2)', boxShadow: 'var(--sh-sm)', cursor: 'pointer' }}
+    >
+      {pending ? 'Đang thoát…' : 'Đăng xuất'}
+    </button>
   );
 }

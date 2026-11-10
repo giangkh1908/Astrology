@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import type { RequestLog } from '@/lib/store/chat-store';
-import { StatusBadge } from '../ui';
-import s from '../admin.module.css';
+import { StatusBadge } from '@/app/admin/ui';
+import s from '@/app/admin/admin.module.css';
 
 const ROUTE_LABEL: Record<string, string> = { interpret: 'Luận giải', heming: 'Hợp bàn' };
 
