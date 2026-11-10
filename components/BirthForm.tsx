@@ -6,6 +6,7 @@ import { useTheme } from '@/components/ThemeProvider';
 import { VN_PROVINCES } from '@/lib/vn/provinces';
 import { formatUtcOffset } from '@/lib/vn/timezone-vn';
 import { formToBirthInfo, calcTrueSolarBranch, resolveFormTimeContext, DEFAULT_LONGITUDE } from '@/lib/ziwei/share';
+import { TWIN_METHODS, TWIN_METHOD_LABELS, isTwinMethod, type TwinMethod } from '@/lib/ziwei/twin';
 
 export interface BirthFormState {
   name: string;
@@ -21,6 +22,8 @@ export interface BirthFormState {
   /** Múi giờ lúc sinh do người dùng chọn: '' = tự động, hoặc '420' | '480' | '540' (phút so với UTC). */
   tzOverride: string;
   gender: 'male' | 'female';
+  /** Sinh đôi cùng giờ, người sinh sau: '' = không, hoặc cách dời cung Mệnh. */
+  twin?: '' | TwinMethod;
 }
 
 interface BirthFormProps {
@@ -64,6 +67,7 @@ export default function BirthForm({ onSubmit, loading, initialData, onFormSave, 
     longitude: initialData?.longitude ?? DEFAULT_LONGITUDE,
     tzOverride: initialData?.tzOverride ?? '',
     gender: initialData?.gender ?? 'male',
+    twin: initialData?.twin ?? '',
   });
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -460,6 +464,22 @@ export default function BirthForm({ onSubmit, loading, initialData, onFormSave, 
             );
           })}
         </div>
+      </div>
+
+      {/* ── Sinh đôi ── */}
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', fontSize: '11px', color: labelClr, marginBottom: '6px', letterSpacing: '0.05em' }}>Sinh đôi cùng giờ</label>
+        <select
+          value={form.twin ?? ''}
+          onChange={e => setForm({ ...form, twin: isTwinMethod(e.target.value) ? e.target.value : '' })}
+          style={inputStyle}
+        >
+          <option value="">Không (hoặc là người sinh trước)</option>
+          {TWIN_METHODS.map(m => <option key={m} value={m}>{TWIN_METHOD_LABELS[m]}</option>)}
+        </select>
+        <p style={{ fontSize: '10px', color: isDark ? 'rgba(165,185,210,0.7)' : 'rgba(140,100,20,0.45)', marginTop: '5px' }}>
+          Người sinh sau giữ nguyên các sao, chỉ dời cung Mệnh. Hai cách đều có người dùng; thử cả hai để xem cách nào khớp hơn.
+        </p>
       </div>
 
       {/* ── 确认信息 Summary Chip ── */}

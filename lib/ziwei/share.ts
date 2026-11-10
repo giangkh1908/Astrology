@@ -3,6 +3,7 @@ import type { BirthInfo } from './types';
 import { branchFromSolarMinutes, resolveZiweiDayOffset, shiftGregorianDate } from './true-solar-time';
 import { findVnCity } from '../vn/provinces';
 import { vnCivilOffsetMinutes, vnLunarTimeZone, type VnRegion } from '../vn/timezone-vn';
+import { isTwinMethod } from './twin';
 
 /** Kinh độ mặc định (Hà Nội) khi chưa chọn nơi sinh. */
 export const DEFAULT_LONGITUDE = 105.85;
@@ -81,6 +82,7 @@ export function formToBirthInfo(form: BirthFormState): BirthInfo {
     utcOffsetMinutes,
     region,
     lunarTimeZone: y > 0 && m > 0 && d > 0 ? vnLunarTimeZone(y, m, d, region) : undefined,
+    ...(isTwinMethod(form.twin) ? { twinMethod: form.twin } : {}),
   };
 }
 
@@ -102,6 +104,7 @@ export function formToSearchParams(form: BirthFormState): URLSearchParams {
   if (form.longitude && form.longitude !== DEFAULT_LONGITUDE) p.set('lo', String(form.longitude));
   if (form.tzOverride) p.set('tz', form.tzOverride);
   p.set('g', form.gender === 'male' ? 'm' : 'f');
+  if (isTwinMethod(form.twin)) p.set('tw', form.twin);
   return p;
 }
 
@@ -124,5 +127,6 @@ export function searchParamsToForm(params: URLSearchParams): Partial<BirthFormSt
     tzOverride: ['420', '480', '540'].includes(params.get('tz') || '') ? (params.get('tz') as string) : '',
     longitude: parseFloat(params.get('lo') || String(DEFAULT_LONGITUDE)),
     gender: params.get('g') === 'f' ? 'female' : 'male',
+    twin: (() => { const tw = params.get('tw'); return isTwinMethod(tw) ? tw : ''; })(),
   };
 }

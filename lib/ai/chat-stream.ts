@@ -7,6 +7,7 @@
  * Có `tools` thì chạy vòng lặp agent: model tự gọi tool, kết quả được gửi lại, lặp tới khi model trả lời.
  */
 import type { ChartTool } from './tools/ziwei-tools';
+import type { ToolCallLog, TurnResult } from '@/lib/store/chat-store';
 
 export interface ChatStreamMessage {
   role: 'system' | 'user' | 'assistant';
@@ -28,6 +29,13 @@ const MAX_TOOL_RESULT_CHARS = 30_000;
 type WireMessage = Record<string, unknown>;
 interface ToolCall { id: string; type: 'function'; function: { name: string; arguments: string } }
 
+/** Model đang gửi lên nhà cung cấp (dùng cho log). */
+export function currentModel(): string {
+  return process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v4.1-flash';
+}
+
+interface Usage { promptTokens: number; completionTokens: number; costUsd: number }
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -48,8 +56,10 @@ const sleep = (ms: number, signal: AbortSignal) => new Promise<void>((resolve, r
 /** Mở một lượt stream tới nhà cung cấp, tự thử lại lỗi tạm thời. Trả về body đã sẵn sàng đọc. */
 async function openUpstream(apiKey: string, messages: WireMessage[], tools: ChartTool[] | undefined, signal: AbortSignal) {
   const body = JSON.stringify({
-    model: process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v4.1-flash',
+    model: currentModel(),
     stream: true,
+    // Kèm số token và chi phí ở event cuối của stream (để ghi log).
+    usage: { include: true },
     // Tắt suy luận ẩn: chỉ `content` được chuyển tiếp, nếu để model "nghĩ" trước
     // thì người dùng phải chờ hết phần reasoning mới thấy chữ đầu tiên.
     reasoning: { enabled: false },
@@ -93,10 +103,15 @@ async function openUpstream(apiKey: string, messages: WireMessage[], tools: Char
 /** Đọc một lượt SSE của nhà cung cấp: đẩy chữ ra ngay, gom tool_calls lại. */
 async function readUpstream(
   body: ReadableStream<Uint8Array>,
+  signal: AbortSignal,
   onText: (text: string) => void,
   onToolCall?: () => void,
+  onUsage?: (usage: Usage) => void,
 ): Promise<ToolCall[]> {
   const reader = body.getReader();
+  // Hủy (người dùng bấm dừng / quá thời gian) thì ngắt đọc ngay, kể cả khi nguồn không tự đóng.
+  const onAbort = () => { reader.cancel().catch(() => undefined); };
+  signal.addEventListener('abort', onAbort, { once: true });
   const decoder = new TextDecoder();
   const calls: ToolCall[] = [];
   let buffer = '';
@@ -111,9 +126,17 @@ async function readUpstream(
         if (!line.startsWith('data: ')) continue;
         const data = line.slice(6).trim();
         if (!data || data === '[DONE]') continue;
-        let event: { error?: unknown; choices?: Array<{ delta?: { content?: unknown; tool_calls?: unknown } }> };
+        let event: { error?: unknown; usage?: unknown; choices?: Array<{ delta?: { content?: unknown; tool_calls?: unknown } }> };
         try { event = JSON.parse(data); } catch { continue; }
         if (event.error) throw new UpstreamError('provider error event');
+        if (isObject(event.usage)) {
+          const u = event.usage;
+          onUsage?.({
+            promptTokens: Number(u.prompt_tokens) || 0,
+            completionTokens: Number(u.completion_tokens) || 0,
+            costUsd: Number(u.cost) || 0,
+          });
+        }
         const delta = event.choices?.[0]?.delta;
         const content = delta?.content;
         const text = typeof content === 'string'
@@ -136,8 +159,10 @@ async function readUpstream(
       }
     }
   } finally {
+    signal.removeEventListener('abort', onAbort);
     reader.releaseLock();
   }
+  if (signal.aborted) throw signal.reason ?? new Error('aborted');
   return calls.filter(Boolean).map((c, i) => ({ ...c, id: c.id || `call_${i}` }));
 }
 
@@ -166,9 +191,44 @@ function runTool(tools: ChartTool[], call: ToolCall, cache: Map<string, string>)
   return { status, content };
 }
 
-export async function streamChatResponse(messages: ChatStreamMessage[], signal: AbortSignal, tools?: ChartTool[]): Promise<Response> {
+export interface StreamOptions {
+  /** Gọi đúng một lần khi lượt kết thúc (xong, lỗi hoặc bị hủy) với toàn bộ chữ đã gửi cho client. */
+  onFinish?: (result: TurnResult) => void;
+}
+
+export async function streamChatResponse(
+  messages: ChatStreamMessage[],
+  signal: AbortSignal,
+  tools?: ChartTool[],
+  options: StreamOptions = {},
+): Promise<Response> {
+  const startedAt = Date.now();
+  let answer = '';
+  let firstTokenMs: number | undefined;
+  const toolCalls: ToolCallLog[] = [];
+  let usage: Usage | undefined;
+  let finished = false;
+  const finish = (status: TurnResult['status'], error?: string) => {
+    if (finished) return;
+    finished = true;
+    try {
+      options.onFinish?.({
+        text: answer, status, ...(error ? { error } : {}), toolCalls, firstTokenMs, durationMs: Date.now() - startedAt,
+        ...(usage ? { usage: { ...usage } } : {}),
+      });
+    } catch (e) {
+      console.error('onFinish failed:', e instanceof Error ? e.message : 'unknown error');
+    }
+  };
+  const addUsage = (u: Usage) => {
+    usage = usage
+      ? { promptTokens: usage.promptTokens + u.promptTokens, completionTokens: usage.completionTokens + u.completionTokens, costUsd: usage.costUsd + u.costUsd }
+      : u;
+  };
+
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
+    finish('error', 'missing API key');
     return jsonError('Chưa cấu hình OPENROUTER_API_KEY trong .env.local.', 503);
   }
 
@@ -177,9 +237,10 @@ export async function streamChatResponse(messages: ChatStreamMessage[], signal: 
   try {
     first = await openUpstream(apiKey, wire, tools, signal);
   } catch (error) {
-    if (signal.aborted) return new Response(null, { status: 499 });
+    if (signal.aborted) { finish('aborted'); return new Response(null, { status: 499 }); }
     const status = error instanceof UpstreamError ? error.status : undefined;
     console.error('OpenRouter request failed:', error instanceof Error ? error.message : 'unknown error');
+    finish('error', error instanceof Error ? error.message : 'unknown error');
     return status
       ? jsonError(`Dịch vụ AI từ chối yêu cầu (HTTP ${status}).`, 502)
       : jsonError('Không kết nối được dịch vụ AI. Vui lòng thử lại sau.', 502);
@@ -189,6 +250,10 @@ export async function streamChatResponse(messages: ChatStreamMessage[], signal: 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const send = (payload: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
+      // Client có thể đã ngắt: ghi vào stream đã đóng thì bỏ qua.
+      const safeEnqueue = (chunk: string) => { try { controller.enqueue(encoder.encode(chunk)); } catch { /* đã đóng */ } };
+      const safeSend = (payload: unknown) => safeEnqueue(`data: ${JSON.stringify(payload)}\n\n`);
+      const safeClose = () => { try { controller.close(); } catch { /* đã đóng */ } };
       const toolCache = new Map<string, string>();
       let sentText = false;
       try {
@@ -200,16 +265,22 @@ export async function streamChatResponse(messages: ChatStreamMessage[], signal: 
           let held = '';
           let flushing = !tools?.length;
           let sawToolCall = false;
-          const emit = (chunk: string) => { sentText = true; send({ delta: { text: chunk } }); };
+          const emit = (chunk: string) => {
+            if (!sentText) firstTokenMs = Date.now() - startedAt;
+            sentText = true;
+            answer += chunk;
+            send({ delta: { text: chunk } });
+          };
           const flush = () => { if (held) emit(held); held = ''; flushing = true; };
-          const calls = await readUpstream(upstream.body, chunk => {
+          const calls = await readUpstream(upstream.body, upstream.signal, chunk => {
             text += chunk;
             if (flushing) emit(chunk);
             else if (!sawToolCall) { held += chunk; if (held.length > PREAMBLE_HOLD_CHARS) flush(); }
-          }, () => { sawToolCall = true; held = ''; });
+          }, () => { sawToolCall = true; held = ''; }, addUsage);
           if (!calls.length || !tools?.length || round > MAX_TOOL_ROUNDS) { flush(); break; }
 
           wire.push({ role: 'assistant', content: text || null, tool_calls: calls });
+          for (const call of calls) toolCalls.push({ name: call.function.name, arguments: call.function.arguments });
           for (const call of calls) {
             const { status, content } = runTool(tools, call, toolCache);
             send({ status });
@@ -219,12 +290,14 @@ export async function streamChatResponse(messages: ChatStreamMessage[], signal: 
           upstream = await openUpstream(apiKey, wire, round < MAX_TOOL_ROUNDS ? tools : undefined, signal);
         }
       } catch (error) {
-        if (signal.aborted) { controller.close(); return; }
+        if (signal.aborted) { finish('aborted'); safeClose(); return; }
         console.error('OpenRouter stream failed:', error instanceof Error ? error.message : 'unknown error');
-        send({ error: sentText ? 'Câu trả lời bị gián đoạn, vui lòng hỏi lại.' : 'Luận giải thất bại, vui lòng thử lại sau.' });
+        finish('error', error instanceof Error ? error.message : 'unknown error');
+        safeSend({ error: sentText ? 'Câu trả lời bị gián đoạn, vui lòng hỏi lại.' : 'Luận giải thất bại, vui lòng thử lại sau.' });
       }
-      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-      controller.close();
+      finish('ok');
+      safeEnqueue('data: [DONE]\n\n');
+      safeClose();
     },
   });
 

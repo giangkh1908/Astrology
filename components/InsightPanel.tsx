@@ -1,5 +1,6 @@
 'use client';
 import { apiRequest } from '@/lib/api/client';
+import { chartKey } from '@/lib/ziwei/chart-key';
 import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import type { ZiweiChart, Palace } from '@/lib/ziwei/types';
@@ -101,8 +102,7 @@ const TOPIC_KEYS: readonly string[] = TOPICS.map(t => t.key);
 const STORE_VERSION = 'v1';
 
 function storageKeyOf(chart: ZiweiChart): string {
-  const b = chart.birthInfo;
-  return `ziwei-chat:${STORE_VERSION}:${b.year}-${b.month}-${b.day}-${b.hour}-${b.gender}-${b.lunarTimeZone ?? 8}`;
+  return `ziwei-chat:${STORE_VERSION}:${chartKey(chart.birthInfo)}`;
 }
 
 function loadStore(key: string): { threads: Threads; labels: Record<string, string> } {
@@ -166,7 +166,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
       const res = await apiRequest('/api/interpret', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chart, intent: intentFor(key), messages: apiMessages, timeContext: selectedTime }),
+        body: JSON.stringify({ chart, intent: intentFor(key), threadKey: key, messages: apiMessages, timeContext: selectedTime }),
         signal: ctrl.signal,
       });
       if (!res.ok) {

@@ -1,5 +1,8 @@
-import { buildInterpretationSystemPrompt, initialInterpretationQuestion, type InterpretationIntent, type InterpretationTimeContext } from '@/lib/prompts/astrology-interpretation';
-import { jsonError, streamChatResponse } from '@/lib/ai/chat-stream';
+import { getPromptSet, type InterpretationIntent, type InterpretationTimeContext } from '@/lib/prompts';
+import { currentModel, jsonError, streamChatResponse } from '@/lib/ai/chat-stream';
+import { resolvePromptVersion } from '@/lib/store/chat-store';
+import { getChatStore } from '@/lib/store';
+import { beginTurn, chartRef, threadKeyFor } from '@/lib/store/persist-turn';
 import { buildChartTools } from '@/lib/ai/tools/ziwei-tools';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
@@ -36,15 +39,31 @@ export async function POST(request: Request) {
     .slice(-16)
     .map(message => ({ role: message.role, content: message.content.slice(0, 6000) }));
 
+  const store = getChatStore();
+  const version = await resolvePromptVersion(store);
+  const prompts = getPromptSet(version);
+
   const intent = isObject(body.intent) ? body.intent as unknown as InterpretationIntent : { type: 'topic' as const, key: 'overview' };
   const time = isObject(body.timeContext) ? body.timeContext as unknown as InterpretationTimeContext : {};
   if (!messages.some(message => message.role === 'user')) {
-    messages.push({ role: 'user', content: initialInterpretationQuestion(intent) });
+    messages.push({ role: 'user', content: prompts.initialInterpretationQuestion(intent) });
   }
 
   const chart = body.chart as unknown as ZiweiChart;
+  const lastQuestion = [...messages].reverse().find(m => m.role === 'user')?.content ?? '';
+  // Dựng prompt/tool trước khi ghi lượt: lỗi ở đây không để lại lượt 'pending'.
+  const systemPrompt = prompts.buildInterpretationSystemPrompt(chart, intent, time);
+  const tools = buildChartTools(chart.birthInfo);
+  const { onFinish } = await beginTurn(store, {
+    kind: 'interpret',
+    chart: chartRef(chart.birthInfo),
+    threadKey: threadKeyFor(body.threadKey, intent),
+    question: lastQuestion,
+    promptVersion: version,
+    model: currentModel(),
+  });
   return streamChatResponse([
-    { role: 'system', content: buildInterpretationSystemPrompt(chart, intent, time) },
+    { role: 'system', content: systemPrompt },
     ...messages,
-  ], request.signal, buildChartTools(chart.birthInfo));
+  ], request.signal, tools, { onFinish });
 }

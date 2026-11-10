@@ -14,6 +14,8 @@ export interface BirthInfo {
   region?: 'north' | 'south';
   /** Múi giờ (7 hoặc 8) dùng để tính âm lịch Việt Nam cho ngày lập lá số */
   lunarTimeZone?: 7 | 8;
+  /** Người sinh sau trong cặp sinh đôi cùng giờ: cách dời cung Mệnh (bỏ trống = lá số bình thường). */
+  twinMethod?: 'huynh_de' | 'thien_di';
   /**
    * 原始输入（用户在表单里实际填的时间），已知出生时间时始终保留。
    * 例：用户输入 5/9 23:55 → year/month/day 会被改成 5/10（次日子时），

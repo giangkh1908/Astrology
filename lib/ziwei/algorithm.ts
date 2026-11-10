@@ -11,6 +11,7 @@ import { BRANCHES, STEMS } from './constants';
 import { schoolStarBrightness, type BrightnessSchool } from './school-data';
 import { SCHOOL_AX } from './school-tables.generated';
 import { DEFAULT_LEAP_MONTH } from './school-config';
+import { applyTwinMethod, isTwinMethod } from './twin';
 // 飞星派工具仅供导出，不再在排盘时调用（倪师《天纪 03》：四化星永远固定不动）
 // import { detectSelfSihua, getSiHuaByStem } from './sihua';
 
@@ -587,6 +588,13 @@ function buildAstrolabe(birthInfo: BirthInfo, opts?: { leapMonth?: LunarMonthPol
   } else {
     // 非闰月或 split 模式：直接 bySolar，保持 iztro 的既有行为
     astrolabe = astro.bySolar(`${year}-${month}-${day}`, hour, iztroGender, true, 'zh-CN');
+  }
+
+  if (birthInfo.twinMethod !== undefined) {
+    if (!isTwinMethod(birthInfo.twinMethod)) {
+      throw new RangeError(`twinMethod must be 'huynh_de' or 'thien_di'; received ${String(birthInfo.twinMethod)}`);
+    }
+    applyTwinMethod(astrolabe, birthInfo.twinMethod);
   }
 
   return { astrolabe, leapMode, effectiveLunar, vnEffective, vnSubstitute };

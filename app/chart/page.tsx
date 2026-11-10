@@ -92,6 +92,28 @@ export default function ChartPage() {
         </button>
       </div>
 
+      {info && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 16 }}>
+          <span style={{ fontSize: 14, color: '#888' }}>Sinh đôi cùng giờ (người sinh sau):</span>
+          {([['', 'Không'], ['huynh_de', 'Mệnh tại Huynh Đệ'], ['thien_di', 'Mệnh tại Thiên Di']] as const).map(([m, label]) => (
+            <button
+              key={m || 'none'}
+              type="button"
+              style={tabStyle((info.twinMethod ?? '') === m)}
+              onClick={() => {
+                if ((info.twinMethod ?? '') === m) return;
+                const { twinMethod: _drop, ...rest } = info;
+                void _drop;
+                setSelectedPalace(null);
+                void submit(m ? { ...rest, twinMethod: m } : rest);
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
+
       <section
         style={{
           marginBottom: 16, padding: '12px 16px', borderRadius: 10, fontSize: 14, lineHeight: 1.6,
