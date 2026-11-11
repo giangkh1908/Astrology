@@ -87,9 +87,6 @@ export default function ChartPage() {
         <button type="button" style={tabStyle(mode === 'vn')} onClick={() => { setMode('vn'); setSelectedPalace(null); setSelectedTime({ view: 'mingpan', lunarYear: currentVnLunarYear() }); }}>
           Việt Nam (UTC+{info?.lunarTimeZone ?? 8})
         </button>
-        <button type="button" style={tabStyle(mode === 'cn')} onClick={() => { setMode('cn'); setSelectedPalace(null); setSelectedTime({ view: 'mingpan', lunarYear: currentVnLunarYear() }); }}>
-          Trung Quốc (UTC+8, cách gốc)
-        </button>
       </div>
 
       {info && (
