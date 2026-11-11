@@ -13,6 +13,7 @@ const body = `export function makeRun(ctx) {
   const {chartA,chartB,formA,formB,generateChart,formToBirthInfo,setFormError,
     setAnalyzing,setTurns,turnsRef,lastTurnRef,setAnalysisError,setChartA,setChartB,fetch: apiRequest,
     setApiMissing,analysisRef} = ctx;
+  const loadSavedTurns = ctx.loadSavedTurns ?? (async () => []);
   const useCallback = (fn) => fn;
   ${source.slice(start, end)}
   return runAnalysis;

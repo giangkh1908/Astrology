@@ -70,6 +70,27 @@ export async function runChatStoreContract(store: ChatStore, tag: string) {
   assert.ok((usage.find(u => u.promptVersion === 'v2')?.count ?? 0) >= 3);
   assert.ok((usage.find(u => u.promptVersion === 'v1')?.count ?? 0) >= 1);
 
+  // Lịch sử nạp lại (chủ sở hữu null = tài khoản env): lượt mở đầu đặt mốc reset, đóng mục thì không nạp lại.
+  const keyH = `test-${tag}-h`;
+  const ht = (over: Partial<TurnStart>) => turn({ chart: { key: keyH, birthInfo: birthA }, threadKey: 'overview', ...over });
+  const end = async (id: string, text: string) => store.recordTurnEnd(id, { text, status: 'ok', toolCalls: [], durationMs: 1 });
+  const q = { kind: 'interpret' as const, chartKey: keyH, userId: null };
+  await end((await store.recordTurnStart(ht({ question: 'Tự động 1', fresh: true, hiddenQuestion: true }))).requestId, 'Đáp 1');
+  await end((await store.recordTurnStart(ht({ question: 'Hỏi tiếp' }))).requestId, 'Đáp 2');
+  let hist = await store.loadHistory(q);
+  assert.deepEqual(hist.map(t => t.messages.map(m => [m.content, !!m.hidden])), [[['Tự động 1', true], ['Đáp 1', false], ['Hỏi tiếp', false], ['Đáp 2', false]]]);
+  await end((await store.recordTurnStart(ht({ question: 'Tự động 2', fresh: true, hiddenQuestion: true }))).requestId, 'Đáp mới');
+  hist = await store.loadHistory(q);
+  assert.deepEqual(hist[0].messages.map(m => m.content), ['Tự động 2', 'Đáp mới'], 'luận lại bỏ lượt cũ');
+  await end((await store.recordTurnStart(ht({ threadKey: 'career', question: 'Nghề?', fresh: true }))).requestId, 'Nghề hợp');
+  assert.deepEqual((await store.loadHistory(q)).map(t => t.threadKey), ['overview', 'career']);
+  await store.closeThread({ ...q, threadKey: 'career' });
+  assert.deepEqual((await store.loadHistory(q)).map(t => t.threadKey), ['overview']);
+  assert.deepEqual(await store.loadHistory({ ...q, kind: 'heming', partnerKey: keyB }), []);
+  await end((await store.recordTurnStart(ht({ kind: 'heming', threadKey: 'heming', partnerChart: { key: keyB, birthInfo: birthB }, question: 'Hợp?', fresh: true }))).requestId, 'Hợp');
+  assert.equal((await store.loadHistory({ ...q, kind: 'heming', partnerKey: keyB }))[0].messages[1].content, 'Hợp');
+  assert.deepEqual(await store.loadHistory({ ...q, kind: 'heming', partnerKey: keyA }), [], 'cặp khác');
+
   // Version đang chạy
   await store.setSetting(ACTIVE_PROMPT_KEY, 'v1');
   assert.equal(await resolvePromptVersion(store, {}), 'v1');

@@ -19,6 +19,60 @@ export interface TurnStart {
   model: string;
   /** Tài khoản tự đăng ký đã hỏi; null/undefined = tài khoản env. */
   userId?: string | null;
+  /** Lượt mở đầu mục (chưa có câu trả lời nào trong lịch sử client gửi): bỏ lịch sử cũ khi nạp lại. */
+  fresh?: boolean;
+  /** Câu hỏi tự động (không do người dùng gõ): không hiện thành bong bóng khi nạp lại. */
+  hiddenQuestion?: boolean;
+}
+
+/** Hội thoại của một người trên một lá số (hoặc cặp lá số với hợp bàn). userId null = tài khoản env. */
+export interface HistoryQuery {
+  kind: 'interpret' | 'heming';
+  chartKey: string;
+  partnerKey?: string | null;
+  userId: string | null;
+}
+
+export interface HistoryMessage { role: 'user' | 'assistant'; content: string; hidden?: boolean }
+export interface HistoryThread { threadKey: string; updatedAt: string; messages: HistoryMessage[] }
+
+/** Dòng tin nhắn thô (sau mốc reset) để ghép thành lịch sử; dùng chung cho mọi adapter. */
+export interface HistoryRow {
+  threadKey: string;
+  updatedAt: string;
+  role: 'user' | 'assistant';
+  content: string;
+  hidden: boolean;
+  requestId: string | null;
+}
+
+/**
+ * Ghép tin nhắn thành các mục: mỗi câu hỏi đi với câu trả lời của cùng lượt (theo requestId; dữ liệu cũ
+ * không có requestId thì lấy tin trả lời ngay sau). Lượt chưa xong, lỗi hoặc trả lời rỗng bị bỏ cả cặp.
+ * rows phải theo thứ tự ghi (id tăng dần); mục trả về theo thứ tự cập nhật cũ → mới.
+ */
+export function buildHistory(rows: HistoryRow[]): HistoryThread[] {
+  const byThread = new Map<string, HistoryRow[]>();
+  for (const r of rows) {
+    const list = byThread.get(r.threadKey) ?? [];
+    list.push(r);
+    byThread.set(r.threadKey, list);
+  }
+  const out: HistoryThread[] = [];
+  for (const [threadKey, list] of byThread) {
+    const messages: HistoryMessage[] = [];
+    list.forEach((m, i) => {
+      if (m.role !== 'user') return;
+      const answer = m.requestId
+        ? list.find(a => a.role === 'assistant' && a.requestId === m.requestId)
+        : (list[i + 1]?.role === 'assistant' ? list[i + 1] : undefined);
+      if (!answer || !answer.content.trim()) return; // lỗi trước khi có chữ, hoặc đang chạy
+      messages.push(m.hidden ? { role: 'user', content: m.content, hidden: true } : { role: 'user', content: m.content });
+      messages.push({ role: 'assistant', content: answer.content });
+    });
+    if (messages.length) out.push({ threadKey, updatedAt: list.reduce((t, r) => (r.updatedAt > t ? r.updatedAt : t), ''), messages });
+  }
+  return out.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
 }
 
 export interface TurnResult {
@@ -93,6 +147,10 @@ export interface ChatStore {
   getChart(id: string): Promise<{ chart: ChartSummary; conversations: ConversationDetail[] } | null>;
   listRequests(f: LogFilter): Promise<RequestLog[]>;
   versionUsage(): Promise<VersionUsage[]>;
+  /** Lịch sử để nạp lại cho chính người đó (chỉ tin sau mốc reset). */
+  loadHistory(q: HistoryQuery): Promise<HistoryThread[]>;
+  /** Đóng một mục: đặt mốc reset, lần sau không nạp lại (tin nhắn vẫn giữ cho admin). */
+  closeThread(q: HistoryQuery & { threadKey: string }): Promise<void>;
 }
 
 /** Version prompt đang chạy: lấy từ store; không có, lạ hoặc store lỗi → mặc định. */

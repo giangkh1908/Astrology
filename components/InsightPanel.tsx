@@ -90,30 +90,32 @@ function ToolSteps({ steps, running }: { steps: string[]; running: boolean }) {
   );
 }
 
-/** Mỗi mục (chủ đề, cung, tứ hóa) là một luồng chat riêng, lưu lại theo lá số */
+/** Mỗi mục (chủ đề, cung, tứ hóa) là một luồng chat riêng, lưu trên server theo tài khoản + lá số */
 type ThreadKey = string;
 type Threads = Record<ThreadKey, Message[]>;
-const STORE_VERSION = 'v1';
+type HistoryState = 'loading' | 'ready' | 'error';
 
-function storageKeyOf(chart: ZiweiChart): string {
-  return `ziwei-chat:${STORE_VERSION}:${chartKey(chart.birthInfo)}`;
+/** Bản cũ lưu hội thoại trong localStorage (không gắn tài khoản): xóa để người dùng chung máy không đọc được. */
+function clearLegacyLocalChats() {
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k?.startsWith('ziwei-chat:')) localStorage.removeItem(k);
+    }
+  } catch { /* trình duyệt chặn bộ nhớ */ }
 }
 
-function loadStore(key: string): { threads: Threads; labels: Record<string, string> } {
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw) {
-      const d = JSON.parse(raw);
-      if (d && typeof d.threads === 'object') {
-        const threads: Threads = {};
-        for (const [thread, messages] of Object.entries(d.threads)) {
-          if (Array.isArray(messages)) threads[thread] = messages.filter((m: Message) => !m.hidden);
-        }
-        return { threads, labels: d.labels ?? {} };
-      }
-    }
-  } catch { /* trình duyệt chặn bộ nhớ hoặc dữ liệu hỏng: bắt đầu trống */ }
-  return { threads: {}, labels: {} };
+/** Nhãn mục khi nạp lại từ server (chủ đề có nhãn riêng qua topicLabel). */
+function defaultLabel(key: ThreadKey, chart: ZiweiChart): string | undefined {
+  if (key.startsWith('palace:')) {
+    const p = chart.palaces.find(x => x.branch === Number(key.slice(7)));
+    return p ? `Cung ${viPalace(p.name)}` : undefined;
+  }
+  if (key.startsWith('sihua:')) {
+    const [, view, starName, siHua] = key.split(':');
+    return `${view === 'daxian' ? 'Hạn' : 'Niên'} ${viStar(starName)} hóa ${viSiHua(siHua)}`;
+  }
+  return undefined;
 }
 
 type InsightIntent =
@@ -131,7 +133,7 @@ function intentFor(key: ThreadKey): InsightIntent {
 }
 
 export default function InsightPanel({ chart, selectedPalace, selectedSiHua, selectedTime }: InsightPanelProps) {
-  const storeKey = storageKeyOf(chart);
+  const storeKey = chartKey(chart.birthInfo);
   const [threads, setThreads] = useState<Threads>({});
   const [labels, setLabels] = useState<Record<string, string>>({});
   const [active, setActive] = useState<ThreadKey>('overview');
@@ -142,6 +144,10 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   const scrollRef = useRef<HTMLDivElement>(null);
   const stickRef = useRef(false); // bám đáy khi đang đọc câu hỏi tiếp
   const loadedKey = useRef<string | null>(null);
+  const [historyState, setHistoryState] = useState<HistoryState>('loading');
+  const historyReady = useRef(false); // chưa nạp xong lịch sử: chưa tự luận (tránh trừ lượt cho mục đã có)
+  const activeRef = useRef<ThreadKey>('overview');
+  useEffect(() => { activeRef.current = active; }, [active]);
   // Hạn mức câu hỏi AI: null = chưa biết hoặc không giới hạn
   const [quota, setQuota] = useState<{ used: number; limit: number } | null>(null);
 
@@ -270,8 +276,9 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     if (label && !TOPIC_KEYS.includes(key)) setLabels(l => (l[key] === label ? l : { ...l, [key]: label }));
     stickRef.current = false;
     setActive(key);
+    activeRef.current = key;
     const existing = threadsRef.current[key];
-    if (auto && !existing?.length && !controllers.current[key]) stream(key, []);
+    if (auto && historyReady.current && !existing?.length && !controllers.current[key]) stream(key, []);
   };
 
   const regenerate = () => {
@@ -282,39 +289,74 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
 
   const closeThread = (key: ThreadKey) => {
     controllers.current[key]?.abort();
+    if (threadsRef.current[key]?.length) {
+      // Đóng trên server để lần sau không nạp lại (lỗi thì thôi: lần sau mục vẫn hiện, không mất gì)
+      void apiRequest('/api/history/close', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'interpret', birthInfo: chart.birthInfo, threadKey: key }),
+      }).catch(() => undefined);
+    }
     setThreads(prev => { const n = { ...prev }; delete n[key]; threadsRef.current = n; return n; });
     setLabels(l => { const n = { ...l }; delete n[key]; return n; });
     if (active === key) {
       const rest = Object.keys(threadsRef.current).filter(k => k !== key && (threadsRef.current[k]?.length || controllers.current[k]));
-      setActive(rest[rest.length - 1] ?? 'overview');
+      activeRef.current = rest[rest.length - 1] ?? 'overview';
+      setActive(activeRef.current);
     }
   };
 
-  // Đổi lá số (hoặc đổi lịch VN/CN): nạp lại các mục đã lưu, mở Mệnh cách
+  // Đổi lá số: nạp các mục đã luận của tài khoản này từ server, rồi mở Mệnh cách (chỉ luận nếu chưa có)
   useEffect(() => {
     if (loadedKey.current === storeKey) return;
     loadedKey.current = storeKey;
+    clearLegacyLocalChats();
     Object.values(controllers.current).forEach(c => c.abort());
     controllers.current = {};
-    const { threads: saved, labels: savedLabels } = loadStore(storeKey);
-    threadsRef.current = saved;
-    setThreads(saved);
-    setLabels(savedLabels);
+    threadsRef.current = {};
+    historyReady.current = false;
+    setThreads({});
+    setLabels({});
     setStreaming({});
+    setHistoryState('loading');
     open('overview');
-  }, [storeKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Lưu các mục đã trả lời xong (mục đang chạy dở không lưu)
-  useEffect(() => {
-    if (loadedKey.current !== storeKey) return;
-    const done: Threads = {};
-    for (const [k, m] of Object.entries(threads)) {
-      if (!streaming[k] && m.some(x => x.role === 'assistant' && !x.error && x.content)) {
-        done[k] = m.filter(x => !x.error && !x.hidden);
-      }
-    }
-    try { localStorage.setItem(storeKey, JSON.stringify({ threads: done, labels })); } catch { /* đầy hoặc bị chặn */ }
-  }, [threads, labels, streaming, storeKey]);
+    // Không hủy bằng cleanup: StrictMode chạy effect 2 lần, lần 2 thoát sớm ở loadedKey → kẹt 'đang tải'.
+    // Kết quả cũ (đổi lá số giữa chừng) bị bỏ nhờ kiểm tra loadedKey.
+    apiRequest('/api/history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind: 'interpret', birthInfo: chart.birthInfo }),
+    })
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d: { threads?: { threadKey: string; messages: Message[] }[] }) => {
+        if (loadedKey.current !== storeKey) return;
+        const saved: Threads = {};
+        const savedLabels: Record<string, string> = {};
+        for (const t of d.threads ?? []) {
+          const msgs = t.messages.filter(m => !m.hidden).map(m => ({ role: m.role, content: m.content }));
+          if (!msgs.length) continue;
+          saved[t.threadKey] = msgs;
+          const label = defaultLabel(t.threadKey, chart);
+          if (label) savedLabels[t.threadKey] = label;
+        }
+        // Mục người dùng đã mở trong lúc chờ (nếu có) được giữ, ghi đè bản lưu
+        const merged: Threads = { ...saved };
+        for (const [k, m] of Object.entries(threadsRef.current)) if (m.length) merged[k] = m;
+        threadsRef.current = merged;
+        setThreads(merged);
+        setLabels(l => ({ ...savedLabels, ...l }));
+        historyReady.current = true;
+        setHistoryState('ready');
+        open(activeRef.current);
+      })
+      .catch(() => {
+        if (loadedKey.current !== storeKey) return;
+        // Không tải được lịch sử: không tự luận (tránh trừ lượt cho mục có thể đã luận); người dùng tự chọn mục
+        historyReady.current = true;
+        setHistoryState('error');
+      });
+  }, [storeKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Bấm vào cung trên lá số → mục riêng của cung đó
   useEffect(() => {
@@ -482,8 +524,12 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
           );
         })}
 
-        {isEmpty && (
+        {isEmpty && historyState === 'loading' && (
+          <p className="text-[11px] animate-pulse" style={{ color: 'var(--t-faint)' }}>Đang tải các mục đã luận…</p>
+        )}
+        {isEmpty && historyState !== 'loading' && (
           <div className="text-[11px] leading-relaxed" style={{ color: 'var(--t-faint)' }}>
+            {historyState === 'error' && <p className="mb-2">Chưa tải được các mục đã luận trước đây.</p>}
             <p className="mb-2">Gõ <span className="ls-kbd">/</span> để chọn mục luận giải, ví dụ:</p>
             <div className="space-y-1">
               {['menh-cach', 'su-nghiep', 'tinh-cam', 'cung-quan-loc'].map(n => {

@@ -4,7 +4,7 @@
  */
 import { neon } from '@neondatabase/serverless';
 import {
-  PAGE_SIZE, UUID_RE,
+  PAGE_SIZE, UUID_RE, buildHistory,
   type ChatStore, type ChartSummary, type ConversationDetail, type RequestLog, type StoredMessage, type ToolCallLog, type TurnStatus,
 } from './chat-store';
 
@@ -12,6 +12,9 @@ type Row = Record<string, unknown>;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
 const numOrNull = (v: unknown) => (v === null || v === undefined ? null : Number(v));
+const ownerId = (id: string | null | undefined) => (id && UUID_RE.test(id) ? id : null);
+/** Tối đa số tin nạp lại cho một lá số (đủ cho mọi mục; chặn phản hồi quá lớn). */
+const HISTORY_LIMIT = 2000;
 const page = (p: unknown) => (Number.isInteger(p) && (p as number) >= 0 ? (p as number) : 0);
 
 function toSummary(r: Row): ChartSummary {
@@ -43,6 +46,8 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
       const samePartner = t.partnerChart?.key === t.chart.key;
       const partnerKey = t.partnerChart && !samePartner ? t.partnerChart.key : null;
       const partnerInfo = t.partnerChart ? JSON.stringify(t.partnerChart.birthInfo) : null;
+      const owner = ownerId(t.userId);
+      const fresh = !!t.fresh;
       const rows = await sql`
         with c as (
           insert into charts (chart_key, birth_info) values (${t.chart.key}, ${JSON.stringify(t.chart.birthInfo)}::jsonb)
@@ -54,17 +59,19 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
           on conflict (chart_key) do update set last_activity_at = now()
           returning id
         ), conv as (
-          insert into conversations (kind, chart_id, partner_chart_id, thread_key)
-          select ${t.kind}, c.id, case when ${samePartner} then c.id else (select id from p) end, ${t.threadKey} from c
-          on conflict on constraint conversations_identity do update set updated_at = now()
+          insert into conversations (kind, chart_id, partner_chart_id, thread_key, user_id, reset_at)
+          select ${t.kind}, c.id, case when ${samePartner} then c.id else (select id from p) end, ${t.threadKey}, ${owner}::uuid,
+                 case when ${fresh} then now() end from c
+          on conflict on constraint conversations_identity do update set updated_at = now(),
+            reset_at = case when ${fresh} then now() else conversations.reset_at end
           returning id
         ), r as (
           insert into ai_requests (conversation_id, route, prompt_version, model, question, status, user_id)
-          select conv.id, ${t.kind}, ${t.promptVersion}, ${t.model}, ${t.question}, 'pending', ${t.userId ?? null}::uuid from conv
+          select conv.id, ${t.kind}, ${t.promptVersion}, ${t.model}, ${t.question}, 'pending', ${owner}::uuid from conv
           returning id, conversation_id
         ), m as (
-          insert into messages (conversation_id, role, content)
-          select conversation_id, 'user', ${t.question} from r
+          insert into messages (conversation_id, role, content, request_id, hidden)
+          select conversation_id, 'user', ${t.question}, id, ${!!t.hiddenQuestion} from r
         )
         select id from r`;
       return { requestId: String(rows[0].id) };
@@ -148,6 +155,34 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
         promptTokens: numOrNull(r.prompt_tokens), completionTokens: numOrNull(r.completion_tokens), costUsd: numOrNull(r.cost_usd),
         chartId: r.chart_id ? String(r.chart_id) : null,
       }));
+    },
+
+    async loadHistory(q) {
+      const rows = await sql`
+        select v.thread_key, v.updated_at, m.role, m.content, m.hidden, m.request_id
+        from conversations v
+        join charts c on c.id = v.chart_id
+        left join charts p on p.id = v.partner_chart_id
+        join messages m on m.conversation_id = v.id and (v.reset_at is null or m.created_at >= v.reset_at)
+        where c.chart_key = ${q.chartKey} and v.kind = ${q.kind}
+          and v.user_id is not distinct from ${ownerId(q.userId)}::uuid
+          and (case when ${q.partnerKey ?? null}::text is null then v.partner_chart_id is null else p.chart_key = ${q.partnerKey ?? null}::text end)
+        order by m.id
+        limit ${HISTORY_LIMIT}`;
+      return buildHistory(rows.map(r => ({
+        threadKey: String(r.thread_key), updatedAt: iso(r.updated_at), role: r.role as 'user' | 'assistant',
+        content: String(r.content), hidden: r.hidden === true, requestId: r.request_id ? String(r.request_id) : null,
+      })));
+    },
+
+    async closeThread(q) {
+      await sql`
+        update conversations v set reset_at = now()
+        from charts c
+        where c.id = v.chart_id and c.chart_key = ${q.chartKey} and v.kind = ${q.kind} and v.thread_key = ${q.threadKey}
+          and v.user_id is not distinct from ${ownerId(q.userId)}::uuid
+          and (case when ${q.partnerKey ?? null}::text is null then v.partner_chart_id is null
+               else v.partner_chart_id = (select id from charts where chart_key = ${q.partnerKey ?? null}::text) end)`;
     },
 
     async versionUsage() {

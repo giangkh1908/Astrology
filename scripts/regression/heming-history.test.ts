@@ -12,11 +12,12 @@ const body = `export function makeRun(ctx) {
   const {chartA,chartB,formA,formB,generateChart,formToBirthInfo,setFormError,
     setAnalyzing,setTurns,turnsRef,lastTurnRef,setAnalysisError,setChartA,setChartB,fetch: apiRequest,
     analysisRef} = ctx;
+  const loadSavedTurns = ctx.loadSavedTurns ?? (async () => []);
   const useCallback = (fn) => fn;
   ${source.slice(start, end)}
   return runAnalysis;
 }`;
-const moduleExports: Record<string, (ctx: object) => (q?: string) => Promise<void>> = {};
+const moduleExports: Record<string, (ctx: object) => (q?: string, restart?: boolean) => Promise<void>> = {};
 new Function('exports', 'setTimeout', ts.transpileModule(body, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
 }).outputText)(moduleExports, () => {});
@@ -31,8 +32,10 @@ let turns: Turn[] = [];
 const turnsRef = { current: [] as Turn[] };
 const requests: { question?: string; history: { question?: string; answer: string }[] }[] = [];
 let reply = '';
+let saved: Turn[] = [];
 
-const run = (q?: string) => moduleExports.makeRun({
+const run = (q?: string, restart?: boolean) => moduleExports.makeRun({
+  loadSavedTurns: async () => saved,
   chartA, chartB, formA: form, formB: form,
   generateChart: async () => ({ birthInfo: { year } }),
   formToBirthInfo: () => ({}),
@@ -44,7 +47,7 @@ const run = (q?: string) => moduleExports.makeRun({
     const bytes = new TextEncoder().encode(`data: ${JSON.stringify({ delta: { text: reply } })}\n\ndata: [DONE]\n\n`);
     return { ok: true, status: 200, body: new ReadableStream({ start(c) { c.enqueue(bytes); c.close(); } }) };
   },
-})(q);
+})(q, restart);
 
 async function main() {
   reply = 'Tổng quan';
@@ -75,9 +78,23 @@ async function main() {
   // Hợp bàn lại từ đầu → xóa lượt cũ
   await run('Thêm');
   assert.equal(turns.length, 2);
-  await run();
+  await run(undefined, true);
   assert.equal(turns.length, 1);
   assert.equal(turns[0].question, null);
+
+  // Bắt đầu hợp bàn cho cặp đã luận → nạp lại, không gọi AI (không trừ lượt); hỏi tiếp nối từ bản đã nạp
+  saved = [{ question: null, answer: 'Đã lưu' }, { question: 'Cũ?', answer: 'Đáp cũ' }];
+  const before = requests.length;
+  await run();
+  assert.deepEqual(turns, saved);
+  assert.equal(requests.length, before, 'không gọi AI');
+  reply = 'Nối tiếp';
+  await run('Tiếp?');
+  assert.deepEqual(requests[before].history.map(h => h.answer), ['Đã lưu', 'Đáp cũ']);
+  // Luận lại từ đầu bỏ qua bản lưu
+  await run(undefined, true);
+  assert.deepEqual(requests[before + 1].history, []);
+  assert.equal(turns.length, 1);
 
   console.log('Heming history regression passed');
 }

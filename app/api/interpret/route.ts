@@ -46,7 +46,10 @@ export async function POST(request: Request) {
 
   const intent = isObject(body.intent) ? body.intent as unknown as InterpretationIntent : { type: 'topic' as const, key: 'overview' };
   const time = isObject(body.timeContext) ? body.timeContext as unknown as InterpretationTimeContext : {};
-  if (!messages.some(message => message.role === 'user')) {
+  // Mở mục (chưa có câu trả lời nào): lượt mới, bỏ lịch sử cũ khi nạp lại. Không có câu user: câu hỏi tự động.
+  const fresh = !messages.some(message => message.role === 'assistant');
+  const hiddenQuestion = !messages.some(message => message.role === 'user');
+  if (hiddenQuestion) {
     messages.push({ role: 'user', content: prompts.initialInterpretationQuestion(intent) });
   }
 
@@ -63,6 +66,8 @@ export async function POST(request: Request) {
     kind: 'interpret',
     chart: chartRef(chart.birthInfo),
     threadKey: threadKeyFor(body.threadKey, intent),
+    fresh,
+    hiddenQuestion,
     question: lastQuestion,
     promptVersion: version,
     model: currentModel(),

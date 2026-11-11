@@ -54,6 +54,8 @@ export async function POST(request: Request) {
     chart: chartRef(body.chartA.birthInfo),
     partnerChart: chartRef(body.chartB.birthInfo),
     threadKey: 'heming',
+    fresh: history.length === 0,
+    hiddenQuestion: !(body.question as string | undefined)?.trim(),
     question,
     promptVersion: version,
     model: currentModel(),

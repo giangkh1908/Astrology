@@ -48,6 +48,28 @@ function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
   );
 }
 
+/** Các lượt hợp bàn đã luận của tài khoản này cho cặp lá số (lỗi mạng/DB → coi như chưa có). */
+async function loadSavedTurns(a: ZiweiChart, b: ZiweiChart): Promise<HemingTurn[]> {
+  try {
+    const res = await apiRequest('/api/history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind: 'heming', birthInfo: a.birthInfo, partnerBirthInfo: b.birthInfo }),
+    });
+    if (!res.ok) return [];
+    const d = await res.json() as { threads?: { messages: { role: string; content: string; hidden?: boolean }[] }[] };
+    const msgs = d.threads?.[0]?.messages ?? [];
+    const turns: HemingTurn[] = [];
+    for (let i = 0; i + 1 < msgs.length; i += 2) {
+      if (msgs[i].role !== 'user' || msgs[i + 1].role !== 'assistant') continue;
+      turns.push({ question: msgs[i].hidden ? null : msgs[i].content, answer: msgs[i + 1].content });
+    }
+    return turns;
+  } catch {
+    return [];
+  }
+}
+
 interface HemingTurn {
   question: string | null; // null: lượt phân tích tổng quan đầu tiên
   answer: string;
@@ -91,8 +113,9 @@ export default function HemingPage() {
     !!(f && f.year && f.month && f.day && f.gender && (f.unknownTime || (f.clockHour !== '' && f.clockMinute !== '')));
 
   // ─── 统一入口：起盘 + 合盘分析 ─────────────────────────────
-  // q === undefined: hợp bàn mới (xóa lượt cũ); có q: hỏi tiếp, giữ lịch sử nếu lá số không đổi.
-  const runAnalysis = useCallback(async (q?: string) => {
+  // q === undefined: hợp bàn mới — nạp lại kết quả đã luận của cặp này nếu có (không trừ lượt),
+  // restart = true thì luận lại từ đầu; có q: hỏi tiếp, giữ lịch sử nếu lá số không đổi.
+  const runAnalysis = useCallback(async (q?: string, restart = false) => {
     setFormError(null);
     if (!isFormReady(formA) || !isFormReady(formB)) {
       setFormError('Vui lòng điền đầy đủ thông tin ngày giờ sinh của cả hai người');
@@ -114,6 +137,16 @@ export default function HemingPage() {
       && JSON.stringify(chartB.birthInfo) === JSON.stringify(cB.birthInfo);
     setChartA(cA);
     setChartB(cB);
+
+    if (q === undefined && !restart) {
+      const saved = await loadSavedTurns(cA, cB);
+      if (saved.length) {
+        turnsRef.current = saved;
+        setTurns(saved);
+        setTimeout(() => analysisRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+        return;
+      }
+    }
 
     const previous = q !== undefined && sameCharts ? turnsRef.current : [];
     const history = previous
@@ -354,7 +387,7 @@ export default function HemingPage() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '4px' }}>
               <span style={{ fontSize: '11px', letterSpacing: '0.2em', color: 'var(--tx-3)' }}>Hỏi thêm về lần hợp bàn này</span>
               <button
-                onClick={() => runAnalysis()}
+                onClick={() => runAnalysis(undefined, true)}
                 disabled={analyzing}
                 style={{ fontSize: '11px', color: 'var(--tx-3)', background: 'none', border: 'none', cursor: analyzing ? 'not-allowed' : 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px' }}
               >
