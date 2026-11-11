@@ -734,28 +734,15 @@ body {
 .ls-insight-scroll::-webkit-scrollbar-thumb { background: var(--t-border); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
 .ls-insight-scroll::-webkit-scrollbar-thumb:hover { background-color: var(--t-faint); }
 
-.ls-topic {
-  background: transparent;
-  border: 1px solid var(--t-border);
-  color: var(--t-faint);
-}
-.ls-topic:hover:not(:disabled) { color: var(--t-text); }
-.ls-topic[data-active] {
-  background: rgba(212, 168, 67, 0.12);
-  border-color: rgba(212, 168, 67, 0.35);
-  color: var(--t-gold);
-}
-.ls-topic:focus-visible { outline: 2px solid var(--t-gold); outline-offset: 1px; }
-/* chấm: mục đã luận (đặc) / đang luận (nhấp nháy) */
-.ls-topic-dot {
-  position: absolute;
-  top: 3px;
-  right: 4px;
+/* chấm nhấp nháy trên chip: mục đang luận */
+.ls-topic-dot-inline {
+  display: inline-block;
   width: 5px;
   height: 5px;
+  margin-left: 5px;
   border-radius: 50%;
   background: var(--t-gold);
-  opacity: 0.7;
+  vertical-align: middle;
 }
 .ls-topic-dot-live { animation: ls-pulse 1s ease-in-out infinite; }
 @keyframes ls-pulse { 50% { opacity: 0.15; } }
@@ -768,6 +755,7 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
 }
+.ls-thread-chips:first-child { margin-top: 0; }
 .ls-thread-chips::-webkit-scrollbar { display: none; }
 .ls-thread-chip {
   display: inline-flex;
@@ -785,4 +773,78 @@ body {
   background: rgba(212, 168, 67, 0.12);
   border-color: rgba(212, 168, 67, 0.35);
   color: var(--t-gold);
+}
+
+/* ─── Lệnh "/" (kiểu Claude Code) ─── */
+.ls-slash {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(100% - 4px);
+  z-index: 20;
+  border: 1px solid var(--t-border);
+  border-radius: 10px;
+  /* nền đặc: thẻ tối là màu trong suốt, phủ lên nền trang để chữ phía sau không lộ */
+  background: linear-gradient(var(--t-card), var(--t-card)), var(--t-bg);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.ls-slash-list {
+  max-height: min(260px, 45vh);
+  overflow-y: auto;
+  padding: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--t-border) transparent;
+}
+.ls-slash-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--t-faint);
+}
+.ls-slash-item[aria-selected="true"] { background: rgba(212, 168, 67, 0.12); color: var(--t-text2); }
+.ls-slash-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--t-gold);
+  white-space: nowrap;
+}
+.ls-slash-item .ls-slash-name { min-width: 9.5em; }
+.ls-slash-hint { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ls-slash-dot { flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--t-gold); opacity: 0.7; align-self: center; }
+.ls-slash-empty { padding: 8px; font-size: 11px; color: var(--t-faint); }
+.ls-slash-foot {
+  padding: 4px 10px;
+  font-size: 9.5px;
+  color: var(--t-faint);
+  border-top: 1px solid var(--t-border);
+}
+@media (hover: none) { .ls-slash-foot { display: none; } }
+.ls-slash-btn {
+  flex-shrink: 0;
+  width: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--t-border);
+  color: var(--t-gold);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+.ls-slash-btn:hover { background: rgba(212, 168, 67, 0.08); }
+.ls-slash-btn:focus-visible, .ls-slash-example:focus-visible { outline: 2px solid var(--t-gold); outline-offset: 1px; }
+.ls-slash-example { display: block; text-align: left; padding: 2px 0; color: var(--t-text2); }
+.ls-slash-example:hover .ls-slash-name { text-decoration: underline; }
+.ls-kbd {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid var(--t-border);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--t-gold);
+}
+@media (max-width: 480px) {
+  .ls-slash-item { flex-wrap: wrap; gap: 0 8px; }
+  .ls-slash-item .ls-slash-name { min-width: 0; }
 }

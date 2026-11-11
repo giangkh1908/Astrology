@@ -1,8 +1,12 @@
 'use client';
 import { apiRequest } from '@/lib/api/client';
 import { chartKey } from '@/lib/ziwei/chart-key';
-import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
-import clsx from 'clsx';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo, useId } from 'react';
+import SlashMenu from './SlashMenu';
+import {
+  TOPIC_KEYS, topicLabel, buildCommands, filterCommands, parseSlash, resolveCommand, isTypingCommand,
+  type SlashCommand,
+} from '@/lib/chat/slash-commands';
 import type { ZiweiChart, Palace } from '@/lib/ziwei/types';
 import type { TimeView } from './TimeNav';
 import { viStar, viPalace, viSiHua } from '@/lib/vn/terms';
@@ -28,15 +32,6 @@ interface InsightPanelProps {
   selectedSiHua?: SelectedSiHua | null;
   selectedTime?: { view: TimeView; lunarYear: number };
 }
-
-const TOPICS = [
-  { key: 'overview',     label: 'Mệnh cách' },
-  { key: 'love',        label: 'Tình cảm' },
-  { key: 'career',      label: 'Sự nghiệp' },
-  { key: 'wealth',      label: 'Tài vận' },
-  { key: 'health',      label: 'Sức khỏe' },
-  { key: 'personality', label: 'Tính cách' },
-] as const;
 
 /** Render AI markdown: **【Title】** → gold header, **bold** → strong */
 function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
@@ -98,7 +93,6 @@ function ToolSteps({ steps, running }: { steps: string[]; running: boolean }) {
 /** Mỗi mục (chủ đề, cung, tứ hóa) là một luồng chat riêng, lưu lại theo lá số */
 type ThreadKey = string;
 type Threads = Record<ThreadKey, Message[]>;
-const TOPIC_KEYS: readonly string[] = TOPICS.map(t => t.key);
 const STORE_VERSION = 'v1';
 
 function storageKeyOf(chart: ZiweiChart): string {
@@ -250,12 +244,13 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     stream(key, apiMessages);
   };
 
-  const open = (key: ThreadKey, label?: string) => {
-    if (label) setLabels(l => (l[key] === label ? l : { ...l, [key]: label }));
+  /** Mở một mục; auto=false khi sắp hỏi luôn một câu trong mục đó (khỏi luận tổng quát trước) */
+  const open = (key: ThreadKey, label?: string, auto = true) => {
+    if (label && !TOPIC_KEYS.includes(key)) setLabels(l => (l[key] === label ? l : { ...l, [key]: label }));
     stickRef.current = false;
     setActive(key);
     const existing = threadsRef.current[key];
-    if (!existing?.length && !controllers.current[key]) stream(key, []);
+    if (auto && !existing?.length && !controllers.current[key]) stream(key, []);
   };
 
   const regenerate = () => {
@@ -268,7 +263,10 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     controllers.current[key]?.abort();
     setThreads(prev => { const n = { ...prev }; delete n[key]; threadsRef.current = n; return n; });
     setLabels(l => { const n = { ...l }; delete n[key]; return n; });
-    if (active === key) setActive('overview');
+    if (active === key) {
+      const rest = Object.keys(threadsRef.current).filter(k => k !== key && (threadsRef.current[k]?.length || controllers.current[k]));
+      setActive(rest[rest.length - 1] ?? 'overview');
+    }
   };
 
   // Đổi lá số (hoặc đổi lịch VN/CN): nạp lại các mục đã lưu, mở Mệnh cách
@@ -329,10 +327,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     stickRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 48;
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    send(active, input);
-    setInput('');
+  const scrollToBottom = () => {
     stickRef.current = true;
     requestAnimationFrame(() => {
       const el = scrollRef.current;
@@ -340,52 +335,101 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     });
   };
 
+  // ── Lệnh "/" ──
+  const menuId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const commands = useMemo(() => buildCommands(chart.palaces), [chart.palaces]);
+  const [menuIndex, setMenuIndex] = useState(0);
+  const [menuDismissed, setMenuDismissed] = useState(false);
+  const menuOpen = isTypingCommand(input) && !menuDismissed;
+  const menuItems = useMemo(
+    () => (menuOpen ? filterCommands(commands, parseSlash(input)?.name ?? '') : []),
+    [menuOpen, commands, input],
+  );
+  const safeIndex = Math.min(menuIndex, Math.max(menuItems.length - 1, 0));
+
+  const runCommand = (cmd: SlashCommand, rest = '') => {
+    setInput('');
+    setMenuDismissed(false);
+    const a = cmd.action;
+    if (a.type === 'regenerate') { if (threadsRef.current[active]?.length || controllers.current[active]) regenerate(); return; }
+    if (a.type === 'close') { closeThread(active); return; }
+    open(a.key, a.label, !rest);
+    if (rest) { send(a.key, rest); scrollToBottom(); }
+  };
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    const slash = parseSlash(input);
+    if (slash) {
+      // Enter khi danh sách đang mở: chạy lệnh đang chọn; không thì tìm theo tên đã gõ
+      const cmd = menuOpen ? menuItems[safeIndex] : resolveCommand(commands, slash.name);
+      if (cmd) runCommand(cmd, menuOpen ? '' : slash.rest);
+      return;
+    }
+    send(active, input);
+    setInput('');
+    scrollToBottom();
+  };
+
+  const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return; // bộ gõ tiếng Việt đang ghép chữ
+    if (menuOpen && menuItems.length) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); setMenuIndex((safeIndex + 1) % menuItems.length); return; }
+      if (e.key === 'ArrowUp') { e.preventDefault(); setMenuIndex((safeIndex - 1 + menuItems.length) % menuItems.length); return; }
+      if (e.key === 'Tab') { e.preventDefault(); setInput(`/${menuItems[safeIndex].name} `); return; }
+    }
+    if (e.key === 'Escape') {
+      if (menuOpen) { e.preventDefault(); setMenuDismissed(true); return; }
+      if (activeStreaming) { e.preventDefault(); controllers.current[active]?.abort(); return; }
+    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+  };
+
+  const onInputChange = (value: string) => {
+    setInput(value);
+    setMenuIndex(0);
+    setMenuDismissed(false);
+  };
+
+  const openSlashMenu = () => {
+    setInput('/');
+    setMenuIndex(0);
+    setMenuDismissed(false);
+    inputRef.current?.focus();
+  };
+
   const activeStreaming = !!streaming[active];
   const lastMsg = messages[messages.length - 1];
   const waitingFirstWord = activeStreaming && (!lastMsg || lastMsg.role === 'user' || (!lastMsg.content && !lastMsg.steps?.length));
-  const extraThreads = Object.keys(labels).filter(k => !TOPIC_KEYS.includes(k) && (threads[k]?.length || streaming[k]));
+  const labelOf = (k: ThreadKey) => topicLabel(k) ?? labels[k] ?? 'mục này';
+  const openThreads = [
+    ...TOPIC_KEYS.filter(k => threads[k]?.length || streaming[k]),
+    ...Object.keys(labels).filter(k => !TOPIC_KEYS.includes(k) && (threads[k]?.length || streaming[k])),
+  ];
   const hasAnswer = (k: ThreadKey) => !!threads[k]?.some(m => m.role === 'assistant' && !m.error && m.content);
+  const isDone = (cmd: SlashCommand) => cmd.action.type === 'open' && hasAnswer(cmd.action.key);
+  const isEmpty = !messages.length && !activeStreaming;
 
   return (
     <div className="ls-insight flex flex-col rounded-xl overflow-hidden card-glass">
 
-      {/* ── Mục luận giải ── */}
-      <div className="flex-shrink-0 px-2 pt-2.5 pb-2" style={{ borderBottom: '1px solid var(--t-border)' }}>
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-1" role="tablist" aria-label="Mục luận giải">
-          {TOPICS.map(t => {
-            const isActive = active === t.key;
-            return (
-              <button
-                key={t.key}
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => open(t.key)}
-                className="ls-topic relative py-1.5 px-0.5 text-[10px] leading-tight font-medium rounded-lg transition-colors duration-150 disabled:opacity-40"
-                data-active={isActive || undefined}
-                title={hasAnswer(t.key) ? 'Đã luận, bấm để xem lại' : 'Bấm để luận giải'}
-              >
-                {t.label}
-                {(streaming[t.key] || hasAnswer(t.key)) && (
-                  <span className={clsx('ls-topic-dot', streaming[t.key] && 'ls-topic-dot-live')} aria-hidden />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {extraThreads.length > 0 && (
-          <div className="ls-thread-chips" aria-label="Các mục đã mở">
-            {extraThreads.map(k => (
+      {/* ── Các mục đã mở (chọn mục mới bằng lệnh /) ── */}
+      {openThreads.length > 0 && (
+        <div className="flex-shrink-0 px-2 py-2" style={{ borderBottom: '1px solid var(--t-border)' }}>
+          <div className="ls-thread-chips" role="tablist" aria-label="Các mục đã mở">
+            {openThreads.map(k => (
               <span key={k} className="ls-thread-chip" data-active={active === k || undefined}>
-                <button onClick={() => { stickRef.current = false; setActive(k); }}>
-                  {labels[k]}{streaming[k] ? '…' : ''}
+                <button role="tab" aria-selected={active === k} onClick={() => { stickRef.current = false; setActive(k); }}>
+                  {labelOf(k)}
+                  {streaming[k] && <span className="ls-topic-dot-inline ls-topic-dot-live" aria-label="đang luận" />}
                 </button>
-                <button className="ls-thread-chip-x" onClick={() => closeThread(k)} aria-label={`Đóng ${labels[k]}`}>×</button>
+                <button className="ls-thread-chip-x" onClick={() => closeThread(k)} aria-label={`Đóng ${labelOf(k)}`}>×</button>
               </span>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* ── Nội dung mục đang mở (cuộn riêng) ── */}
       <div ref={scrollRef} onScroll={onScroll} className="ls-insight-scroll flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
@@ -417,28 +461,64 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
           );
         })}
 
+        {isEmpty && (
+          <div className="text-[11px] leading-relaxed" style={{ color: 'var(--t-faint)' }}>
+            <p className="mb-2">Gõ <span className="ls-kbd">/</span> để chọn mục luận giải, ví dụ:</p>
+            <div className="space-y-1">
+              {['menh-cach', 'su-nghiep', 'tinh-cam', 'cung-quan-loc'].map(n => {
+                const cmd = commands.find(c => c.name === n);
+                return cmd && (
+                  <button key={n} onClick={() => runCommand(cmd)} className="ls-slash-example">
+                    <span className="ls-slash-name">/{n}</span> <span>{cmd.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {waitingFirstWord && (
           <p className="text-[11px] animate-pulse" style={{ color: 'var(--t-faint)' }}>Đang luận giải…</p>
         )}
       </div>
 
-      {/* ── Hỏi tiếp trong mục đang mở ── */}
-      <div className="flex-shrink-0 px-3 pb-3 pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
-        {hasAnswer(active) && !activeStreaming && (
-          <div className="flex justify-end mb-1.5">
-            <button onClick={regenerate} className="text-[10px] underline-offset-2 hover:underline" style={{ color: 'var(--t-faint)' }}>
-              Luận lại mục này
-            </button>
-          </div>
+      {/* ── Ô nhập: hỏi tiếp, hoặc gõ / để chọn mục ── */}
+      <div className="relative flex-shrink-0 px-3 pb-3 pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
+        {menuOpen && (
+          <SlashMenu
+            id={menuId}
+            items={menuItems}
+            activeIndex={safeIndex}
+            isDone={isDone}
+            onHover={setMenuIndex}
+            onPick={cmd => runCommand(cmd)}
+          />
         )}
         <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={openSlashMenu}
+            className="ls-slash-btn"
+            aria-label="Chọn mục bằng lệnh /"
+            title="Chọn mục (/)"
+          >
+            /
+          </button>
           <input
+            ref={inputRef}
             type="text"
             value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSend()}
-            placeholder={`Hỏi tiếp về ${TOPICS.find(t => t.key === active)?.label ?? labels[active] ?? 'mục này'}…`}
-            className="flex-1 rounded-lg px-3 py-2 text-[11px] focus:outline-none transition-colors"
+            onChange={e => onInputChange(e.target.value)}
+            onKeyDown={onInputKeyDown}
+            onBlur={() => setMenuDismissed(true)}
+            onFocus={() => setMenuDismissed(false)}
+            role="combobox"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            aria-autocomplete="list"
+            aria-activedescendant={menuOpen && menuItems.length ? `${menuId}-${safeIndex}` : undefined}
+            placeholder={isEmpty ? 'Gõ / để chọn mục luận giải…' : `Hỏi tiếp về ${labelOf(active)}… (gõ / để đổi mục)`}
+            className="flex-1 min-w-0 rounded-lg px-3 py-2 text-[11px] focus:outline-none transition-colors"
             style={{ background: 'var(--t-card)', border: '1px solid var(--t-border)', color: 'var(--t-text)' }}
           />
           {activeStreaming && !input.trim() ? (
@@ -446,7 +526,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
               onClick={() => controllers.current[active]?.abort()}
               className="px-3 py-2 rounded-lg text-[11px] font-medium"
               style={{ background: 'transparent', border: '1px solid var(--t-border)', color: 'var(--t-text2)' }}
-              title="Dừng câu trả lời đang viết"
+              title="Dừng câu trả lời đang viết (Esc)"
             >
               Dừng
             </button>
@@ -457,7 +537,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
               className="px-3 py-2 rounded-lg text-[11px] font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               style={{ background: 'rgba(212,168,67,0.15)', border: '1px solid rgba(212,168,67,0.25)', color: 'var(--t-gold)' }}
             >
-              Hỏi tiếp
+              {parseSlash(input) ? 'Mở' : 'Gửi'}
             </button>
           )}
         </div>
