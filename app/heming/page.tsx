@@ -52,6 +52,7 @@ interface HemingTurn {
   question: string | null; // null: lượt phân tích tổng quan đầu tiên
   answer: string;
   error?: boolean;
+  errorMessage?: string; // lời nhắn từ máy chủ (vd. hết lượt hỏi)
 }
 
 export default function HemingPage() {
@@ -134,7 +135,11 @@ export default function HemingPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chartA: cA, chartB: cB, question: current.question ?? undefined, history }),
       });
-      if (!res.ok || !res.body) throw new Error();
+      if (!res.ok) {
+        const err = await res.json().catch(() => null) as { error?: string } | null;
+        throw new Error(typeof err?.error === 'string' ? `server:${err.error}` : '');
+      }
+      if (!res.body) throw new Error();
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -164,8 +169,9 @@ export default function HemingPage() {
         if (changed) commit({ ...current, answer: text });
       }
       if (!text || interrupted) throw new Error();
-    } catch {
-      commit({ ...current, error: true });
+    } catch (e) {
+      const errorMessage = e instanceof Error && e.message.startsWith('server:') ? e.message.slice(7) : undefined;
+      commit({ ...current, error: true, errorMessage });
     } finally {
       setAnalyzing(false);
     }
@@ -328,7 +334,7 @@ export default function HemingPage() {
                 {turn.answer && <AiContent text={turn.answer} streaming={isLast && analyzing} />}
                 {turn.error && (
                   <div style={{ padding: '12px 16px', borderRadius: '10px', border: '1px solid var(--bdr)', background: 'var(--bg-card)', fontSize: '13px', color: 'var(--tx-2)', marginTop: '12px' }}>
-                    {turn.answer ? 'Câu trả lời bị gián đoạn, vui lòng hỏi lại.' : 'Tạm thời không phân tích được, vui lòng kiểm tra kết nối máy chủ và thử lại.'}
+                    {turn.errorMessage ?? (turn.answer ? 'Câu trả lời bị gián đoạn, vui lòng hỏi lại.' : 'Tạm thời không phân tích được, vui lòng kiểm tra kết nối máy chủ và thử lại.')}
                   </div>
                 )}
               </div>

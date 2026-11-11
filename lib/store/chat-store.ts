@@ -17,6 +17,8 @@ export interface TurnStart {
   question: string;
   promptVersion: PromptVersionId;
   model: string;
+  /** Tài khoản tự đăng ký đã hỏi; null/undefined = tài khoản env. */
+  userId?: string | null;
 }
 
 export interface TurnResult {

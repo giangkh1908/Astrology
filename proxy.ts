@@ -1,20 +1,21 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { ADMIN_COOKIE, readAdminConfig, readAuthConfig, safeNextPath, SESSION_COOKIE, verifySessionToken } from '@/lib/auth/session';
+import { ADMIN_COOKIE, readAdminConfig, safeNextPath, SESSION_COOKIE, verifySessionToken, verifyUserSession } from '@/lib/auth/session';
 
 const isAdminPath = (p: string) => p === '/admin' || p.startsWith('/admin/') || p === '/api/admin' || p.startsWith('/api/admin/');
 
 /**
- * Chặn toàn bộ trang và API khi chưa đăng nhập. Mở: /login, /admin/login, /api/auth/*.
+ * Chặn toàn bộ trang và API khi chưa đăng nhập. Mở: /login, /register, /admin/login, /api/auth/*.
+ * Proxy chỉ kiểm chữ ký phiên; trạng thái tài khoản (duyệt/khóa) và lượt hỏi kiểm ở route AI.
  * Khu /admin và /api/admin chỉ nhận tài khoản admin; phần còn lại nhận tài khoản thường.
  */
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  if (pathname === '/login' || pathname === '/admin/login' || pathname.startsWith('/api/auth/')) return NextResponse.next();
+  if (pathname === '/login' || pathname === '/register' || pathname === '/admin/login' || pathname.startsWith('/api/auth/')) return NextResponse.next();
 
   const admin = isAdminPath(pathname);
   const ok = admin
     ? await verifySessionToken(request.cookies.get(ADMIN_COOKIE)?.value, readAdminConfig())
-    : await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, readAuthConfig());
+    : await verifyUserSession(request.cookies.get(SESSION_COOKIE)?.value);
   if (ok) return NextResponse.next();
 
   if (pathname.startsWith('/api/')) {

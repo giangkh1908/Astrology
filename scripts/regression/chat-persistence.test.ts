@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { ACTIVE_PROMPT_KEY, type ChatStore } from '../../lib/store/chat-store';
 import { createMemoryChatStore } from '../../lib/store/memory-chat-store';
 import { setChatStoreForTest } from '../../lib/store';
+import { envUserCookie } from './helpers/session';
 
 // Route AI: lấy version prompt đang chạy, ghi tin user cuối + câu trả lời + log vào store; store lỗi không làm hỏng chat.
 process.env.OPENROUTER_API_KEY = 'test-key';
@@ -39,8 +40,8 @@ async function main() {
   const { POST: heming } = await import('../../app/api/heming/route');
   const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', name: 'Tên giả' } as never);
   const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
-  const post = (fn: (r: Request) => Promise<Response>, path: string, payload: unknown) => fn(new Request(`http://localhost${path}`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+  const post = async (fn: (r: Request) => Promise<Response>, path: string, payload: unknown) => fn(new Request(`http://localhost${path}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', cookie: await envUserCookie() }, body: JSON.stringify(payload),
   }));
 
   const store = createMemoryChatStore();

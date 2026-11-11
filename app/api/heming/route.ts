@@ -3,6 +3,7 @@ import { resolvePromptVersion } from '@/lib/store/chat-store';
 import { getChatStore } from '@/lib/store';
 import { beginTurn, chartRef } from '@/lib/store/persist-turn';
 import { getPromptSet } from '@/lib/prompts';
+import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
 export const runtime = 'nodejs';
@@ -45,7 +46,10 @@ export async function POST(request: Request) {
     ]);
 
   const systemPrompt = prompts.buildCompatibilitySystemPrompt(body.chartA, body.chartB);
+  const charge = await chargeChat(request);
+  if (!charge.ok) return charge.response;
   const { onFinish } = await beginTurn(store, {
+    userId: charge.userId,
     kind: 'heming',
     chart: chartRef(body.chartA.birthInfo),
     partnerChart: chartRef(body.chartB.birthInfo),
@@ -54,9 +58,10 @@ export async function POST(request: Request) {
     promptVersion: version,
     model: currentModel(),
   });
-  return streamChatResponse([
+  const response = await streamChatResponse([
     { role: 'system', content: systemPrompt },
     ...history,
     { role: 'user', content: question },
-  ], request.signal, undefined, { onFinish });
+  ], request.signal, undefined, { onFinish: refundingOnFinish(onFinish, charge.refund) });
+  return withQuotaHeader(response, charge.quota);
 }

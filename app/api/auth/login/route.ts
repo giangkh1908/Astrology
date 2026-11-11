@@ -1,8 +1,9 @@
-import { handleLogin } from '@/lib/auth/handlers';
+import { handleUserLogin } from '@/lib/auth/user-handlers';
 import { readAuthConfig, SESSION_COOKIE } from '@/lib/auth/session';
 
 export const runtime = 'nodejs';
 
+/** Đăng nhập trang chính: tài khoản env hoặc tài khoản tự đăng ký đã được duyệt. */
 export async function POST(request: Request) {
-  return handleLogin(request, readAuthConfig(), SESSION_COOKIE);
+  return handleUserLogin(request, readAuthConfig(), SESSION_COOKIE);
 }

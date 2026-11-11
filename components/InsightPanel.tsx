@@ -142,6 +142,26 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   const scrollRef = useRef<HTMLDivElement>(null);
   const stickRef = useRef(false); // bám đáy khi đang đọc câu hỏi tiếp
   const loadedKey = useRef<string | null>(null);
+  // Hạn mức câu hỏi AI: null = chưa biết hoặc không giới hạn
+  const [quota, setQuota] = useState<{ used: number; limit: number } | null>(null);
+
+  const readQuota = (value: string | null) => {
+    const m = value?.match(/^(\d+)\/(\d+)$/);
+    if (m) setQuota({ used: Number(m[1]), limit: Number(m[2]) });
+    else if (value) setQuota(null); // "<used>/unlimited"
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    apiRequest('/api/account')
+      .then(r => (r.ok ? r.json() : null))
+      .then((a: { used?: number; limit?: number | null } | null) => {
+        if (cancelled || !a) return;
+        setQuota(typeof a.used === 'number' && typeof a.limit === 'number' ? { used: a.used, limit: a.limit } : null);
+      })
+      .catch(() => { /* không biết hạn mức: ẩn dòng này */ });
+    return () => { cancelled = true; };
+  }, []);
 
   const updateThread = useCallback((key: ThreadKey, fn: (m: Message[]) => Message[]) => {
     setThreads(prev => {
@@ -163,6 +183,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
         body: JSON.stringify({ chart, intent: intentFor(key), threadKey: key, messages: apiMessages, timeContext: selectedTime }),
         signal: ctrl.signal,
       });
+      readQuota(res.headers.get('X-Chat-Quota'));
       if (!res.ok) {
         const err = await res.json().catch(() => null) as { error?: string } | null;
         throw new Error(err?.error ? `server:${err.error}` : 'Yêu cầu thất bại');
@@ -541,6 +562,13 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
             </button>
           )}
         </div>
+        {quota && (
+          <p className="mt-1.5 text-right text-[10px]" style={{ color: 'var(--t-faint)' }} aria-live="polite">
+            {quota.used >= quota.limit
+              ? 'Đã hết lượt hỏi — liên hệ admin để mở thêm'
+              : `Còn ${quota.limit - quota.used}/${quota.limit} câu`}
+          </p>
+        )}
       </div>
     </div>
   );

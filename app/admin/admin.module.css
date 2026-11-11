@@ -49,3 +49,6 @@
   .hideSm { display: none; }
   .table th, .table td { padding: 8px; }
 }
+
+.actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.numInput { composes: input; width: 80px; }

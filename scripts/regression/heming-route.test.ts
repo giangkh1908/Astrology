@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { envUserCookie } from './helpers/session';
 
 // Trang Hợp bàn gọi POST /api/heming và đọc SSE `data: {"delta":{"text":...}}`.
 // Route từng bị thiếu → trang luôn báo "Tạm thời không phân tích được".
@@ -23,9 +24,9 @@ async function main() {
   const { generateChart } = await import('../../lib/ziwei/algorithm');
   const chartA = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male' } as never);
   const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
-  const call = (payload: unknown) => POST(new Request('http://localhost/api/heming', {
+  const call = async (payload: unknown) => POST(new Request('http://localhost/api/heming', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', cookie: await envUserCookie() },
     body: JSON.stringify(payload),
   }));
 

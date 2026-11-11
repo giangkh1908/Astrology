@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { envUserCookie } from './helpers/session';
 
 // Route chỉ chuyển tiếp delta.content; nếu model bật reasoning, chữ đầu tiên
 // chỉ xuất hiện sau khi model nghĩ xong → khung chat đứng ở "Đang luận giải…".
@@ -25,7 +26,7 @@ async function main() {
 
   const res = await POST(new Request('http://localhost/api/interpret', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', cookie: await envUserCookie() },
     body: JSON.stringify({ chart, messages: [{ role: 'user', content: 'Hỏi thử' }] }),
   }));
 

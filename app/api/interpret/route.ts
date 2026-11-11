@@ -4,6 +4,7 @@ import { resolvePromptVersion } from '@/lib/store/chat-store';
 import { getChatStore } from '@/lib/store';
 import { beginTurn, chartRef, threadKeyFor } from '@/lib/store/persist-turn';
 import { buildChartTools } from '@/lib/ai/tools/ziwei-tools';
+import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
 export const runtime = 'nodejs';
@@ -54,7 +55,11 @@ export async function POST(request: Request) {
   // Dựng prompt/tool trước khi ghi lượt: lỗi ở đây không để lại lượt 'pending'.
   const systemPrompt = prompts.buildInterpretationSystemPrompt(chart, intent, time);
   const tools = buildChartTools(chart.birthInfo);
+  // Trừ lượt sau khi dựng prompt (lỗi dựng prompt không mất lượt); AI lỗi trước khi có chữ → hoàn lượt.
+  const charge = await chargeChat(request);
+  if (!charge.ok) return charge.response;
   const { onFinish } = await beginTurn(store, {
+    userId: charge.userId,
     kind: 'interpret',
     chart: chartRef(chart.birthInfo),
     threadKey: threadKeyFor(body.threadKey, intent),
@@ -62,8 +67,9 @@ export async function POST(request: Request) {
     promptVersion: version,
     model: currentModel(),
   });
-  return streamChatResponse([
+  const response = await streamChatResponse([
     { role: 'system', content: systemPrompt },
     ...messages,
-  ], request.signal, tools, { onFinish });
+  ], request.signal, tools, { onFinish: refundingOnFinish(onFinish, charge.refund) });
+  return withQuotaHeader(response, charge.quota);
 }

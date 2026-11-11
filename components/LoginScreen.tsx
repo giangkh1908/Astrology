@@ -13,9 +13,11 @@ interface LoginFormProps {
   /** Chỉ cho quay lại đường dẫn bắt đầu bằng prefix này; còn lại về fallback. */
   nextPrefix?: string;
   fallback?: string;
+  /** Có giá trị thì hiện liên kết "Đăng ký" dưới nút đăng nhập. */
+  registerHref?: string;
 }
 
-function LoginForm({ endpoint, title, subtitle, nextPrefix = '/', fallback = '/' }: LoginFormProps) {
+function LoginForm({ endpoint, title, subtitle, nextPrefix = '/', fallback = '/', registerHref }: LoginFormProps) {
   const params = useSearchParams();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -69,6 +71,12 @@ function LoginForm({ endpoint, title, subtitle, nextPrefix = '/', fallback = '/'
       <button type="submit" disabled={pending} style={{ width: '100%', padding: '11px', fontSize: '14px', fontWeight: 600, borderRadius: '8px', border: 'none', background: 'var(--ac)', color: '#fff', cursor: pending ? 'wait' : 'pointer', opacity: pending ? 0.7 : 1 }}>
         {pending ? 'Đang kiểm tra…' : 'Đăng nhập'}
       </button>
+
+      {registerHref && (
+        <p style={{ fontSize: '13px', color: 'var(--tx-3)', margin: '16px 0 0', textAlign: 'center' }}>
+          Chưa có tài khoản? <a href={registerHref} style={{ color: 'var(--ac)', textDecoration: 'underline' }}>Đăng ký</a>
+        </p>
+      )}
     </form>
   );
 }

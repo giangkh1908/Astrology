@@ -59,8 +59,8 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
           on conflict on constraint conversations_identity do update set updated_at = now()
           returning id
         ), r as (
-          insert into ai_requests (conversation_id, route, prompt_version, model, question, status)
-          select conv.id, ${t.kind}, ${t.promptVersion}, ${t.model}, ${t.question}, 'pending' from conv
+          insert into ai_requests (conversation_id, route, prompt_version, model, question, status, user_id)
+          select conv.id, ${t.kind}, ${t.promptVersion}, ${t.model}, ${t.question}, 'pending', ${t.userId ?? null}::uuid from conv
           returning id, conversation_id
         ), m as (
           insert into messages (conversation_id, role, content)

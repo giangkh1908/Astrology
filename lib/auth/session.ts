@@ -6,6 +6,7 @@
  * Scope nằm trong phần được ký nên cookie của tài khoản này không dùng được cho tài khoản kia.
  * AUTH_SECRET: chuỗi ngẫu nhiên (>= 32 ký tự) để ký cookie phiên bằng HMAC-SHA256.
  * Thiếu biến nào thì từ chối mọi đăng nhập (fail closed).
+ * Tài khoản tự đăng ký (bảng users) dùng chung cookie tv_session, chủ thể là `member:<id>`.
  * Chỉ dùng Web Crypto nên chạy được cả trong proxy lẫn route handler.
  */
 export const SESSION_COOKIE = 'tv_session';
@@ -56,7 +57,17 @@ function constantTimeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-const encodeUser = (config: AuthConfig) => toBase64Url(encoder.encode(`${config.scope}:${config.username}`));
+const encodeSubject = (subject: string) => toBase64Url(encoder.encode(subject));
+const encodeUser = (config: AuthConfig) => encodeSubject(`${config.scope}:${config.username}`);
+
+function fromBase64Url(s: string): string | null {
+  try {
+    const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+    return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+  } catch {
+    return null;
+  }
+}
 
 async function sign(payload: string, secret: string): Promise<string> {
   const key = await crypto.subtle.importKey('raw', encoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
@@ -89,6 +100,43 @@ export async function verifySessionToken(token: string | undefined, config: Auth
   // Đổi AUTH_USERNAME thì phiên cũ hết hiệu lực; đổi AUTH_SECRET thì mọi phiên hết hiệu lực.
   if (!constantTimeEqual(user, encodeUser(config))) return false;
   return constantTimeEqual(mac, await sign(`${user}.${expRaw}`, config.secret));
+}
+
+/** Khóa ký phiên; thiếu hoặc quá ngắn → null (không ai đăng nhập được). */
+export function readSessionSecret(env: Record<string, string | undefined> = process.env): string | null {
+  const secret = env.AUTH_SECRET;
+  return secret && secret.length >= 32 ? secret : null;
+}
+
+const MEMBER_PREFIX = 'member:';
+const MEMBER_ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Phiên của tài khoản tự đăng ký: cùng định dạng token, chủ thể `member:<uuid>`. */
+export async function createMemberToken(userId: string, secret: string, nowMs = Date.now()): Promise<string> {
+  const exp = Math.floor(nowMs / 1000) + SESSION_TTL_SECONDS;
+  const payload = `${encodeSubject(`${MEMBER_PREFIX}${userId}`)}.${exp}`;
+  return `${payload}.${await sign(payload, secret)}`;
+}
+
+/** Trả về id tài khoản nếu chữ ký và hạn hợp lệ; không thì null. Không kiểm DB (trạng thái tài khoản kiểm ở route). */
+export async function verifyMemberToken(token: string | undefined, secret: string | null, nowMs = Date.now()): Promise<string | null> {
+  if (!token || !secret) return null;
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+  const [subjectRaw, expRaw, mac] = parts;
+  const exp = Number(expRaw);
+  if (!Number.isInteger(exp) || exp * 1000 <= nowMs) return null;
+  if (!constantTimeEqual(mac, await sign(`${subjectRaw}.${expRaw}`, secret))) return null;
+  const subject = fromBase64Url(subjectRaw);
+  if (!subject?.startsWith(MEMBER_PREFIX)) return null;
+  const id = subject.slice(MEMBER_PREFIX.length);
+  return MEMBER_ID_RE.test(id) ? id.toLowerCase() : null;
+}
+
+/** Phiên trang chính hợp lệ: tài khoản env hoặc tài khoản tự đăng ký. */
+export async function verifyUserSession(token: string | undefined, env: Record<string, string | undefined> = process.env): Promise<boolean> {
+  if (await verifySessionToken(token, readAuthConfig(env))) return true;
+  return (await verifyMemberToken(token, readSessionSecret(env))) !== null;
 }
 
 export { safeNextPath } from './next-path';
