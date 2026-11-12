@@ -33,6 +33,9 @@ export interface HistoryQuery {
   userId: string | null;
 }
 
+/** Một câu người dùng tự gõ (không phải câu hỏi tự động), kèm thời điểm gõ. */
+export interface UserQuestion { threadKey: string; content: string; createdAt: string }
+
 export interface HistoryMessage { role: 'user' | 'assistant'; content: string; hidden?: boolean }
 export interface HistoryThread { threadKey: string; updatedAt: string; messages: HistoryMessage[] }
 
@@ -151,6 +154,8 @@ export interface ChatStore {
   loadHistory(q: HistoryQuery): Promise<HistoryThread[]>;
   /** Đóng một mục: đặt mốc reset, lần sau không nạp lại (tin nhắn vẫn giữ cho admin). */
   closeThread(q: HistoryQuery & { threadKey: string }): Promise<void>;
+  /** Câu người dùng tự gõ (bỏ câu ẩn, chỉ tin sau mốc reset), mới nhất trước, tối đa limit câu. */
+  loadUserQuestions(q: HistoryQuery, limit: number): Promise<UserQuestion[]>;
 }
 
 /** Version prompt đang chạy: lấy từ store; không có, lạ hoặc store lỗi → mặc định. */

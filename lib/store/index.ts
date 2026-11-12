@@ -14,6 +14,7 @@ export const disabledChatStore: ChatStore = {
   async versionUsage() { return []; },
   async loadHistory() { return []; },
   async closeThread() { /* không lưu */ },
+  async loadUserQuestions() { return []; },
 };
 
 let instance: ChatStore | null = null;

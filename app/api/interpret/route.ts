@@ -5,6 +5,7 @@ import { getChatStore } from '@/lib/store';
 import { beginTurn, chartRef, threadKeyFor } from '@/lib/store/persist-turn';
 import { buildChartTools } from '@/lib/ai/tools/ziwei-tools';
 import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
+import { priorNotesOf } from '@/lib/store/prior-notes';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
 export const runtime = 'nodejs';
@@ -41,11 +42,16 @@ export async function POST(request: Request) {
     .map(message => ({ role: message.role, content: message.content.slice(0, 6000) }));
 
   const store = getChatStore();
-  const version = await resolvePromptVersion(store);
-  const prompts = getPromptSet(version);
-
+  const chart = body.chart as unknown as ZiweiChart;
   const intent = isObject(body.intent) ? body.intent as unknown as InterpretationIntent : { type: 'topic' as const, key: 'overview' };
   const time = isObject(body.timeContext) ? body.timeContext as unknown as InterpretationTimeContext : {};
+  const threadKey = threadKeyFor(body.threadKey, intent);
+  // Đọc song song version prompt và lời người dùng đã kể ở các mục khác của lá số này.
+  const [version, priorNotes] = await Promise.all([
+    resolvePromptVersion(store),
+    priorNotesOf(request, store, chart, threadKey),
+  ]);
+  const prompts = getPromptSet(version);
   // Mở mục (chưa có câu trả lời nào): lượt mới, bỏ lịch sử cũ khi nạp lại. Không có câu user: câu hỏi tự động.
   const fresh = !messages.some(message => message.role === 'assistant');
   const hiddenQuestion = !messages.some(message => message.role === 'user');
@@ -53,10 +59,9 @@ export async function POST(request: Request) {
     messages.push({ role: 'user', content: prompts.initialInterpretationQuestion(intent) });
   }
 
-  const chart = body.chart as unknown as ZiweiChart;
   const lastQuestion = [...messages].reverse().find(m => m.role === 'user')?.content ?? '';
   // Dựng prompt/tool trước khi ghi lượt: lỗi ở đây không để lại lượt 'pending'.
-  const systemPrompt = prompts.buildInterpretationSystemPrompt(chart, intent, time);
+  const systemPrompt = prompts.buildInterpretationSystemPrompt(chart, intent, time, priorNotes);
   const tools = buildChartTools(chart.birthInfo);
   // Trừ lượt sau khi dựng prompt (lỗi dựng prompt không mất lượt); AI lỗi trước khi có chữ → hoàn lượt.
   const charge = await chargeChat(request);
@@ -65,7 +70,7 @@ export async function POST(request: Request) {
     userId: charge.userId,
     kind: 'interpret',
     chart: chartRef(chart.birthInfo),
-    threadKey: threadKeyFor(body.threadKey, intent),
+    threadKey,
     fresh,
     hiddenQuestion,
     question: lastQuestion,

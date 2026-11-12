@@ -57,10 +57,15 @@ function intentOfThread(key: string): InterpretationIntent {
  */
 export function markAutoQuestions(kind: HistoryQuery['kind'], threads: HistoryThread[]): HistoryThread[] {
   return threads.map(t => {
-    const auto = new Set(PROMPT_VERSIONS.map(v => {
-      const p = getPromptSet(v.id);
-      return kind === 'heming' ? p.defaultCompatibilityQuestion : p.initialInterpretationQuestion(intentOfThread(t.threadKey));
-    }));
+    const auto = autoQuestionsOf(kind, t.threadKey);
     return { ...t, messages: t.messages.map(m => (m.role === 'user' && !m.hidden && auto.has(m.content) ? { ...m, hidden: true } : m)) };
   });
+}
+
+/** Các câu hỏi tự động (mọi version prompt) của một mục. */
+export function autoQuestionsOf(kind: HistoryQuery['kind'], threadKey: string): Set<string> {
+  return new Set(PROMPT_VERSIONS.map(v => {
+    const p = getPromptSet(v.id);
+    return kind === 'heming' ? p.defaultCompatibilityQuestion : p.initialInterpretationQuestion(intentOfThread(threadKey));
+  }));
 }

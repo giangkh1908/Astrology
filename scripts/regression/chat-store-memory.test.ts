@@ -91,6 +91,17 @@ export async function runChatStoreContract(store: ChatStore, tag: string) {
   assert.equal((await store.loadHistory({ ...q, kind: 'heming', partnerKey: keyB }))[0].messages[1].content, 'Hợp');
   assert.deepEqual(await store.loadHistory({ ...q, kind: 'heming', partnerKey: keyA }), [], 'cặp khác');
 
+  // Câu người dùng tự gõ: bỏ câu ẩn, tin trước mốc reset, mục đã đóng, câu trả lời; mới nhất trước, có ngày của từng tin.
+  assert.deepEqual(await store.loadUserQuestions(q, 10), [], 'chỉ còn câu tự động và mục đã đóng');
+  await end((await store.recordTurnStart(ht({ question: 'Tôi ở Huế' }))).requestId, 'Đáp');
+  await end((await store.recordTurnStart(ht({ threadKey: 'love', question: 'Đã có vợ', fresh: true }))).requestId, 'Đáp');
+  const qs = await store.loadUserQuestions(q, 10);
+  assert.deepEqual(qs.map(x => [x.threadKey, x.content]), [['love', 'Đã có vợ'], ['overview', 'Tôi ở Huế']]);
+  assert.ok(!Number.isNaN(Date.parse(qs[0].createdAt)) && qs[0].createdAt >= qs[1].createdAt);
+  assert.deepEqual((await store.loadUserQuestions(q, 1)).map(x => x.content), ['Đã có vợ'], 'giới hạn giữ câu mới nhất');
+  assert.deepEqual(await store.loadUserQuestions({ ...q, userId: '00000000-0000-4000-8000-000000000009' }, 10), [], 'tài khoản khác');
+  assert.deepEqual((await store.loadUserQuestions({ ...q, kind: 'heming', partnerKey: keyB }, 10)).map(x => x.content), ['Hợp?']);
+
   // Version đang chạy
   await store.setSetting(ACTIVE_PROMPT_KEY, 'v1');
   assert.equal(await resolvePromptVersion(store, {}), 'v1');

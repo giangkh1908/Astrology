@@ -6,7 +6,7 @@ import type { PromptSet } from './shared';
 import { promptSetV1 } from './v1';
 import { promptSetV2 } from './v2';
 
-export type { InterpretationIntent, InterpretationTimeContext, PromptSet } from './shared';
+export type { CompatibilityNotes, InterpretationIntent, InterpretationTimeContext, PriorNote, PromptSet } from './shared';
 export { chartFacts } from './shared';
 
 export type PromptVersionId = 'v1' | 'v2';

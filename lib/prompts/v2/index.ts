@@ -34,8 +34,8 @@ const questions: InitialQuestions = {
 const COMPATIBILITY_PRESENTATION = 'Cách trình bày: KHÔNG nhắc tên sao, tên hóa gắn với sao hay độ sáng Miếu/Hãm; chuyển thành ý nghĩa đời thường. Căn cứ chỉ tóm ngắn 1–2 câu theo tên cung (cung nào của ai hợp/xung với cung nào của người kia). Phần kết luận phải chi tiết: hai người hợp ở đâu, dễ va chạm chuyện gì, giai đoạn nào cần lưu ý, nên làm gì. Chỉ khi người dùng hỏi rõ "sao nào"/căn cứ chuyên môn mới nêu tên sao.';
 
 export const promptSetV2: PromptSet = {
-  buildInterpretationSystemPrompt: (chart, intent, time) => buildInterpretationPrompt(chart, intent, time, style),
+  buildInterpretationSystemPrompt: (chart, intent, time, priorNotes) => buildInterpretationPrompt(chart, intent, time, style, priorNotes),
   initialInterpretationQuestion: intent => pickInitialQuestion(intent, questions),
-  buildCompatibilitySystemPrompt: (a, b) => buildCompatibilityPrompt(a, b, COMPATIBILITY_PRESENTATION),
+  buildCompatibilitySystemPrompt: (a, b, notes) => buildCompatibilityPrompt(a, b, COMPATIBILITY_PRESENTATION, notes),
   defaultCompatibilityQuestion: DEFAULT_COMPATIBILITY_QUESTION,
 };

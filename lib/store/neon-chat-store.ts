@@ -175,6 +175,23 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
       })));
     },
 
+    async loadUserQuestions(q, limit) {
+      // Chỉ đọc câu ngắn của người dùng (không kéo câu trả lời dài của AI), mới nhất trước.
+      const rows = await sql`
+        select v.thread_key, m.content, m.created_at
+        from conversations v
+        join charts c on c.id = v.chart_id
+        left join charts p on p.id = v.partner_chart_id
+        join messages m on m.conversation_id = v.id and (v.reset_at is null or m.created_at >= v.reset_at)
+        where c.chart_key = ${q.chartKey} and v.kind = ${q.kind}
+          and v.user_id is not distinct from ${ownerId(q.userId)}::uuid
+          and (case when ${q.partnerKey ?? null}::text is null then v.partner_chart_id is null else p.chart_key = ${q.partnerKey ?? null}::text end)
+          and m.role = 'user' and not m.hidden
+        order by m.id desc
+        limit ${Math.max(0, Math.floor(limit))}`;
+      return rows.map(r => ({ threadKey: String(r.thread_key), content: String(r.content), createdAt: iso(r.created_at) }));
+    },
+
     async closeThread(q) {
       await sql`
         update conversations v set reset_at = now()

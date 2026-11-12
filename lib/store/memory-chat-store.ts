@@ -95,6 +95,15 @@ export function createMemoryChatStore(): ChatStore {
     async closeThread(q) {
       for (const v of ownedConvs(q)) if (v.threadKey === q.threadKey) v.resetAt = now();
     },
+    async loadUserQuestions(q, limit) {
+      return ownedConvs(q)
+        .flatMap(v => messages
+          .filter(m => m.conversationId === v.id && m.role === 'user' && !m.hidden && (!v.resetAt || m.createdAt >= v.resetAt))
+          .map(m => ({ threadKey: v.threadKey, content: m.content, createdAt: m.createdAt, order: Number(m.id) })))
+        .sort((a, b) => b.order - a.order)
+        .slice(0, Math.max(0, limit))
+        .map(({ order: _o, ...x }) => x);
+    },
     async versionUsage() {
       const map = new Map<string, { count: number; lastUsedAt: string | null }>();
       for (const r of requests) {

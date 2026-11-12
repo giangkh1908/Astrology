@@ -2,6 +2,7 @@ import { currentModel, jsonError, streamChatResponse } from '@/lib/ai/chat-strea
 import { resolvePromptVersion } from '@/lib/store/chat-store';
 import { getChatStore } from '@/lib/store';
 import { beginTurn, chartRef } from '@/lib/store/persist-turn';
+import { priorNotesOf } from '@/lib/store/prior-notes';
 import { getPromptSet } from '@/lib/prompts';
 import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
 import type { ZiweiChart } from '@/lib/ziwei/types';
@@ -31,7 +32,12 @@ export async function POST(request: Request) {
     return jsonError('Câu hỏi phải là chuỗi ký tự.', 400);
   }
   const store = getChatStore();
-  const version = await resolvePromptVersion(store);
+  // Đọc song song version prompt và lời người dùng đã kể ở /chart của từng người.
+  const [version, notesA, notesB] = await Promise.all([
+    resolvePromptVersion(store),
+    priorNotesOf(request, store, body.chartA),
+    priorNotesOf(request, store, body.chartB),
+  ]);
   const prompts = getPromptSet(version);
   const question = (body.question as string | undefined)?.trim().slice(0, 1000) || prompts.defaultCompatibilityQuestion;
 
@@ -45,7 +51,7 @@ export async function POST(request: Request) {
       { role: 'assistant' as const, content: turn.answer.slice(0, 12000) },
     ]);
 
-  const systemPrompt = prompts.buildCompatibilitySystemPrompt(body.chartA, body.chartB);
+  const systemPrompt = prompts.buildCompatibilitySystemPrompt(body.chartA, body.chartB, { a: notesA, b: notesB });
   const charge = await chargeChat(request);
   if (!charge.ok) return charge.response;
   const { onFinish } = await beginTurn(store, {

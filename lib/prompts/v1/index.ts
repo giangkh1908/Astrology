@@ -25,8 +25,8 @@ const questions: InitialQuestions = {
 };
 
 export const promptSetV1: PromptSet = {
-  buildInterpretationSystemPrompt: (chart, intent, time) => buildInterpretationPrompt(chart, intent, time, style),
+  buildInterpretationSystemPrompt: (chart, intent, time, priorNotes) => buildInterpretationPrompt(chart, intent, time, style, priorNotes),
   initialInterpretationQuestion: intent => pickInitialQuestion(intent, questions),
-  buildCompatibilitySystemPrompt: (a, b) => buildCompatibilityPrompt(a, b),
+  buildCompatibilitySystemPrompt: (a, b, notes) => buildCompatibilityPrompt(a, b, undefined, notes),
   defaultCompatibilityQuestion: DEFAULT_COMPATIBILITY_QUESTION,
 };
