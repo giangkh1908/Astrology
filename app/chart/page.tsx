@@ -111,19 +111,14 @@ export default function ChartPage() {
         </div>
       )}
 
+      {!same && (
       <section
         style={{
           marginBottom: 16, padding: '12px 16px', borderRadius: 10, fontSize: 14, lineHeight: 1.6,
-          border: `1px solid ${same ? 'rgba(46,139,87,0.4)' : 'rgba(205,92,92,0.45)'}`,
-          background: same ? 'rgba(46,139,87,0.07)' : 'rgba(205,92,92,0.07)',
+          border: '1px solid rgba(205,92,92,0.45)',
+          background: 'rgba(205,92,92,0.07)',
         }}
       >
-        {same ? (
-          <div>
-            <strong>Hai cách tính cho cùng một lá số.</strong> Ngày sinh này âm lịch Việt Nam và Trung Quốc trùng nhau,
-            nên an sao giống hệt.
-          </div>
-        ) : (
           <>
             <div style={{ marginBottom: 8 }}>
               <strong>Lá số Việt Nam và Trung Quốc khác nhau ({charts.diff.length} điểm).</strong>{' '}
@@ -150,8 +145,8 @@ export default function ChartPage() {
               </table>
             </div>
           </>
-        )}
       </section>
+      )}
 
       {/* TimeNav nằm trong ChartBoard (điều khiển lớp phủ Tứ Hóa) — không render thêm ở đây */}
       <div
