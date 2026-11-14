@@ -51,7 +51,7 @@ export function createMemoryChatStore(): ChatStore {
     async recordTurnEnd(requestId, r) {
       const req = requests.find(x => x.id === requestId);
       if (!req) return;
-      messages.push({ id: String(messages.length + 1), conversationId: req.conversationId, requestId, hidden: false, role: 'assistant', content: r.text, promptVersion: req.promptVersion, status: r.status, createdAt: now() });
+      messages.push({ id: String(messages.length + 1), conversationId: req.conversationId, requestId, hidden: false, role: 'assistant', content: r.text, promptVersion: req.promptVersion, status: r.asked ? 'asked' : r.status, createdAt: now() });
       Object.assign(req, {
         status: r.status as TurnStatus, error: r.error ?? null, firstTokenMs: r.firstTokenMs ?? null, durationMs: r.durationMs,
         toolCalls: r.toolCalls, promptTokens: r.usage?.promptTokens ?? null, completionTokens: r.usage?.completionTokens ?? null, costUsd: r.usage?.costUsd ?? null,
@@ -103,6 +103,13 @@ export function createMemoryChatStore(): ChatStore {
         .sort((a, b) => b.order - a.order)
         .slice(0, Math.max(0, limit))
         .map(({ order: _o, ...x }) => x);
+    },
+    async lastAssistantStatus(q) {
+      const last = ownedConvs(q)
+        .filter(v => v.threadKey === q.threadKey)
+        .flatMap(v => messages.filter(m => m.conversationId === v.id && m.role === 'assistant' && (!v.resetAt || m.createdAt >= v.resetAt)))
+        .sort((a, b) => Number(b.id) - Number(a.id))[0];
+      return last?.status ?? null;
     },
     async versionUsage() {
       const map = new Map<string, { count: number; lastUsedAt: string | null }>();

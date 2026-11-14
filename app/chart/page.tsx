@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import PageTopBar from '@/components/PageTopBar';
 import BirthForm from '@/components/BirthForm';
 import ChartBoard from '@/components/ChartBoard';
 import InsightPanel from '@/components/InsightPanel';
@@ -48,6 +49,8 @@ export default function ChartPage() {
 
   if (!charts) {
     return (
+      <>
+      <PageTopBar title="Lập lá số" />
       <main style={{ maxWidth: 720, margin: '0 auto', padding: '48px 20px' }}>
         <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Lập lá số Tử Vi Đẩu Số</h1>
         <p style={{ color: '#888', marginBottom: 32, fontSize: 14, lineHeight: 1.7 }}>
@@ -59,6 +62,7 @@ export default function ChartPage() {
         {loading && <p>Đang lập lá số…</p>}
         {error && <p role="alert">Không thể lập lá số. Vui lòng kiểm tra lại ngày sinh và giờ sinh.</p>}
       </main>
+      </>
     );
   }
 
@@ -74,6 +78,8 @@ export default function ChartPage() {
 
   // ── 已起盘：命盘 + 解读 ──
   return (
+    <>
+    <PageTopBar title="Lá số Tử Vi" />
     <main style={{ maxWidth: 1280, margin: '0 auto', padding: '24px 16px' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 16 }}>
         <button
@@ -157,5 +163,6 @@ export default function ChartPage() {
         <InsightPanel chart={chart} selectedPalace={selectedPalace} selectedTime={selectedTime} />
       </div>
     </main>
+    </>
   );
 }

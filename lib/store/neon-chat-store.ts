@@ -2,10 +2,10 @@
  * ChatStore trên Postgres qua driver HTTP của Neon. Mọi giá trị đi qua tham số của tagged template
  * (không nối chuỗi SQL). Schema: db/migrations/*.sql.
  */
-import { neon } from '@neondatabase/serverless';
+import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
 import {
   PAGE_SIZE, UUID_RE, buildHistory,
-  type ChatStore, type ChartSummary, type ConversationDetail, type RequestLog, type StoredMessage, type ToolCallLog, type TurnStatus,
+  type ChatStore, type ChartSummary, type ConversationDetail, type RequestLog, type StoredMessage, type ToolCallLog, type TurnResult, type TurnStatus,
 } from './chat-store';
 
 type Row = Record<string, unknown>;
@@ -16,6 +16,26 @@ const ownerId = (id: string | null | undefined) => (id && UUID_RE.test(id) ? id 
 /** Tối đa số tin nạp lại cho một lá số (đủ cho mọi mục; chặn phản hồi quá lớn). */
 const HISTORY_LIMIT = 2000;
 const page = (p: unknown) => (Number.isInteger(p) && (p as number) >= 0 ? (p as number) : 0);
+
+type Sql = NeonQueryFunction<false, false>;
+
+/** Kết thúc một lượt: cập nhật log (chỉ khi còn pending) và ghi tin trả lời. Dùng chung cho mọi route có lưu hội thoại. */
+export async function recordTurnEndSql(sql: Sql, requestId: string, r: TurnResult): Promise<void> {
+  if (!UUID_RE.test(requestId)) return;
+  await sql`
+    with req as (
+      update ai_requests set
+        status = ${r.status}, error = ${r.error ?? null},
+        first_token_ms = ${r.firstTokenMs ?? null}, duration_ms = ${r.durationMs},
+        tool_calls = ${JSON.stringify(r.toolCalls)}::jsonb,
+        prompt_tokens = ${r.usage?.promptTokens ?? null}, completion_tokens = ${r.usage?.completionTokens ?? null},
+        cost_usd = ${r.usage?.costUsd ?? null}
+      where id = ${requestId}::uuid and status = 'pending'
+      returning id, conversation_id, prompt_version
+    )
+    insert into messages (conversation_id, role, content, prompt_version, request_id, status)
+    select conversation_id, 'assistant', ${r.text}, prompt_version, id, ${r.asked ? 'asked' : r.status} from req`;
+}
 
 function toSummary(r: Row): ChartSummary {
   return {
@@ -78,20 +98,7 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
     },
 
     async recordTurnEnd(requestId, r) {
-      if (!UUID_RE.test(requestId)) return;
-      await sql`
-        with req as (
-          update ai_requests set
-            status = ${r.status}, error = ${r.error ?? null},
-            first_token_ms = ${r.firstTokenMs ?? null}, duration_ms = ${r.durationMs},
-            tool_calls = ${JSON.stringify(r.toolCalls)}::jsonb,
-            prompt_tokens = ${r.usage?.promptTokens ?? null}, completion_tokens = ${r.usage?.completionTokens ?? null},
-            cost_usd = ${r.usage?.costUsd ?? null}
-          where id = ${requestId}::uuid and status = 'pending'
-          returning id, conversation_id, prompt_version
-        )
-        insert into messages (conversation_id, role, content, prompt_version, request_id, status)
-        select conversation_id, 'assistant', ${r.text}, prompt_version, id, ${r.status} from req`;
+      await recordTurnEndSql(sql, requestId, r);
     },
 
     async listCharts(p) {
@@ -200,6 +207,22 @@ export function createNeonChatStore(databaseUrl: string): ChatStore {
           and v.user_id is not distinct from ${ownerId(q.userId)}::uuid
           and (case when ${q.partnerKey ?? null}::text is null then v.partner_chart_id is null
                else v.partner_chart_id = (select id from charts where chart_key = ${q.partnerKey ?? null}::text) end)`;
+    },
+
+    async lastAssistantStatus(q) {
+      const rows = await sql`
+        select m.status
+        from conversations v
+        join charts c on c.id = v.chart_id
+        left join charts p on p.id = v.partner_chart_id
+        join messages m on m.conversation_id = v.id and (v.reset_at is null or m.created_at >= v.reset_at)
+        where c.chart_key = ${q.chartKey} and v.kind = ${q.kind} and v.thread_key = ${q.threadKey}
+          and v.user_id is not distinct from ${ownerId(q.userId)}::uuid
+          and (case when ${q.partnerKey ?? null}::text is null then v.partner_chart_id is null else p.chart_key = ${q.partnerKey ?? null}::text end)
+          and m.role = 'assistant'
+        order by m.id desc
+        limit 1`;
+      return rows.length ? ((rows[0].status as string | null) ?? null) : null;
     },
 
     async versionUsage() {

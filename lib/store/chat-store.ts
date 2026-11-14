@@ -83,6 +83,8 @@ export interface TurnResult {
   status: Exclude<TurnStatus, 'pending'>;
   error?: string;
   toolCalls: ToolCallLog[];
+  /** Lượt này AI hỏi lại người dùng (prompt v3): text = câu dẫn + khối <!--ask:-->. */
+  asked?: boolean;
   firstTokenMs?: number;
   durationMs: number;
   usage?: { promptTokens?: number; completionTokens?: number; costUsd?: number };
@@ -156,6 +158,8 @@ export interface ChatStore {
   closeThread(q: HistoryQuery & { threadKey: string }): Promise<void>;
   /** Câu người dùng tự gõ (bỏ câu ẩn, chỉ tin sau mốc reset), mới nhất trước, tối đa limit câu. */
   loadUserQuestions(q: HistoryQuery, limit: number): Promise<UserQuestion[]>;
+  /** status của tin assistant cuối cùng trong mục (sau mốc reset); chưa có thì null. 'asked' = AI đang chờ người dùng trả lời thẻ hỏi. */
+  lastAssistantStatus(q: HistoryQuery & { threadKey: string }): Promise<string | null>;
 }
 
 /** Version prompt đang chạy: lấy từ store; không có, lạ hoặc store lỗi → mặc định. */

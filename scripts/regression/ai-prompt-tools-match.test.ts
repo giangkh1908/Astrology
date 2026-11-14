@@ -31,8 +31,10 @@ for (const { id } of PROMPT_VERSIONS) {
     assert.ok(vanHan.includes(`"${field}"`), `kết quả xem_van_han thiếu trường ${field}`);
   }
   assert.equal(prompt.match(/[㐀-鿿]/), null, 'prompt còn chữ Hán');
-  assert.match(set.initialInterpretationQuestion({ type: 'topic', key: 'love' }), /năm âm lịch hiện tại/);
-  assert.doesNotMatch(set.initialInterpretationQuestion({ type: 'topic', key: 'personality' }), /năm âm lịch hiện tại/);
+  // v1, v2 nhắc năm âm lịch hiện tại cuối bài; v3 luận khung 3 tháng âm lịch đang chọn.
+  const timeHint = id === 'v3' ? /khung 3 tháng âm lịch/ : /năm âm lịch hiện tại/;
+  assert.match(set.initialInterpretationQuestion({ type: 'topic', key: 'love' }), timeHint);
+  assert.doesNotMatch(set.initialInterpretationQuestion({ type: 'topic', key: 'personality' }), timeHint);
 }
 
 const v2 = getPromptSet('v2');

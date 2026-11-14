@@ -102,7 +102,7 @@ async function main() {
 
   // ── /api/account ──
   const acc = await account(page('/api/account', memberCookie));
-  assert.deepEqual(await acc.json(), { username: 'khach', kind: 'member', used: 0, limit: 5, status: 'approved' });
+  assert.deepEqual(await acc.json(), { username: 'khach', kind: 'member', used: 0, limit: 5, status: 'approved', promptVersion: 'v2' });
   assert.equal((await account(page('/api/account'))).status, 401);
   assert.equal((await (await account(page('/api/account', envCookie))).json()).limit, null);
 

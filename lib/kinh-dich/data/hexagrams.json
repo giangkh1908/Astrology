@@ -1,0 +1,2768 @@
+{
+ "source": "https://github.com/docsachvathaoluan/dich-so",
+ "commit": "ebceef1cd20f2e445c622ed511b635dedc556b6d",
+ "hexagrams": [
+  {
+   "number": 1,
+   "name": "Thuần Càn",
+   "hanzi": "乾",
+   "upper": "Càn",
+   "lower": "Càn",
+   "bits": "111111",
+   "judgment": "Nguyên, Hanh, Lợi, Trinh (元亨利貞).",
+   "image": "Trời vận hành mạnh mẽ; người quân tử tự cường không ngừng (天行健，君子以自強不息).",
+   "modernShort": "Sức sáng tạo thuần khiết đang dâng — thời điểm khởi xướng, dẫn dắt và bền chí tiến lên như trời vận hành không nghỉ.",
+   "lines": [
+    {
+     "textHV": "Tiềm long vật dụng",
+     "gloss": "Rồng lặn, chớ dùng",
+     "modern": "Còn ẩn mình, chưa tới thời. Âm thầm tích lũy, đừng vội ra tay."
+    },
+    {
+     "textHV": "Hiện long tại điền, lợi kiến đại nhân",
+     "gloss": "Rồng hiện ở ruộng, lợi gặp người lớn",
+     "modern": "Bắt đầu lộ diện, tài năng được thấy. Nên tìm gặp người có đức/quyền để được nâng đỡ."
+    },
+    {
+     "textHV": "Quân tử chung nhật càn càn, tịch dịch nhược, lệ vô cữu",
+     "gloss": "Cả ngày cần cù, tối còn lo sợ; nguy nhưng không lỗi",
+     "modern": "Giai đoạn chuyển tiếp nguy hiểm. Nỗ lực hết mình + thận trọng thì qua được an toàn."
+    },
+    {
+     "textHV": "Hoặc dược tại uyên, vô cữu",
+     "gloss": "Hoặc nhảy lên, hoặc ở lại vực",
+     "modern": "Thời điểm lưỡng lự: tiến hay lui chưa rõ. Linh hoạt tùy thời, không ép."
+    },
+    {
+     "textHV": "Phi long tại thiên, lợi kiến đại nhân",
+     "gloss": "Rồng bay ở trời",
+     "modern": "Đỉnh cao. Đạt đúng vị trí, đúng thời. Hào tốt nhất — người tài ở ngôi cao xứng đáng."
+    },
+    {
+     "textHV": "Kháng long hữu hối",
+     "gloss": "Rồng bay quá cao có hối hận",
+     "modern": "Đi quá đà, kiêu ngạo, vượt giới hạn — phải hối tiếc. Biết dừng đúng lúc mới khôn."
+    }
+   ],
+   "extra": {
+    "textHV": "Dụng Cửu: Kiến quần long vô thủ, cát",
+    "gloss": "Thấy đàn rồng không đầu, tốt",
+    "modern": "Dù mạnh mẽ cũng phải biết mềm mỏng, khiêm nhường; đừng lúc nào cũng cứng nhắc đòi đứng đầu thiên hạ. Cứng mà biết mềm thì mới bền."
+   }
+  },
+  {
+   "number": 2,
+   "name": "Thuần Khôn",
+   "hanzi": "坤",
+   "upper": "Khôn",
+   "lower": "Khôn",
+   "bits": "000000",
+   "judgment": "Nguyên hanh, lợi về sự bền của ngựa cái (元亨，利牝馬之貞).",
+   "image": "Thế đất dày; người quân tử lấy đức dày để nâng chở muôn vật (地勢坤，君子以厚德載物).",
+   "modernShort": "Sức nâng đỡ và bao dung — thành công đến từ thuận theo và kiên nhẫn hiện thực hoá, thay vì áp đặt.",
+   "lines": [
+    {
+     "textHV": "Lý sương, kiên băng chí",
+     "gloss": "Xéo lên sương, biết băng dày sắp tới",
+     "modern": "Thấy dấu hiệu nhỏ phải đoán được hậu quả lớn. Cái xấu lúc còn nhỏ phải ngăn ngay. Phòng từ gốc."
+    },
+    {
+     "textHV": "Trực, phương, đại, bất tập vô bất lợi",
+     "gloss": "Thẳng, vuông, lớn — không cần học mà vẫn lợi",
+     "modern": "Hào đẹp nhất, chủ quẻ. Đức của Đất: ngay thẳng, vuông vức (đúng mực), rộng lớn. Sống tự nhiên đúng đạo thì việc gì cũng thuận."
+    },
+    {
+     "textHV": "Hàm chương khả trinh, hoặc tòng vương sự, vô thành hữu chung",
+     "gloss": "Ngậm kín tài hoa; không cậy công thì cuối cùng tốt",
+     "modern": "Có tài mà biết giấu, làm cho người trên mà không tranh công. Khiêm tốn thì về sau hưởng kết quả tốt."
+    },
+    {
+     "textHV": "Quát nang, vô cữu vô dự",
+     "gloss": "Thắt chặt miệng túi: không lỗi, không khen",
+     "modern": "Thời kỳ bế tắc, nên kín đáo giữ mình. Không nổi bật cũng chẳng sao — \"im lặng là vàng\"."
+    },
+    {
+     "textHV": "Hoàng thường, nguyên cát",
+     "gloss": "Quần vàng, rất tốt",
+     "modern": "Vàng = màu trung chính; quần = đồ mặc phía dưới. Ở vị trí cao mà vẫn giữ đức khiêm hạ, đúng mực thì đại cát. Đẹp ở trong mà không phô trương."
+    },
+    {
+     "textHV": "Long chiến vu dã, kỳ huyết huyền hoàng",
+     "gloss": "Rồng đánh nhau ở đồng, máu xanh vàng",
+     "modern": "Âm thịnh quá hóa tranh giành với Dương — cả hai cùng bị thương. Đi quá đà, lấn lướt thì sinh xung đột, thua thiệt cả đôi bên."
+    }
+   ],
+   "extra": {
+    "textHV": "Dụng Lục: Lợi vĩnh trinh",
+    "gloss": "Lợi về sự chính đính lâu dài",
+    "modern": "Đạo Âm mềm yếu khó giữ bền, nên phải kiên trì giữ chính đạo lâu dài thì mới tốt. Mềm mà bền mới có giá trị."
+   }
+  },
+  {
+   "number": 3,
+   "name": "Truân",
+   "hanzi": "屯",
+   "upper": "Khảm",
+   "lower": "Chấn",
+   "bits": "100010",
+   "judgment": "Rất hanh thông, lợi về giữ chính; chớ vội có chỗ đi, lợi về việc dựng người giúp (屯：元亨，利貞，勿用有攸往，利建侯).",
+   "image": "Mây và sấm (mây tụ, sấm động giữa hỗn mang), là Truân; người quân tử nhân đó lo việc kinh bang tế thế (雲雷，屯；君子以經綸).",
+   "modernShort": "Cái mới nhú lên giữa hỗn mang — khởi đầu rối ren, cần kiên nhẫn sắp xếp và tìm cộng sự trước khi bung ra.",
+   "lines": [
+    {
+     "textHV": "Bàn hoàn, lợi cư trinh, lợi kiến hầu",
+     "gloss": "Quanh co, lợi giữ chính bền, lợi dựng tước hầu",
+     "modern": "Người tài ở vị trí thấp lúc đầu loạn. Đừng vội tiến, quanh co chờ thời, giữ vững chính đạo. Kẻ sang biết hạ mình thì được lòng dân."
+    },
+    {
+     "textHV": "Nữ tử trinh bất tự, thập niên nãi tự",
+     "gloss": "Con gái giữ trinh không lấy chồng, mười năm mới lấy",
+     "modern": "Bị kẻ mạnh gần kề quấy nhiễu, nhưng có \"người đúng\" ở xa. Kiên trì giữ mình, chờ đúng người đúng thời — dù phải đợi rất lâu."
+    },
+    {
+     "textHV": "Tức lộc vô ngu, quân tử cơ bất như xả",
+     "gloss": "Đuổi hươu không người dẫn đường, quân tử biết cơ thì bỏ",
+     "modern": "Lao theo mục tiêu mà không có người dẫn đường thì chỉ lạc vào rừng. Người khôn biết nhìn thời cơ mà dừng lại đúng lúc."
+    },
+    {
+     "textHV": "Thừa mã ban như, cầu hôn cấu, vãng cát",
+     "gloss": "Cưỡi ngựa rẽ ngang, tìm dâu gia, đi thì tốt",
+     "modern": "Tự biết tài mình không đủ, nhưng biết tìm người hiền để hợp tác. Biết người biết mình mà cầu viện đúng chỗ thì tốt."
+    },
+    {
+     "textHV": "Truân kỳ cao, tiểu trinh cát, đại trinh hung",
+     "gloss": "Gian truân về ơn huệ, việc nhỏ tốt, việc lớn dữ",
+     "modern": "Người lãnh đạo ơn đức chưa lan tỏa, quyền lực bị phân tán. Nên làm dần dần từng việc nhỏ; muốn làm lớn, cải tổ gấp gáp thì hỏng."
+    },
+    {
+     "textHV": "Thừa mã ban như, khấp huyết liên như",
+     "gloss": "Cưỡi ngựa rẽ ngang, khóc ra máu đầm đìa",
+     "modern": "Gian nan tới cùng cực, yếu đuối lại không ai giúp, đi đâu cũng bế tắc. Cảnh tuyệt vọng — nhưng \"sao có thể kéo dài được?\" (không thể mãi thế)."
+    }
+   ]
+  },
+  {
+   "number": 4,
+   "name": "Mông",
+   "hanzi": "蒙",
+   "upper": "Cấn",
+   "lower": "Khảm",
+   "bits": "010001",
+   "judgment": "Hanh thông. Không phải ta cầu trẻ thơ, mà trẻ thơ cầu ta; bói lần đầu thì bảo, hỏi nhiễu nhiều lần thì không bảo. Lợi về giữ chính (蒙：亨。匪我求童蒙，童蒙求我。初筮告，再三瀆，瀆則不告。利貞).",
+   "image": "Dưới núi có suối chảy ra, là Mông; người quân tử nhân đó làm việc quả quyết để nuôi dưỡng đức (山下出泉，蒙；君子以果行育德).",
+   "modernShort": "Sự ngây ngô của người mới — đây là lúc khiêm tốn học hỏi, để được dẫn dắt khai mở trí tuệ.",
+   "lines": [
+    {
+     "textHV": "Phát mông, lợi dụng hình nhân, dĩ vãng lận",
+     "gloss": "Mở mang trẻ thơ, lợi dùng hình phạt để cởi gông cùm, cứ thế mãi thì hối tiếc",
+     "modern": "Với kẻ tối tăm quá đỗi, buổi đầu cần kỷ luật nghiêm để họ biết sợ. Nhưng hình phạt chỉ là bước đầu — cứ trừng phạt mãi thì hỏng."
+    },
+    {
+     "textHV": "Bao mông cát, nạp phụ cát, tử khắc gia",
+     "gloss": "Bao dung trẻ thơ thì tốt, nghe cả vợ thì tốt, con trẻ được nhà",
+     "modern": "Hào đẹp nhất — người thầy có tài. Phải rộng lượng bao dung, biết lắng nghe cả người kém hơn mình."
+    },
+    {
+     "textHV": "Vật dụng thủ nữ, kiến kim phu bất hữu cung",
+     "gloss": "Chớ lấy cô gái này, thấy chồng vàng thì mất mình",
+     "modern": "Kẻ thấy lợi là ngả nghiêng, bỏ chính đạo chạy theo tiền. \"Nết không thuận\", không đáng kết giao."
+    },
+    {
+     "textHV": "Khốn mông, lận",
+     "gloss": "Khốn về tăm tối, hối tiếc",
+     "modern": "Kẻ tối tăm mà xa rời người hiền, không ai dẫn dắt — mắc kẹt trong ngu muội. Muốn sáng phải gần người sáng."
+    },
+    {
+     "textHV": "Đồng mông, cát",
+     "gloss": "Trẻ thơ, tốt",
+     "modern": "Người ở ngôi cao mà khiêm nhường, giữ tâm thuần khiết, biết nghe theo người tài. \"Thuận và nhũn\" — thái độ học hỏi lý tưởng."
+    },
+    {
+     "textHV": "Kích mông, bất lợi vi khấu, lợi ngự khấu",
+     "gloss": "Đánh kẻ tối tăm: không lợi làm giặc, lợi chống giặc",
+     "modern": "Với kẻ ngu tối cứng đầu có khi phải dùng biện pháp mạnh — nhưng đúng mục đích. Nghiêm khắc phải có giới hạn."
+    }
+   ]
+  },
+  {
+   "number": 5,
+   "name": "Nhu",
+   "hanzi": "需",
+   "upper": "Khảm",
+   "lower": "Càn",
+   "bits": "111010",
+   "judgment": "Có niềm tin, sáng sủa hanh thông; giữ chính thì tốt, lợi về vượt sông lớn (需：有孚，光亨。貞吉，利涉大川).",
+   "image": "Mây lên trên trời, là Nhu (chờ); người quân tử nhân đó ăn uống, an dưỡng mà chờ thời (雲上於天，需；君子以飲食宴樂).",
+   "modernShort": "Chờ đợi có niềm tin — nuôi sức và giữ bình tĩnh trước hiểm; thời cơ đến với người biết đợi.",
+   "lines": [
+    {
+     "textHV": "Nhu vu giao, lợi dụng hằng, vô cữu",
+     "gloss": "Đợi ở đồng, lợi giữ đạo thường, không lỗi",
+     "modern": "Còn xa chỗ hiểm nhất. Cứ an ổn giữ nếp thường, đừng nóng nảy lao tới."
+    },
+    {
+     "textHV": "Nhu vu sa, tiểu hữu ngôn, chung cát",
+     "gloss": "Đợi ở bãi cát, hơi có điều tiếng, sau tốt",
+     "modern": "Gần chỗ hiểm hơn. Bắt đầu có tai tiếng nhỏ. Nhờ ở giữa, xử lý rộng rãi nên cuối cùng vẫn tốt."
+    },
+    {
+     "textHV": "Nhu vu nê, trí khấu chí",
+     "gloss": "Đợi ở bùn, dắt giặc đến",
+     "modern": "Sát chỗ hiểm. Vì quá cứng mà nóng vội tiến, tự chuốc họa. Nếu biết kính cẩn thận trọng thì không thất bại."
+    },
+    {
+     "textHV": "Nhu vu huyết, xuất tự huyệt",
+     "gloss": "Đợi ở máu, ra khỏi hang",
+     "modern": "Đã vào chỗ hiểm, bị thương. Nhưng nhờ mềm thuận, biết theo thời mà lui ra, không cố chống, nên thoát được."
+    },
+    {
+     "textHV": "Nhu vu tửu thực, trinh cát",
+     "gloss": "Đợi chưng rượu cơm, chính bền thì tốt",
+     "modern": "Hào đẹp nhất — vua cứng mạnh trung chính. Ở đúng vị trí thì cứ an nhiên \"ăn uống\" mà chờ, tin chắc kết quả sẽ đến."
+    },
+    {
+     "textHV": "Nhập vu huyệt, hữu bất tốc chi khách tam nhân lai, kính chi chung cát",
+     "gloss": "Vào hang, có ba khách không mời mà đến, kính trọng họ thì cuối cùng tốt",
+     "modern": "Khi có người bất ngờ đến, đừng ghen ghét tranh giành, lấy lòng thành kính đối đãi thì sẽ tốt đẹp."
+    }
+   ]
+  },
+  {
+   "number": 6,
+   "name": "Tụng",
+   "hanzi": "訟",
+   "upper": "Càn",
+   "lower": "Khảm",
+   "bits": "010111",
+   "judgment": "Có niềm tin nhưng bị nghẽn nên lo sợ; giữ đạo trung thì tốt, theo đến cùng thì xấu. Lợi gặp người lớn, không lợi vượt sông lớn (訟：有孚，窒，惕，中吉，終凶。利見大人，不利涉大川).",
+   "image": "Trời và nước vận hành trái chiều nhau, là Tụng; người quân tử nhân đó khi làm việc thì lo tính ngay từ đầu (天與水違行，訟；君子以作事謀始).",
+   "modernShort": "Mâu thuẫn nảy sinh — cân nhắc nhượng bộ, tìm trung gian; thắng bằng cãi vã thường thua về lâu dài.",
+   "lines": [
+    {
+     "textHV": "Bất vĩnh sở sự, tiểu hữu ngôn, chung cát",
+     "gloss": "Không kéo dài việc, hơi có điều tiếng, sau tốt",
+     "modern": "Không đeo đuổi tranh chấp dai dẳng. Biết dừng sớm nên cuối cùng vẫn tốt."
+    },
+    {
+     "textHV": "Bất khắc tụng, quy nhi bô... vô sảnh",
+     "gloss": "Không thắng kiện, lui về trốn, làng nhỏ 300 hộ, không tội",
+     "modern": "Kiện với người trên mạnh hơn thì thế yếu không địch nổi. Biết mình đuối thì rút lui, tự xử khiêm nhường để tránh họa."
+    },
+    {
+     "textHV": "Thực cựu đức, trinh lệ, chung cát, hoặc tòng vương sự vô thành",
+     "gloss": "Ăn theo đức cũ, giữ chính mà lo sợ, sau tốt; theo việc vua thì không nhận công",
+     "modern": "Kẻ mềm yếu, không thích kiện. Cứ an phận giữ nếp cũ, thận trọng lo xa thì tốt. Làm cho người trên thì đừng giành công."
+    },
+    {
+     "textHV": "Bất khắc tụng, phục tức mệnh, thâu an trinh cát",
+     "gloss": "Không thể kiện, quay về theo lẽ phải, đổi sang yên bề chính đạo, tốt",
+     "modern": "Kẻ vốn thích kiện nhưng không có đối thủ. Nén cơn nóng giận, quay về chính lý, bỏ ý hiếu thắng thì tốt."
+    },
+    {
+     "textHV": "Tụng nguyên cát",
+     "gloss": "Kiện, cả tốt",
+     "modern": "Hào đẹp nhất — người phân xử ở ngôi cao, trung chính công bằng. \"Trung thì nghe không lệch, chính thì đoán hợp lẽ.\" Vị quan tòa lý tưởng."
+    },
+    {
+     "textHV": "Hoặc tích chi bàn đái, chung triêu tam trĩ chi",
+     "gloss": "Được ban dải lưng da, nhưng một buổi sáng bị lột ba lần",
+     "modern": "Kẻ cứng đầu theo kiện đến cùng cực. Dù thắng, phần thưởng cũng không giữ được lâu. Cái được nhờ tranh giành thì sớm muộn cũng mất."
+    }
+   ]
+  },
+  {
+   "number": 7,
+   "name": "Sư",
+   "hanzi": "師",
+   "upper": "Khôn",
+   "lower": "Khảm",
+   "bits": "010000",
+   "judgment": "Giữ chính; có bậc trưởng lão (tướng tài) thì tốt, không lỗi (師：貞丈人吉，无咎).",
+   "image": "Trong lòng đất có nước, là Sư (quân đội); người quân tử nhân đó dung chứa dân và nuôi dưỡng số đông (地中有水，師；君子以容民畜衆).",
+   "modernShort": "Huy động lực lượng có kỷ luật — cần người chỉ huy chính trực và mục tiêu rõ để dẫn dắt đám đông.",
+   "lines": [
+    {
+     "textHV": "Sư xuất dĩ luật, phủ tang hung",
+     "gloss": "Quân ra phải có kỷ luật, không thì hung",
+     "modern": "Xuất quân. Phải có kỷ luật, quân lệnh nghiêm. Không kỷ luật thì dù may mà thắng cũng là điềm dữ."
+    },
+    {
+     "textHV": "Tại sư trung cát, vô cữu, vương tam tích mệnh",
+     "gloss": "Ở trong quân, vừa phải thì tốt, vua ba lần ban thưởng",
+     "modern": "Hào chủ quẻ — vị tướng tài. Được vua tin dùng, toàn quyền chỉ huy. Phải vừa uy nghiêm vừa ôn hòa, xử sự đúng mực."
+    },
+    {
+     "textHV": "Sư hoặc dư thi, hung",
+     "gloss": "Quân có khi khiêng thây về, hung",
+     "modern": "Thất bại. Để nhiều người cùng chỉ huy (không thống nhất) → đại bại. \"Lắm thầy nhiều ma.\""
+    },
+    {
+     "textHV": "Sư tả thứ, vô cữu",
+     "gloss": "Quân lùi đóng, không lỗi",
+     "modern": "Rút lui đúng lúc. Biết mình không đủ sức thì lui quân bảo toàn lực lượng — không phải hèn nhát mà là khôn ngoan."
+    },
+    {
+     "textHV": "Điền hữu cầm, lợi chấp ngôn... trưởng tử suất sư, đệ tử dư thi, trinh hung",
+     "gloss": "Ruộng có chim nên bắt; con cả cầm quân, con em khiêng thây, dù chính cũng hung",
+     "modern": "Vua ra lệnh dùng binh. Chỉ đánh khi bị xâm phạm. Giao việc phải chuyên cho một người tài; để kẻ kém xen vào thì dù chính nghĩa cũng bại."
+    },
+    {
+     "textHV": "Đại quân hữu mệnh, khai quốc thừa gia, tiểu nhân vật dụng",
+     "gloss": "Vua ban mệnh, mở nước phong nhà, kẻ tiểu nhân chớ dùng",
+     "modern": "Ban thưởng. Kẻ tiểu nhân dù có công cũng chỉ nên thưởng tiền bạc, đừng trao quyền cai trị. Dùng tiểu nhân nắm quyền ắt loạn nước."
+    }
+   ]
+  },
+  {
+   "number": 8,
+   "name": "Tỷ",
+   "hanzi": "比",
+   "upper": "Khảm",
+   "lower": "Khôn",
+   "bits": "000010",
+   "judgment": "Tốt. Xét lại từ gốc, giữ đạo lâu bền chính đáng thì không lỗi; kẻ chưa yên tìm đến, ai đến muộn thì xấu (比：吉。原筮元永貞，无咎。不寧方來，後夫凶).",
+   "image": "Trên mặt đất có nước, là Tỷ (gần gũi); các tiên vương nhân đó dựng muôn nước, thân với chư hầu (地上有水，比；先王以建萬國，親諸侯).",
+   "modernShort": "Liên kết và quy tụ — gắn bó quanh một trung tâm đáng tin; đến sớm và chân thành thì được nhận.",
+   "lines": [
+    {
+     "textHV": "Hữu phu tỷ chi, vô cữu... hữu tha cát",
+     "gloss": "Có lòng tin mà gắn bó, không lỗi; tin đầy chậu, còn có tốt khác",
+     "modern": "Khởi đầu gắn bó phải có lòng thành thật. Lòng thành đầy đặn như \"chậu đầy nước\", không cần tô vẽ, người ta tự đến."
+    },
+    {
+     "textHV": "Tỷ chi tự nội, trinh cát",
+     "gloss": "Gắn bó tự bên trong, chính bền thì tốt",
+     "modern": "Gắn bó với người trên một cách đường hoàng, giữ phẩm giá của mình. Không đau đáu chạy theo cầu cạnh."
+    },
+    {
+     "textHV": "Tỷ chi phỉ nhân",
+     "gloss": "Gắn bó với kẻ không đáng gắn bó",
+     "modern": "Kết giao nhầm người — chung quanh toàn kẻ không trung chính. Sai lầm lớn nhất là chọn nhầm bạn đồng hành."
+    },
+    {
+     "textHV": "Ngoại tỷ chi, trinh cát",
+     "gloss": "Bên ngoài gắn bó, chính bền thì tốt",
+     "modern": "Thân người hiền, theo người trên (hào 5 — vua sáng). Chọn đúng minh chủ mà theo thì tốt lành."
+    },
+    {
+     "textHV": "Hiển tỷ, vương dụng tam khu, thất tiền cầm... cát",
+     "gloss": "Gắn bó công khai, vua đi săn đuổi ba mặt, mất con mồi phía trước, tốt",
+     "modern": "Hào đẹp nhất — đạo gắn bó của bậc vua. Vây ba mặt, chừa một lối: đến thì đón, đi thì không ép. Gắn bó rộng lượng, công bằng, không cưỡng cầu. Vương đạo."
+    },
+    {
+     "textHV": "Tỷ chi vô thủ, hung",
+     "gloss": "Gắn bó không có đầu, hung",
+     "modern": "Gắn bó mà không có khởi đầu tốt (thiếu chân thành từ đầu) thì không có kết thúc tốt. \"Không có đầu thì không có chót.\""
+    }
+   ]
+  },
+  {
+   "number": 9,
+   "name": "Tiểu Súc",
+   "hanzi": "小畜",
+   "upper": "Tốn",
+   "lower": "Càn",
+   "bits": "111011",
+   "judgment": "Hanh thông. Mây dày mà chưa mưa, từ cõi tây của ta (小畜：亨。密雲不雨，自我西郊).",
+   "image": "Gió đi trên trời, là Tiểu Súc; người quân tử nhân đó trau dồi vẻ đẹp của văn đức (風行天上，小畜；君子以懿文德).",
+   "modernShort": "Tích góp từng chút — sức còn nhỏ, chưa thể làm lớn; kiềm chế và chuẩn bị, mây tụ chưa thành mưa.",
+   "lines": [
+    {
+     "textHV": "Phục tự đạo, hà kỳ cữu, cát",
+     "gloss": "Trở lại theo đường chính, còn lỗi gì? Tốt",
+     "modern": "Ở xa hào âm, tự giữ được đường chính, không bị kìm hãm. Người biết đi đúng đường thì tự do."
+    },
+    {
+     "textHV": "Khiên phục, cát",
+     "gloss": "Dắt nhau trở lại, tốt",
+     "modern": "Liên kết với người cùng chí hướng, dắt díu nhau cùng lui về đúng đạo. Không đơn độc chống chọi."
+    },
+    {
+     "textHV": "Dư thoát bức, phu thê phản mục",
+     "gloss": "Xe trụt bánh, chồng vợ trở mắt (nhìn nhau tức giận)",
+     "modern": "Nóng vội muốn tiến nhưng bị kìm đến \"trụt bánh xe\". Lại sinh xung đột. Lỗi tại chính mình."
+    },
+    {
+     "textHV": "Hữu phu, huyết khứ, dịch xuất, vô cữu",
+     "gloss": "Có lòng tin, máu chảy đi, sợ hãi tan, không lỗi",
+     "modern": "Hào âm chủ quẻ — kẻ đi kìm giữ. Một mình yếu chống nhiều kẻ mạnh, tất bị tổn thương. Nhờ lòng chân thành cảm hóa được người trên nên thoát hiểm. Lấy yếu chống mạnh phải dùng đức thành."
+    },
+    {
+     "textHV": "Hữu phu loan như, phú dĩ kỳ lân",
+     "gloss": "Có lòng tin gắn kết, giàu nhờ láng giềng",
+     "modern": "Vua có lòng thành tín, quy tụ được mọi người, cùng chia sẻ sức mạnh (\"không giàu một mình\"). Sức mạnh đến từ tập thể."
+    },
+    {
+     "textHV": "Ký vũ ký xử... phụ trinh lệ... quân tử chinh hung",
+     "gloss": "Đã mưa đã yên, vợ giữ mãi thì nguy; trăng gần rằm, quân tử đi thì hung",
+     "modern": "Sự chứa đã hoàn thành. Cảnh báo: khí âm (kẻ yếu) đã tích tụ mạnh ngang khí Dương (như \"trăng gần rằm\"). Quân tử chớ manh động, phải cảnh giác từ sớm."
+    }
+   ]
+  },
+  {
+   "number": 10,
+   "name": "Lý",
+   "hanzi": "履",
+   "upper": "Càn",
+   "lower": "Đoài",
+   "bits": "110111",
+   "judgment": "Giẫm lên đuôi cọp mà cọp không cắn, hanh thông (履虎尾，不咥人，亨).",
+   "image": "Trên là trời, dưới là đầm, là Lý; người quân tử nhân đó phân biệt trên dưới, định yên chí dân (上天下澤，履；君子以辨上下，定民志).",
+   "modernShort": "Bước trên đường nguy như giẫm đuôi hổ — cư xử đúng mực, lễ độ và tỉnh táo thì vượt qua.",
+   "lines": [
+    {
+     "textHV": "Tố lý, vãng vô cữu",
+     "gloss": "Giẫm theo sự vốn có, đi thì không lỗi",
+     "modern": "An phận, sống mộc mạc đúng bản chất mình. Không tham lam vọng động cầu thoát nghèo hèn bằng mọi giá."
+    },
+    {
+     "textHV": "Lý đạo thản thản, u nhân trinh cát",
+     "gloss": "Giẫm đường bằng phẳng, người u tĩnh giữ chính thì tốt",
+     "modern": "Đi con đường bằng phẳng, thong dong. Cần người trong lòng yên tĩnh, không bị lợi lộc làm rối loạn. Bình tâm thì đường đi thênh thang."
+    },
+    {
+     "textHV": "Diểu năng thị, bí năng lý... chất nhân hung",
+     "gloss": "Chột mà đòi trông rõ, què mà đòi đi xa, giẫm đuôi cọp bị cắn, hung",
+     "modern": "Không tự lượng sức mình. Tài kém mà chí liều lĩnh, đòi làm việc lớn — bị cắn. Biết mình biết ta, đừng ảo tưởng."
+    },
+    {
+     "textHV": "Lý hổ vĩ, tố tố chung cát",
+     "gloss": "Giẫm đuôi cọp, nơm nớp sợ hãi, cuối cùng tốt",
+     "modern": "Tình thế hiểm, nhưng biết cẩn trọng, nơm nớp lo sợ, thận trọng từng bước nên cuối cùng thoát nguy. Gặp nguy giữ thái độ khiêm cẩn."
+    },
+    {
+     "textHV": "Quải lý, trinh lệ",
+     "gloss": "Quyết đoán mà giẫm, dù chính bền cũng nguy",
+     "modern": "Người ở ngôi cao quá cương quyết, độc đoán, không nghe ai — dù có lý cũng nguy. Lãnh đạo tự thị chuyên quyền thì vẫn nguy. Phải biết lắng nghe."
+    },
+    {
+     "textHV": "Thị lý khảo tường, kỳ tuyền nguyên cát",
+     "gloss": "Xem lại đường đã đi, xét điềm lành, quay vòng trọn vẹn thì rất tốt",
+     "modern": "Cuối hành trình, nhìn lại tổng kết. Nếu đầu cuối chu toàn, trọn vẹn thì đại cát. Giá trị một đời nằm ở kết thúc tốt đẹp, viên mãn."
+    }
+   ]
+  },
+  {
+   "number": 11,
+   "name": "Thái",
+   "hanzi": "泰",
+   "upper": "Khôn",
+   "lower": "Càn",
+   "bits": "111000",
+   "judgment": "Cái nhỏ ra đi, cái lớn kéo tới; tốt, hanh thông (泰：小往大來，吉亨).",
+   "image": "Trời đất giao nhau, là Thái; bậc vua nhân đó tài bồi đạo trời đất, giúp cho sự thích nghi của trời đất để nâng đỡ dân (天地交泰，后以財成天地之道，輔相天地之宜，以左右民).",
+   "modernShort": "Trời đất giao hoà — giai đoạn thông suốt, mọi thứ ăn khớp; tận dụng nhưng nhớ thịnh rồi sẽ suy.",
+   "lines": [
+    {
+     "textHV": "Bạt mao nhự, dĩ kỳ vựng, chinh cát",
+     "gloss": "Nhổ cụm cỏ tranh, cả rễ kéo theo, đi thì tốt",
+     "modern": "Khởi đầu thái bình. Người hiền tiến lên thì kéo theo cả đồng chí cùng loại. Không ai làm nên việc một mình."
+    },
+    {
+     "textHV": "Bao hoang, dụng bằng hà... bằng vong, đắc thượng vu trung hàng",
+     "gloss": "Bao dung chỗ hoang, dám lội sông, không bỏ sót việc xa, mất bè cánh, hợp đạo giữa",
+     "modern": "Hào chủ quẻ. Bốn phẩm chất người trị cuộc thái: bao dung; quyết đoán dũng cảm (dám cải cách); không bỏ sót người hiền nơi xa; công bằng không thiên vị bè đảng."
+    },
+    {
+     "textHV": "Vô bình bất bí, vô vãng bất phục... gian trinh vô cữu",
+     "gloss": "Không chỗ phẳng nào không lồi lõm, không đi nào không trở lại; chịu khó giữ chính thì không lỗi",
+     "modern": "Bước ngoặt — cảnh báo. Quy luật thái cực tất bĩ. Lúc thịnh phải chịu khó lo xa, giữ chính đạo. Đừng ngủ quên trong chiến thắng."
+    },
+    {
+     "textHV": "Phiên phiên, bất phú dĩ kỳ lân, bất giới dĩ phu",
+     "gloss": "Phơi phới, chẳng giàu mà láng giềng theo, chẳng răn mà tin nhau",
+     "modern": "Cuộc thái đã qua đỉnh. Tiểu nhân \"phơi phới\" rủ nhau đi xuống. Dấu hiệu tiểu nhân tụ họp làm hại chính đạo, quân tử phải cảnh giác."
+    },
+    {
+     "textHV": "Đế Ất quy muội, dĩ chỉ, nguyên cát",
+     "gloss": "Vua Đế Ất gả em gái, được phúc, rất tốt",
+     "modern": "Hào rất đẹp. Người ở ngôi cao mà khiêm nhường, biết trọng dụng người hiền tài (dù địa vị thấp hơn) — như vua gả em gái mà chịu hạ mình theo lễ. Đại cát."
+    },
+    {
+     "textHV": "Thành phục vu hoàng, vật dụng sư... trinh lận",
+     "gloss": "Thành đổ về hào rãnh, chớ dùng quân, dù chính cũng thẹn tiếc",
+     "modern": "Kết thúc — thái tàn, bĩ đến. Thành xây từ đất giờ sụp trở lại rãnh. Lòng dân đã lìa, không thể dùng vũ lực cưỡng ép. Chỉ nên tự giữ mình. Thịnh cực tất suy."
+    }
+   ]
+  },
+  {
+   "number": 12,
+   "name": "Bĩ",
+   "hanzi": "否",
+   "upper": "Càn",
+   "lower": "Khôn",
+   "bits": "000111",
+   "judgment": "Bế tắc do kẻ xấu; không lợi cho sự giữ chính của người quân tử; cái lớn ra đi, cái nhỏ kéo tới (否之匪人，不利君子貞，大往小來).",
+   "image": "Trời đất không giao nhau, là Bĩ; người quân tử nhân đó kiệm đức tránh nạn, không cầu vinh hoa bổng lộc (天地不交，否；君子以儉德辟難，不可榮以祿).",
+   "modernShort": "Trên dưới không thông — thời bế tắc; người vững vàng thu mình giữ mình, chờ khí vận đổi chiều.",
+   "lines": [
+    {
+     "textHV": "Bạt mao nhự, dĩ kỳ vựng, trinh cát hanh",
+     "gloss": "Nhổ cụm cỏ tranh, cả rễ theo, giữ chính thì tốt hanh",
+     "modern": "Thời bĩ, người tốt nên rủ nhau cùng giữ vững tiết tháo, ẩn mình, đừng đua tiến. Giữ chính đạo thì hanh thông."
+    },
+    {
+     "textHV": "Bao thừa, tiểu nhân cát, đại nhân bĩ hanh",
+     "gloss": "Bọc chứa sự vâng thuận, tiểu nhân tốt, đại nhân giữ bĩ thì hanh",
+     "modern": "Kẻ tiểu nhân biết nịnh thì \"tốt\" cho họ. Nhưng đại nhân đừng uốn mình luồn cúi — cứ giữ vững mình, thân khốn mà đạo vẫn hanh. Đừng đánh mất khí tiết để cầu yên."
+    },
+    {
+     "textHV": "Bao tu",
+     "gloss": "Bọc chứa sự hổ thẹn",
+     "modern": "Kẻ tiểu nhân ở sai vị trí, mưu tính điều xằng bậy nhưng chưa làm được, trong lòng chứa đầy điều đáng hổ thẹn."
+    },
+    {
+     "textHV": "Hữu mệnh vô cữu, trù ly chỉ",
+     "gloss": "Có mệnh thì không lỗi, bè loại cùng hưởng phúc",
+     "modern": "Cuộc bĩ đã qua đỉnh, sắp chuyển. Làm việc lớn phải thuận theo mệnh (mệnh vua/mệnh trời), không cậy công tự chuyên thì không lỗi."
+    },
+    {
+     "textHV": "Hưu bĩ, đại nhân cát, kỳ vong kỳ vong, hệ vu bào tang",
+     "gloss": "Ngăn được bĩ, đại nhân tốt; \"này mất, này mất!\", buộc vào cây dâu rậm",
+     "modern": "Hào đẹp nhất — người cứu thời loạn. Phải cảnh giác: tự nhắc \"này nguy đây!\" mà lo phòng bị vững chắc như buộc vào gốc dâu rễ sâu. Vừa thoát nguy chớ chủ quan."
+    },
+    {
+     "textHV": "Khuynh bĩ, tiên bĩ hậu hỉ",
+     "gloss": "Lật đổ cảnh bĩ, trước bĩ sau mừng",
+     "modern": "Bĩ cực thái lai! Bĩ đến cùng tột thì tất nghiêng đổ, chuyển sang thái. Đêm tối nhất là trước bình minh — kiên trì qua cảnh khốn thì ắt có ngày tươi sáng."
+    }
+   ]
+  },
+  {
+   "number": 13,
+   "name": "Đồng Nhân",
+   "hanzi": "同人",
+   "upper": "Càn",
+   "lower": "Ly",
+   "bits": "101111",
+   "judgment": "Cùng người nơi đồng nội (rộng mở, công khai), hanh thông; lợi vượt sông lớn, lợi về sự giữ chính của người quân tử (同人于野，亨。利涉大川，利君子貞).",
+   "image": "Trời và lửa (cùng bốc lên), là Đồng Nhân; người quân tử nhân đó phân loại giống nòi, biện biệt sự vật (天與火，同人；君子以類族辨物).",
+   "modernShort": "Hợp quần với người cùng chí — cởi mở, công tâm và vượt phe nhóm thì việc lớn thành.",
+   "lines": [
+    {
+     "textHV": "Đồng nhân vu môn, vô cữu",
+     "gloss": "Hòa đồng ngoài cửa, không lỗi",
+     "modern": "Khởi đầu — hòa đồng công khai, rộng mở, không thiên về người thân gần. Không ai trách được."
+    },
+    {
+     "textHV": "Đồng nhân vu tông, lận",
+     "gloss": "Hòa đồng trong họ hàng, đáng tiếc",
+     "modern": "Đáng tiếc! Chỉ hòa đồng phạm vi hẹp (họ hàng, phe mình), vướng tình riêng. Dù trung chính nhưng kết giao hạn hẹp theo tư tình nên vẫn đáng tiếc."
+    },
+    {
+     "textHV": "Phục nhung vu mãng, thăng kỳ cao lăng, tam tuế bất hưng",
+     "gloss": "Phục quân trong rừng, lên gò cao trông ngóng, ba năm không dám dấy",
+     "modern": "Kẻ cường bạo muốn cướp đoạt bằng vũ lực nhưng lý không thẳng, nên phải giấu quân, sợ hãi suốt ba năm không dám ra tay. Mưu đồ bất chính thì tự chuốc bất an."
+    },
+    {
+     "textHV": "Thừa kỳ dung, phất khắc công, cát",
+     "gloss": "Trèo lên tường (định đánh) nhưng không đánh, tốt",
+     "modern": "Muốn tranh giành, đã \"trèo tường\" nhưng tự biết nghĩa lý không cho phép mà dừng. Biết dừng đúng lúc, sửa sai, quay về lẽ phải thì tốt."
+    },
+    {
+     "textHV": "Đồng nhân, tiên hào diêu nhi hậu tiếu, đại sư khắc tương ngộ",
+     "gloss": "Hòa đồng, trước kêu gào sau cười, quân lớn thắng mới gặp nhau",
+     "modern": "Người có lý bị ngăn cách, uất ức \"kêu gào\". Nhưng vì lẽ phải nên cuối cùng vượt trở ngại mà \"gặp nhau, cùng cười\". Hai người đồng tâm nhất trí thì không gì ngăn cách nổi."
+    },
+    {
+     "textHV": "Đồng nhân vu giao, vô hối",
+     "gloss": "Hòa đồng ở vùng ngoài, không ăn năn",
+     "modern": "Ở nơi xa vắng, chẳng có ai để hòa cùng. Không đạt chí đoàn kết nhưng cũng không đến nỗi ăn năn. Cô độc không hẳn xấu, nhưng chưa phải cách hay."
+    }
+   ]
+  },
+  {
+   "number": 14,
+   "name": "Đại Hữu",
+   "hanzi": "大有",
+   "upper": "Ly",
+   "lower": "Càn",
+   "bits": "111101",
+   "judgment": "Sở hữu lớn; rất hanh thông (大有：元亨).",
+   "image": "Lửa ở trên trời (chiếu khắp), là Đại Hữu; người quân tử nhân đó ngăn điều ác, nêu điều thiện, thuận theo mệnh tốt lành của trời (火在天上，大有；君子以遏惡揚善，順天休命).",
+   "modernShort": "Nắm trong tay nhiều — giàu nguồn lực và uy tín; giữ khiêm tốn và chia sẻ để bền lâu.",
+   "lines": [
+    {
+     "textHV": "Vô giao hại, phỉ cữu, nan tắc vô cữu",
+     "gloss": "Chưa dính đến hại, không lỗi; biết khó nhọc thì không lỗi",
+     "modern": "Khởi đầu giàu thịnh. Chưa kiêu căng nên chưa gặp hại. Giàu tự nó không lỗi, chỉ người vì giàu mà sinh kiêu xa mới có lỗi."
+    },
+    {
+     "textHV": "Đại xa dĩ tái, hữu du vãng, vô cữu",
+     "gloss": "Xe lớn để chở, đi đâu cũng được, không lỗi",
+     "modern": "Người có tài lớn, gánh vác được trọng trách như xe lớn chở vật nặng. Có năng lực thực sự thì đảm đương được việc lớn."
+    },
+    {
+     "textHV": "Công dụng hưởng vu thiên tử, tiểu nhân phất khắc",
+     "gloss": "Bậc công hầu dâng lên thiên tử, tiểu nhân thì không thể",
+     "modern": "Người ở vị trí cao giàu có phải biết đem cái mình có phụng sự bề trên/tập thể, không tư lợi độc chiếm. Kẻ tiểu nhân độc chiếm của cải — tai họa."
+    },
+    {
+     "textHV": "Phỉ kỳ bàng, vô cữu",
+     "gloss": "Không phô trương sự thịnh của mình, không lỗi",
+     "modern": "Ở giai đoạn thịnh quá đỉnh. Biết khiêm tốn, không phô trương sự giàu thịnh thì không lỗi. Quá thịnh mà biết tự nén là người sáng suốt."
+    },
+    {
+     "textHV": "Quyết phu giao như, uy như, cát",
+     "gloss": "Lòng tin giao hòa với nhau, lại có oai nghiêm, tốt",
+     "modern": "Hào chủ quẻ — lãnh đạo lý tưởng. Dùng lòng chân thành khiêm nhường đối đãi kẻ dưới, nên trên dưới tin nhau. Nhưng chỉ mềm mỏng thì bị khinh nhờn, phải có oai nghiêm. Cần cả đức lẫn uy."
+    },
+    {
+     "textHV": "Tự thiên hựu chi, cát, vô bất lợi",
+     "gloss": "Trời giúp cho, tốt, không gì không lợi",
+     "modern": "Hào đẹp nhất — được trời phù hộ. Ở đỉnh cao mà không tự nhận sở hữu, biết hạ mình theo người hiền, đầy mà không tràn. Đỉnh cao của trí tuệ là khiêm nhường."
+    }
+   ]
+  },
+  {
+   "number": 15,
+   "name": "Khiêm",
+   "hanzi": "謙",
+   "upper": "Khôn",
+   "lower": "Cấn",
+   "bits": "001000",
+   "judgment": "Hanh thông; người quân tử giữ được đến cùng (謙：亨，君子有終).",
+   "image": "Trong lòng đất có núi (núi cao mà ẩn dưới đất), là Khiêm; người quân tử nhân đó bớt chỗ nhiều bù chỗ ít, cân nhắc mà chia cho đều (地中有山，謙；君子以裒多益寡，稱物平施).",
+   "modernShort": "Khiêm hạ là sức mạnh — càng cao càng cúi mình, được người nể và việc thuận.",
+   "lines": [
+    {
+     "textHV": "Khiêm khiêm quân tử, dụng thiệp đại xuyên, cát",
+     "gloss": "Quân tử nhún lại nhún, dùng để sang sông lớn, tốt",
+     "modern": "Khiêm đến tột bậc, tự xử ở vị trí thấp nhất. Đức này giúp vượt cả hiểm nạn. Nền tảng để đi qua mọi khó khăn."
+    },
+    {
+     "textHV": "Minh khiêm, trinh cát",
+     "gloss": "Khiêm nhường thể hiện ra ngoài, chính bền thì tốt",
+     "modern": "Đức khiêm chứa đầy bên trong nên tự nhiên phát ra ngoài, không gắng gượng. Khiêm nhường từ tâm chân thành thì tốt."
+    },
+    {
+     "textHV": "Lao khiêm, quân tử hữu chung, cát",
+     "gloss": "Nhọc mà nhún, quân tử có sau chót, tốt",
+     "modern": "Hào chủ quẻ — quý nhất. Người có công lao lớn mà vẫn khiêm nhường (\"lao khiêm\"). Điều khó nhất: có công mà không kiêu. Người như thế thì \"muôn dân phục\"."
+    },
+    {
+     "textHV": "Vô bất lợi, vi khiêm",
+     "gloss": "Không gì không lợi, phát huy sự khiêm",
+     "modern": "Ở vị trí gần vua, trên người có công. Phải chủ động thể hiện khiêm nhường trong mọi hành động. Khiêm đúng lúc đúng chỗ, \"không trái phép tắc\"."
+    },
+    {
+     "textHV": "Bất phú dĩ kỳ lân, lợi dụng xâm phạt, vô bất lợi",
+     "gloss": "Không giàu mà sai khiến được láng giềng, lợi về chinh phạt, không gì không lợi",
+     "modern": "Lãnh đạo khiêm nhường quy tụ được người nhờ đức. Nhưng không thể chỉ mềm mỏng, phải có uy vũ trị kẻ bất phục. Khiêm cần đi kèm cương quyết đúng lúc."
+    },
+    {
+     "textHV": "Minh khiêm, lợi dụng hành sư chinh ấp quốc",
+     "gloss": "Khiêm nhường thể hiện ra, lợi về dùng quân đánh làng nước mình",
+     "modern": "Khiêm đến cùng cực mà chí chưa toại. Có thể dùng biện pháp mạnh để tự sửa mình (\"đánh làng nước của mình\" = tự chỉnh đốn). Biết tự nghiêm khắc với mình."
+    }
+   ]
+  },
+  {
+   "number": 16,
+   "name": "Dự",
+   "hanzi": "豫",
+   "upper": "Chấn",
+   "lower": "Khôn",
+   "bits": "000100",
+   "judgment": "Hứng khởi; lợi về dựng nước phong hầu và dấy quân (豫：利建侯行師).",
+   "image": "Sấm nổ vang khỏi mặt đất, phấn chấn, là Dự; các tiên vương nhân đó làm nhạc tôn sùng đức, long trọng dâng lên Thượng Đế, phối cùng tổ tiên (雷出地奮，豫；先王以作樂崇德，殷薦之上帝，以配祖考).",
+   "modernShort": "Năng lượng phấn chấn lan toả — chuẩn bị kỹ rồi khơi cảm hứng tập thể, nhưng chớ say sưa quá đà.",
+   "lines": [
+    {
+     "textHV": "Minh dự, hung",
+     "gloss": "Reo hò khoe sự vui, hung",
+     "modern": "Vui quá lố — xấu. Kẻ tiểu nhân được chiều đến mức khoe khoang reo hò, nông nổi khinh bạc. Vui mà buông thả, phô trương, thiếu chừng mực thì chuốc họa."
+    },
+    {
+     "textHV": "Giới vu thạch, bất chung nhật, trinh cát",
+     "gloss": "Tiết tháo vững như đá, không đợi trọn ngày, chính bền thì tốt",
+     "modern": "Hào đẹp nhất. Giữa cuộc vui mà giữ mình trung chính, vững như đá, không sa đà. Thấy điều bất ổn thì dứt bỏ ngay không chần chừ. Biết tiết chế, sáng suốt."
+    },
+    {
+     "textHV": "Vu dự, hối trì, hữu hối",
+     "gloss": "Ngước nhìn cầu vui, ăn năn chậm thì có hối tiếc",
+     "modern": "Kẻ không trung chính, cứ ngước nhìn kẻ trên để cầu vui, dựa dẫm. Phải biết hối cải mau, chậm sửa thì hối tiếc."
+    },
+    {
+     "textHV": "Do dự, đại hữu đắc, vật nghi, bằng hạp trâm",
+     "gloss": "Nguồn của niềm vui, được nhiều, chớ nghi ngờ, bè bạn tụ họp",
+     "modern": "Hào chủ quẻ — người mang niềm vui đến cho mọi người. Thực hiện được chí lớn. Gánh vác trọng trách phải chí thành không nghi ngờ, khi đó bè bạn cộng sự tự tụ họp về giúp."
+    },
+    {
+     "textHV": "Trinh tật, hằng bất tử",
+     "gloss": "Chính bền mà có bệnh, thường không chết",
+     "modern": "Người ở ngôi cao yếu đuối, đắm chìm trong vui, bị lấn át bởi kẻ dưới mạnh hơn. \"Mắc bệnh mà không chết\" — quyền lực mất nhưng ngôi vị còn. Hưởng lạc quá mức mà không tự lập thì rơi vào thế bị động."
+    },
+    {
+     "textHV": "Minh dự thành, hữu thâu, vô cữu",
+     "gloss": "Mê muội trong vui đã thành, biết thay đổi thì không lỗi",
+     "modern": "Vui đến mê muội, cùng cực, không biết quay đầu. Nhưng ở cuối quẻ (có thể biến đổi): nếu biết kịp thời thay đổi thì vẫn sửa được lỗi. \"Tối tăm về sự vui thì sao có thể kéo dài?\""
+    }
+   ]
+  },
+  {
+   "number": 17,
+   "name": "Tùy",
+   "hanzi": "隨",
+   "upper": "Đoài",
+   "lower": "Chấn",
+   "bits": "100110",
+   "judgment": "Thuận theo; rất hanh thông, lợi về giữ chính, không lỗi (隨：元亨，利貞，无咎).",
+   "image": "Trong đầm có sấm (sấm lặng nghỉ trong đầm), là Tùy; người quân tử nhân đó lúc trời tối thì vào nghỉ ngơi (澤中有雷，隨；君子以嚮晦入宴息).",
+   "modernShort": "Đi theo dòng chảy đúng — linh hoạt thích ứng, theo người xứng đáng và được người theo lại.",
+   "lines": [
+    {
+     "textHV": "Quan hữu thâu, trinh cát, xuất môn giao hữu công",
+     "gloss": "Chức việc có thay đổi; giữ chính thì tốt; ra khỏi cửa kết giao thì có công",
+     "modern": "Hoàn cảnh/vai trò đổi thay — cứ giữ ngay thẳng thì tốt. Đừng khép mình theo phe cánh riêng; mở lòng kết giao rộng rãi thì mới nên việc."
+    },
+    {
+     "textHV": "Hệ tiểu tử, thất trượng phu",
+     "gloss": "Bám kẻ nhỏ (gần) thì mất người lớn (đáng theo)",
+     "modern": "Bám lấy cái lợi/người tầm thường ngay bên cạnh thì đánh mất người xứng đáng ở xa. Không thể ôm cả hai — chọn theo ai là bỏ ai."
+    },
+    {
+     "textHV": "Hệ trượng phu, thất tiểu tử, tùy hữu cầu đắc, lợi cư trinh",
+     "gloss": "Bám người lớn thì mất kẻ nhỏ; theo thì cầu được, lợi ở giữ chính bền",
+     "modern": "Dứt khoát theo người/mục tiêu xứng đáng, chịu buông cái nhỏ — theo đúng thì được điều mình cầu. Nhưng phải giữ mình chính đính, đừng theo vì bám víu."
+    },
+    {
+     "textHV": "Tùy hữu hoạch, trinh hung, hữu phu tại đạo, dĩ minh, hà cữu",
+     "gloss": "Theo mà được (lòng người/lợi), giữ nguyên thì hung; có lòng thành, ở đạo, sáng suốt thì lỗi gì",
+     "modern": "Được người ngưỡng mộ, thu phục nhân tâm — nhưng ở vị trí gần vua mà \"được lòng thiên hạ\" là nguy. Giữ lòng thành, hành xử đúng đạo, minh bạch thì mới tránh họa."
+    },
+    {
+     "textHV": "Phu vu gia, cát",
+     "gloss": "Tin ở điều lành (kẻ lành), tốt",
+     "modern": "Ở ngôi cao mà chân thành hướng về, tin dùng điều thiện/người tốt — chính đáng nên tốt lành. Lãnh đạo tin đúng người thì cả hệ thống theo về."
+    },
+    {
+     "textHV": "Câu hệ chi, nãi tòng duy chi, vương dụng hưởng vu tây sơn",
+     "gloss": "Ràng buộc chặt, rồi lại buộc thêm; vua dùng [lòng thành ấy] tế ở núi Tây",
+     "modern": "Sự gắn kết bền tới mức ràng buộc keo sơn — đỉnh của đạo \"theo\": chân thành đến cùng thì cảm được cả thần minh (điển vua Văn tế núi Kỳ). Lòng theo tới cực điểm là lòng thành tuyệt đối."
+    }
+   ]
+  },
+  {
+   "number": 18,
+   "name": "Cổ",
+   "hanzi": "蠱",
+   "upper": "Cấn",
+   "lower": "Tốn",
+   "bits": "011001",
+   "judgment": "Rất hanh thông, lợi vượt sông lớn; lo liệu ba ngày trước ngày Giáp, ba ngày sau ngày Giáp (蠱：元亨，利涉大川，先甲三日，後甲三日).",
+   "image": "Dưới núi có gió (gió quẩn dưới núi làm vật hư hoại), là Cổ; người quân tử nhân đó chấn hưng dân chúng, nuôi dưỡng đức (山下有風，蠱；君子以振民育德).",
+   "modernShort": "Dọn dẹp cái mục ruỗng — can đảm chỉnh sửa sai lầm tích tụ để khởi sự lại lành mạnh.",
+   "lines": [
+    {
+     "textHV": "Cán phụ chi cổ, hữu tử, khảo vô cữu, lệ, chung cát",
+     "gloss": "Sửa việc hỏng của cha; có con [gánh] thì cha không lỗi; nguy nhưng cuối cùng tốt",
+     "modern": "Nhận lấy mớ hỗn độn người trước để lại mà chỉnh đốn. Có người kế thừa dám gánh thì lỗi cũ được hóa giải. Việc khó, có nguy, nhưng làm tới nơi thì tốt."
+    },
+    {
+     "textHV": "Cán mẫu chi cổ, bất khả trinh",
+     "gloss": "Sửa việc hỏng của mẹ, không thể [quá] cứng rắn",
+     "modern": "Chỉnh sửa việc thuộc phần \"mềm\" (tình cảm, thâm căn) thì đừng cứng nhắc ép buộc. Uyển chuyển, giữ hòa khí mà sửa dần mới được."
+    },
+    {
+     "textHV": "Cán phụ chi cổ, tiểu hữu hối, vô đại cữu",
+     "gloss": "Sửa việc hỏng của cha, hơi có ăn năn, không lỗi lớn",
+     "modern": "Quá cương quyết, mạnh tay chấn chỉnh — có gây chút va vấp đáng tiếc, nhưng động cơ đúng nên không thành lỗi lớn. Thà hơi quá còn hơn buông."
+    },
+    {
+     "textHV": "Dụ phụ chi cổ, vãng kiến lận",
+     "gloss": "Dung túng việc hỏng của cha, cứ thế thì thấy tiếc",
+     "modern": "Nhu nhược, xuê xoa cho qua cái hỏng — càng để lâu càng đáng tiếc. Không dám động vào gốc bệnh thì bệnh nặng thêm."
+    },
+    {
+     "textHV": "Cán phụ chi cổ, dụng dự",
+     "gloss": "Sửa việc hỏng của cha, được khen ngợi",
+     "modern": "Chỉnh đốn đúng cách, biết dùng người hiền phụ giúp — thành công và được tiếng tốt. Cải cách khéo là cải cách khiến người ta tâm phục."
+    },
+    {
+     "textHV": "Bất sự vương hầu, cao thượng kỳ sự",
+     "gloss": "Chẳng thờ vương hầu, xem việc mình là cao quý",
+     "modern": "Đứng ngoài vòng danh lợi, không màng chức tước, giữ khí tiết và tự trọng việc mình theo đuổi. Người đã qua thời trị loạn, lui về giữ đạo cho đời noi."
+    }
+   ]
+  },
+  {
+   "number": 19,
+   "name": "Lâm",
+   "hanzi": "臨",
+   "upper": "Khôn",
+   "lower": "Đoài",
+   "bits": "110000",
+   "judgment": "Rất hanh thông, lợi về giữ chính; đến tháng tám thì có điều xấu (臨：元亨，利貞，至于八月有凶).",
+   "image": "Trên đầm có đất (bờ đất nhìn xuống đầm), là Lâm; người quân tử nhân đó dạy dỗ không cùng, dung chứa bảo bọc dân không bờ bến (澤上有地，臨；君子以教思无窮，容保民无疆).",
+   "modernShort": "Dương khí dâng, cơ hội đến gần — chủ động tiếp cận với thiện chí, nhưng nhớ thịnh có hạn kỳ.",
+   "lines": [
+    {
+     "textHV": "Hàm lâm, trinh cát",
+     "gloss": "Cảm mà tới, giữ chính thì tốt",
+     "modern": "Bắt đầu tiến tới bằng sự đồng cảm, thu hút tự nhiên. Giữ ngay thẳng thì tốt — sức lên buổi đầu cần nền chính đính."
+    },
+    {
+     "textHV": "Hàm lâm, cát, vô bất lợi",
+     "gloss": "Cảm mà tới, tốt, không gì không lợi",
+     "modern": "Sức đang lên mạnh, cảm hóa được người, gặp thời thuận — làm gì cũng lợi. Nhưng \"tốt\" đây là nhờ đắc trung: mạnh mà vẫn giữ mực giữa."
+    },
+    {
+     "textHV": "Cam lâm, vô du lợi, ký ưu chi, vô cữu",
+     "gloss": "Ngọt (lấy lòng) mà tới, chẳng có gì lợi; đã biết lo thì không lỗi",
+     "modern": "Tới bằng lời ngon ngọt, xu nịnh — chẳng ích gì. Nhưng nếu biết tự cảnh giác, sửa lại, thì còn kịp gỡ, không thành lỗi."
+    },
+    {
+     "textHV": "Chí lâm, vô cữu",
+     "gloss": "Chí thành mà tới, không lỗi",
+     "modern": "Đến với người bằng tấm lòng thành thật, hết mực — dù ở vị trí mềm yếu vẫn không lỗi, vì thành tâm và biết trọng người dưới tài."
+    },
+    {
+     "textHV": "Trí lâm, đại quân chi nghi, cát",
+     "gloss": "Lấy trí tuệ mà tới, đúng cách của bậc vua lớn, tốt",
+     "modern": "Lãnh đạo bằng sự sáng suốt: biết ủy quyền, dùng người tài (hào 2) chứ không ôm đồm. Đó là phong độ đáng có của người đứng đầu — tốt."
+    },
+    {
+     "textHV": "Đôn lâm, cát, vô cữu",
+     "gloss": "Đôn hậu mà tới, tốt, không lỗi",
+     "modern": "Ở đỉnh mà vẫn giữ lòng dày dặn, chân thành hướng về việc chung — đôn hậu nên tốt và không lỗi. Cái \"lớn\" trọn vẹn nằm ở đức dày."
+    }
+   ]
+  },
+  {
+   "number": 20,
+   "name": "Quán",
+   "hanzi": "觀",
+   "upper": "Tốn",
+   "lower": "Khôn",
+   "bits": "000011",
+   "judgment": "Đã rửa tay (sửa soạn tế) mà chưa dâng lễ, lòng thành nghiêm trang khiến người ngưỡng vọng (觀：盥而不荐，有孚顒若).",
+   "image": "Gió đi trên mặt đất (thổi tới khắp nơi), là Quán; các tiên vương nhân đó đi xem xét các phương, quan sát dân để đặt việc dạy dỗ (風行地上，觀；先王以省方，觀民設教).",
+   "modernShort": "Lùi lại quan sát toàn cảnh — nhìn sâu, làm gương, hiểu quy luật trước khi hành động.",
+   "lines": [
+    {
+     "textHV": "Đồng quán, tiểu nhân vô cữu, quân tử lận",
+     "gloss": "Xem nông cạn như trẻ con; kẻ tầm thường thì không sao, người quân tử thì đáng tiếc",
+     "modern": "Nhìn đời hời hợt, thiển cận. Với người thường thì tạm chấp nhận; nhưng người có trách nhiệm mà tầm nhìn nông thì đáng tiếc."
+    },
+    {
+     "textHV": "Khuy quán, lợi nữ trinh",
+     "gloss": "Nhòm xem hạn hẹp (qua khe), lợi cho sự trinh của đàn bà",
+     "modern": "Cái nhìn chật hẹp, thiên lệch — chỉ hợp với vị trí giữ mình thủ phận, không hợp để tính việc lớn. Tầm nhìn hẹp thì tự giới hạn mình."
+    },
+    {
+     "textHV": "Quán ngã sinh, tiến thoái",
+     "gloss": "Xem việc mình làm mà [quyết] tiến hay lui",
+     "modern": "Biết tự soi lại chính mình để chọn tiến hay lui đúng lúc — không mù quáng lao theo, cũng không cứng nhắc. Tự xét mình là gốc của tiến thoái đúng."
+    },
+    {
+     "textHV": "Quán quốc chi quang, lợi dụng tân vu vương",
+     "gloss": "Xem sự sáng đẹp của nước, lợi được làm khách quý của vua",
+     "modern": "Ở gần trung tâm, thấy được cái hay cái sáng của thời cuộc/tổ chức. Người có tầm nhìn ấy xứng được trọng dụng như khách quý — nên ra giúp đời."
+    },
+    {
+     "textHV": "Quán ngã sinh, quân tử vô cữu",
+     "gloss": "Xem việc mình làm; quân tử thì không lỗi",
+     "modern": "Người đứng đầu tự soi lại chính mình: dân/tổ chức ra sao là tấm gương phản chiếu mình. Giữ được tư cách quân tử thì không lỗi. Lãnh đạo bằng thân giáo."
+    },
+    {
+     "textHV": "Quán kỳ sinh, quân tử vô cữu",
+     "gloss": "Xem [cả đời] việc mình; quân tử thì không lỗi",
+     "modern": "Ở ngoài quyền vị mà vẫn được người xem như chuẩn mực — càng phải tự nhìn lại toàn bộ đường mình đi. Giữ trọn tư cách thì không lỗi."
+    }
+   ]
+  },
+  {
+   "number": 21,
+   "name": "Phệ Hạp",
+   "hanzi": "噬嗑",
+   "upper": "Ly",
+   "lower": "Chấn",
+   "bits": "100101",
+   "judgment": "Hanh thông; lợi về dùng hình ngục (噬嗑：亨，利用獄).",
+   "image": "Sấm và chớp cùng đến, là Phệ Hạp; các tiên vương nhân đó làm sáng hình phạt và chỉnh đốn pháp luật (雷電噬嗑；先王以明罰敕法).",
+   "modernShort": "Cắn đứt vật cản giữa hai hàm — dứt khoát xử lý chướng ngại, công bằng và rõ ràng.",
+   "lines": [
+    {
+     "textHV": "Lý hiệu, diệt chỉ, vô cữu",
+     "gloss": "Mang cùm [chân], đứt ngón chân, không lỗi",
+     "modern": "Lỗi mới chớm, phạt nhẹ (cùm chân) để răn ngay — ngăn được cái xấu đi xa. Trừng phạt sớm ở mức nhỏ chính là để cứu, nên không lỗi."
+    },
+    {
+     "textHV": "Phệ phu, diệt tị, vô cữu",
+     "gloss": "Cắn da mềm, cụt mũi, không lỗi",
+     "modern": "Xử kẻ dễ trị, thuận tay như cắn miếng mềm — có hơi quá tay (cụt mũi) nhưng danh chính, đúng lẽ, nên không lỗi."
+    },
+    {
+     "textHV": "Phệ tích nhục, ngộ độc, tiểu lận, vô cữu",
+     "gloss": "Cắn thịt khô (mắm), gặp phải độc, hơi tiếc, không lỗi",
+     "modern": "Xử việc cũ tồn đọng, gai góc — gặp phản ứng khó chịu (như trúng độc), có chút mất mặt. Nhưng vị thế chưa vững mà dám làm thì cũng không thành lỗi."
+    },
+    {
+     "textHV": "Phệ can tỷ, đắc kim thỉ, lợi gian trinh, cát",
+     "gloss": "Cắn miếng khô có xương, được mũi tên vàng; lợi về giữ chính trong gian nan, tốt",
+     "modern": "Đối đầu chướng ngại cứng nhất (kẻ/việc khó nhằn). Phải cương trực như \"tên vàng\" (thẳng và cứng); bền chí giữ chính giữa gian khó thì thắng — tốt."
+    },
+    {
+     "textHV": "Phệ can nhục, đắc hoàng kim, trinh lệ, vô cữu",
+     "gloss": "Cắn thịt khô, được vàng ròng; chính bền, biết lo sợ, không lỗi",
+     "modern": "Người cầm cân xử án: quyền lớn (vàng), việc khó vừa. Giữ công chính, luôn giữ lòng thận trọng dè chừng thì không lỗi. Quyền càng cao càng phải sợ sai."
+    },
+    {
+     "textHV": "Hạ hiệu, diệt nhĩ, hung",
+     "gloss": "Mang gông [cổ], đứt tai, hung",
+     "modern": "Ác đã chồng chất tới cùng (gông cổ nặng), lại \"điếc\" không nghe lời can — hết đường cứu. Cái xấu tích đến cực, bịt tai với phải trái thì tất hung."
+    }
+   ]
+  },
+  {
+   "number": 22,
+   "name": "Bí",
+   "hanzi": "賁",
+   "upper": "Cấn",
+   "lower": "Ly",
+   "bits": "101001",
+   "judgment": "Hanh thông; lợi nhỏ về chỗ có đi (賁：亨，小利有攸往).",
+   "image": "Dưới núi có lửa (lửa soi rọi chân núi), là Bí; người quân tử nhân đó làm sáng các việc chính sự, nhưng không dám lấy đó mà xử kiện (山下有火，賁；君子以明庶政，无敢折獄).",
+   "modernShort": "Vẻ đẹp tô điểm — hình thức làm rõ nội dung, nhưng đừng để cái đẹp che mất thực chất.",
+   "lines": [
+    {
+     "textHV": "Bí kỳ chỉ, xả xa nhi đồ",
+     "gloss": "Trang sức ngón chân của mình; bỏ xe mà đi bộ",
+     "modern": "Tô điểm từ chỗ thấp nhất, giữ bản phận: thà đi bộ đường hoàng còn hơn ngồi nhờ cái xe không xứng. Làm đẹp mình bằng cách giữ liêm khiết, không tham vinh hão."
+    },
+    {
+     "textHV": "Bí kỳ tu",
+     "gloss": "Trang sức bộ râu (của người)",
+     "modern": "Râu chỉ đẹp theo cái cằm — trang sức phải nương vào cái gốc (chất) mới có nghĩa. Hình thức tự nó không sống được, phải gắn với nội dung nó tô điểm."
+    },
+    {
+     "textHV": "Bí như, nhu như, vĩnh trinh cát",
+     "gloss": "Rỡ ràng, nhuần mượt; mãi giữ chính thì tốt",
+     "modern": "Đang giữa lúc phong lưu, nhuần nhã, được vây bọc bởi cái đẹp — dễ đắm vào đó. Phải bền giữ chính đạo mãi mãi thì cái đẹp ấy mới tốt lành."
+    },
+    {
+     "textHV": "Bí như, phan như, bạch mã hàn như, phỉ khấu, hôn cấu",
+     "gloss": "Rỡ ràng, phơ phơ trắng; ngựa trắng phi như bay; chẳng phải giặc, mà là cầu hôn",
+     "modern": "Muốn về với điều chân thật (mộc mạc, \"trắng\") nhưng bị ngăn cách. Kẻ tưởng là \"giặc\" cản đường hóa ra là người đến kết duyên. Vượt hiểu lầm thì hợp được điều mình hướng tới."
+    },
+    {
+     "textHV": "Bí vu khâu viên, thúc bạch tiên tiên, lận, chung cát",
+     "gloss": "Trang sức ở gò vườn, [chỉ] bó lụa mỏng nhỏ; đáng chê [đạm bạc] nhưng cuối cùng tốt",
+     "modern": "Chuộng sự giản dị, tiết kiệm (lễ vật đơn sơ) — thoạt trông có vẻ hà tiện, đáng chê. Nhưng trọng chất hơn phô trương thì rốt cuộc tốt đẹp."
+    },
+    {
+     "textHV": "Bạch bí, vô cữu",
+     "gloss": "Trang sức bằng màu trắng (không màu), không lỗi",
+     "modern": "Đỉnh của cái đẹp là trở về mộc mạc: bỏ hết tô vẽ, để bản chất tự lên tiếng. \"Vẽ xong rồi mới thấy nền trắng là quý\" — chất phác là trang sức cao nhất."
+    }
+   ]
+  },
+  {
+   "number": 23,
+   "name": "Bác",
+   "hanzi": "剝",
+   "upper": "Cấn",
+   "lower": "Khôn",
+   "bits": "000001",
+   "judgment": "Không lợi về chỗ có đi (剝：不利有攸往).",
+   "image": "Núi nương trên đất (sắp lở xuống), là Bác; người trên nhân đó làm dày phần dưới để yên chỗ ở (山附於地，剝；上以厚下安宅).",
+   "modernShort": "Cái xấu gặm dần từ trên — thời suy bại, giữ mình, không cố chống, chờ đáy để bật lại.",
+   "lines": [
+    {
+     "textHV": "Bác sàng dĩ túc, miệt trinh, hung",
+     "gloss": "Đẽo giường [bắt đầu] từ chân, bỏ mất sự chính, hung",
+     "modern": "Sự phá hoại khởi đầu âm thầm từ nền móng (chân giường). Cái xấu gặm từ gốc, gạt bỏ lẽ chính — điềm hung đang nhen."
+    },
+    {
+     "textHV": "Bác sàng dĩ biện, miệt trinh, hung",
+     "gloss": "Đẽo giường lên tới thanh ngang, bỏ mất chính, hung",
+     "modern": "Suy hoại lan lên cao hơn, tới thành giường — mà chưa có ai bênh vực lẽ phải. Cái xấu tiến thêm một nấc, vẫn hung."
+    },
+    {
+     "textHV": "Bác chi, vô cữu",
+     "gloss": "[Cùng phe bóc mà] bóc theo, [nhưng] không lỗi",
+     "modern": "Tuy ở giữa đám đang phá, nhưng lòng hướng về hào dương (chính đạo) ở trên, tách khỏi đồng bọn — nên riêng mình không mắc lỗi. Giữa số đông sai, vẫn có thể chọn đứng đúng."
+    },
+    {
+     "textHV": "Bác sàng dĩ phu, hung",
+     "gloss": "Đẽo giường tới mặt (chạm da người nằm), hung",
+     "modern": "Tàn phá đã chạm tới thân, tai họa sát sườn — không còn là chuyện nền móng nữa. Nguy đã tới da thịt, hung rõ ràng."
+    },
+    {
+     "textHV": "Quán ngư, dĩ cung nhân sủng, vô bất lợi",
+     "gloss": "Xâu cá [dẫn đàn], đem đám cung nhân được sủng ái, không gì không lợi",
+     "modern": "Người đứng đầu đám âm biết quy thuận cái dương còn lại (dẫn cả bầy về với chính đạo, như dẫn đàn cung nhân theo vua) — chuyển thế, nên không gì không lợi. Bước ngoặt: kẻ mạnh trong thời suy biết hàng phục điều chính."
+    },
+    {
+     "textHV": "Thạc quả bất thực, quân tử đắc dư, tiểu nhân bác lư",
+     "gloss": "Trái to (hạt giống) không bị ăn; quân tử được xe [dân chở], tiểu nhân thì bị đổ nhà",
+     "modern": "Hào dương duy nhất còn sót — như hạt giống cuối cùng không bị ăn, chứa mầm hồi sinh. Với quân tử, đây là lúc được nâng đỡ trở lại; với tiểu nhân phá tới cùng, là tự sập chính mái nhà mình. Cùng tắc biến — suy tận thì mầm mới nảy."
+    }
+   ]
+  },
+  {
+   "number": 24,
+   "name": "Phục",
+   "hanzi": "復",
+   "upper": "Khôn",
+   "lower": "Chấn",
+   "bits": "100000",
+   "judgment": "Hanh thông. Ra vào không bệnh tật, bạn đến không lỗi; trở lại theo đạo của nó, bảy ngày thì quay về, lợi về chỗ có đi (復：亨。出入无疾，朋來无咎。反復其道，七日來復，利有攸往).",
+   "image": "Sấm ở trong lòng đất, là Phục; các tiên vương nhân đó ngày Đông chí thì đóng cửa ải, khách buôn không đi, vua không đi xét các phương (雷在地中，復；先王以至日閉關，商旅不行，后不省方).",
+   "modernShort": "Một tia dương trở lại sau cùng cực — bước ngoặt phục hồi, khởi đầu chu kỳ mới từ điểm thấp nhất.",
+   "lines": [
+    {
+     "textHV": "Bất viễn phục, vô kỳ hối, nguyên cát",
+     "gloss": "Chưa đi xa đã trở lại, không đến mức ăn năn, rất tốt",
+     "modern": "Vừa chớm lệch đã kịp quay đầu, sửa ngay khi lỗi còn nhỏ — chẳng phải hối hận gì. Đây là hào đẹp nhất: biết mình sai và sửa liền là đại tốt."
+    },
+    {
+     "textHV": "Hưu phục, cát",
+     "gloss": "Trở lại một cách tốt lành, tốt",
+     "modern": "Quay về điều thiện một cách đẹp đẽ, nhờ biết hạ mình gần gũi người tốt (hào 1 ngay dưới). Theo gương người hiền mà trở lại thì tốt."
+    },
+    {
+     "textHV": "Tần phục, lệ, vô cữu",
+     "gloss": "Trở lại nhiều lần (lận đận), nguy, [nhưng] không lỗi",
+     "modern": "Sửa rồi lại sa, sa rồi lại sửa — chập chờn, có nguy. Nhưng rốt cuộc vẫn quay về nẻo chính, nên không thành lỗi. Kiên trì sửa mình dù vấp váp."
+    },
+    {
+     "textHV": "Trung hành độc phục",
+     "gloss": "Đi giữa [đám âm] mà một mình trở lại [theo dương]",
+     "modern": "Ở giữa số đông đang trôi theo cái sai, một mình dứt khoát quay về điều đúng. Cô độc mà theo đạo — không nói cát hung, nhưng tự nó là điều đáng quý."
+    },
+    {
+     "textHV": "Đôn phục, vô hối",
+     "gloss": "Dốc lòng đôn hậu trở lại, không ăn năn",
+     "modern": "Thành tâm, dày dặn tự xét mình mà quay về — trở lại bằng cả tấm lòng chứ không hời hợt. Vững vàng như thế thì không phải hối tiếc."
+    },
+    {
+     "textHV": "Mê phục, hung, hữu tai sảnh, dụng hành sư chung hữu đại bại",
+     "gloss": "Mê muội không chịu trở lại, hung, có tai họa; đem quân [ra trận] thì cuối cùng đại bại",
+     "modern": "Lạc lối tới cùng mà vẫn không chịu quay đầu — cố chấp trong cái sai. Hung, tự chuốc họa; làm việc lớn (dấy binh) trong trạng thái ấy thì chắc chắn thất bại nặng. Lỡ thời quay về là bi kịch."
+    }
+   ]
+  },
+  {
+   "number": 25,
+   "name": "Vô Vọng",
+   "hanzi": "無妄",
+   "upper": "Càn",
+   "lower": "Chấn",
+   "bits": "100111",
+   "judgment": "Rất hanh thông, lợi về giữ chính; nếu không chính đáng thì có tai họa, không lợi về chỗ có đi (无妄：元亨，利貞。其匪正有眚，不利有攸往).",
+   "image": "Dưới trời sấm chạy, muôn vật được phú cho lẽ chân thật không vọng, là Vô Vọng; các tiên vương nhân đó gắng hợp thời để nuôi dưỡng muôn vật (天下雷行，物與无妄；先王以茂對時，育萬物).",
+   "modernShort": "Hành động hồn nhiên, không vụ lợi — thuận tự nhiên và ngay thẳng thì không lỗi.",
+   "lines": [
+    {
+     "textHV": "Vô vọng, vãng cát",
+     "gloss": "Không càn bậy, đi tới thì tốt",
+     "modern": "Xuất phát từ động cơ chân thật, trong sáng — cứ thế tiến thì tốt. Lòng ngay thẳng là vốn liếng vững nhất để bắt đầu."
+    },
+    {
+     "textHV": "Bất canh hoạch, bất tri dư, tắc lợi hữu du vãng",
+     "gloss": "Chẳng [vì] gặt mà cày, chẳng [vì] có ruộng thuần mà vỡ ruộng mới; [không vụ lợi] thì lợi có chỗ đi",
+     "modern": "Làm việc vì bản thân việc đó là đúng, không chăm chăm tính công cán kết quả. Buông cái tâm vụ lợi thì đường đi mới hanh."
+    },
+    {
+     "textHV": "Vô vọng chi tai, hoặc hệ chi ngưu, hành nhân chi đắc, ấp nhân chi tai",
+     "gloss": "Tai vạ của sự chân thật: buộc trâu ở đó, người qua đường dắt mất, người trong làng mắc vạ oan",
+     "modern": "Ngay cả khi mình chẳng làm gì sai, tai bay vạ gió vẫn có thể ập đến. Rủi ro vô cớ là một phần của đời — chân thật rồi thì đừng tự dằn vặt vì cái ngoài tầm mình."
+    },
+    {
+     "textHV": "Khả trinh, vô cữu",
+     "gloss": "Có thể giữ chính, không lỗi",
+     "modern": "Cứ bền giữ sự ngay thẳng vốn có, không lung lay theo ngoại cảnh — giữ được thì không lỗi. Cái chính đã sẵn, việc của ta là đừng đánh mất nó."
+    },
+    {
+     "textHV": "Vô vọng chi tật, vật dược, hữu hỷ",
+     "gloss": "Cái bệnh [đến với người] chân thật, đừng uống thuốc, [tự khỏi] có mừng",
+     "modern": "Đã sống ngay thẳng mà gặp trục trặc bất ngờ thì đừng cuống lên \"chữa\" bừa — can thiệp nóng vội chỉ làm hỏng thêm. Cứ vững, để nó tự qua, rồi có mừng."
+    },
+    {
+     "textHV": "Vô vọng, hành hữu sảnh, vô du lợi",
+     "gloss": "Chân thật [tới cực] mà [cố] đi thì có lỗi, không gì lợi",
+     "modern": "Đã tới lúc nên dừng mà vẫn cố tiến, dù động cơ trong sáng cũng thành sai — vì trái thời. Chân thật vẫn phải biết đúng lúc; hết thời mà gắng thì vô ích."
+    }
+   ]
+  },
+  {
+   "number": 26,
+   "name": "Đại Súc",
+   "hanzi": "大畜",
+   "upper": "Cấn",
+   "lower": "Càn",
+   "bits": "111001",
+   "judgment": "Lợi về giữ chính; không ăn cơm nhà (mà ra giúp đời) thì tốt, lợi vượt sông lớn (大畜：利貞，不家食吉，利涉大川).",
+   "image": "Trời nằm trong núi (núi chứa được cả trời), là Đại Súc; người quân tử nhân đó học rộng lời xưa nết trước để tích chứa đức của mình (天在山中，大畜；君子以多識前言往行，以畜其德).",
+   "modernShort": "Dồn nén năng lượng lớn — kiềm chế và bồi dưỡng nội lực, chờ thời để bung sức mạnh.",
+   "lines": [
+    {
+     "textHV": "Hữu lệ, lợi dĩ",
+     "gloss": "Có nguy, nên dừng lại",
+     "modern": "Sức còn non mà đòi xông lên là gặp nguy. Biết dừng đúng lúc, chờ tích đủ lực — dừng ở đây là khôn, không phải hèn."
+    },
+    {
+     "textHV": "Dư thoát phúc",
+     "gloss": "Xe [tự] tháo rời trục bánh [mà dừng]",
+     "modern": "Tự kiềm mình dừng lại như xe tháo bánh — không cố lăn tới. Đắc trung nên biết tiết chế đúng lúc, không manh động."
+    },
+    {
+     "textHV": "Lương mã trục, lợi gian trinh, nhật nhàn dư vệ, lợi hữu du vãng",
+     "gloss": "Ngựa hay đua ruổi, lợi giữ chính trong gian nan; ngày ngày luyện xe và phòng bị, lợi có chỗ đi",
+     "modern": "Sức đã đủ, trên dưới cùng chí — như ngựa tốt phóng lên. Nhưng phải vừa tiến vừa rèn kỹ năng và giữ phòng bị, bền chí trong khó khăn thì mới đi xa."
+    },
+    {
+     "textHV": "Đồng ngưu chi cốc, nguyên cát",
+     "gloss": "Cái ách chặn [sừng] con trâu non, cả tốt",
+     "modern": "Chặn cái hung ngay từ khi nó chưa kịp mọc \"sừng\" (chưa thành hại) — như hãm trâu từ lúc non. Ngăn cái xấu từ mầm thì nhẹ nhàng mà hiệu quả nhất: đại tốt."
+    },
+    {
+     "textHV": "Phần thỉ chi nha, cát",
+     "gloss": "[Trị] nanh con lợn đã thiến, tốt",
+     "modern": "Muốn trị cái hung (nanh lợn) thì đừng đấu trực diện với nanh, hãy \"thiến\" nó — hóa giải cái gốc gây hung. Trị tận căn nguyên, cái dữ tự mất sức: tốt."
+    },
+    {
+     "textHV": "Hà thiên chi cù, hanh",
+     "gloss": "Rong ruổi trên đường lớn của trời, hanh thông",
+     "modern": "Tích lũy đến độ viên mãn thì mọi ngăn trở tan hết — thênh thang như đi trên đại lộ của trời. Dồn nén đủ lâu, đến lúc là bung ra hanh thông."
+    }
+   ]
+  },
+  {
+   "number": 27,
+   "name": "Di",
+   "hanzi": "頤",
+   "upper": "Cấn",
+   "lower": "Chấn",
+   "bits": "100001",
+   "judgment": "Giữ chính thì tốt. Xem cách nuôi dưỡng, tự mình lo lấy miếng ăn (頤：貞吉。觀頤，自求口實).",
+   "image": "Dưới núi có sấm, là Di; người quân tử nhân đó thận trọng lời nói, tiết độ ăn uống (山下有雷，頤；君子以慎言語，節飲食).",
+   "modernShort": "Chăm lo nuôi dưỡng — chú ý nuôi gì cho thân và tâm; lời nói và cái ăn đều cần tiết độ.",
+   "lines": [
+    {
+     "textHV": "Xả nhĩ linh quy, quan ngã đóa di, hung",
+     "gloss": "Bỏ con rùa thiêng của mình [khả năng tự nuôi], nhìn ta trễ mép thèm thuồng, hung",
+     "modern": "Vốn có tài tự lo (rùa thiêng = tự nuôi khí), lại bỏ đó để nhìn miếng ăn người khác mà thèm — đánh mất khí phách. Bỏ nội lực đi cầu cạnh bên ngoài thì hung."
+    },
+    {
+     "textHV": "Điên di, phất kinh vu khâu, chinh hung",
+     "gloss": "Nuôi ngược [cầu kẻ dưới nuôi], trái lẽ thường mà [lại] cầu ở gò cao, đi thì hung",
+     "modern": "Đáng lẽ tự lập lại đi ngửa tay xin cả người dưới lẫn người trên — trái đạo nuôi. Cứ thế mà hành động thì hung. Mất tự chủ trong việc nuôi thân là điều đáng ngại."
+    },
+    {
+     "textHV": "Phất di, trinh hung, thập niên vật dụng, vô du lợi",
+     "gloss": "Trái hẳn đạo nuôi, giữ vậy thì hung; mười năm chớ dùng, không gì lợi",
+     "modern": "Nuôi dưỡng sai đường tận gốc (chạy theo dục vọng), giữ lối đó thì hung dài lâu — \"mười năm chớ dùng\". Sai từ cái nuôi mình thì hỏng cả đời."
+    },
+    {
+     "textHV": "Điên di, cát, hổ thị đam đam, kỳ dục trục trục, vô cữu",
+     "gloss": "Nuôi ngược [cầu người tài giúp nuôi], tốt; như hổ nhìn chằm chằm, lòng ham theo đuổi mãi, không lỗi",
+     "modern": "Người có trách nhiệm mà tự thấy sức thiếu, chủ động cầu người tài về giúp nuôi dân — \"nuôi ngược\" mà chính đáng. Khao khát ấy mãnh liệt như hổ chăm chú, nhưng vì mục đích tốt nên không lỗi."
+    },
+    {
+     "textHV": "Phất kinh, cư trinh cát, bất khả thiệp đại xuyên",
+     "gloss": "Trái lẽ thường, [nhưng] ở yên giữ chính thì tốt; chưa thể vượt sông lớn",
+     "modern": "Tự lực chưa đủ để tự nuôi cả thiên hạ, phải nương người hiền. Biết phận, ở yên giữ chính thì tốt; nhưng đừng liều làm việc lớn quá sức (vượt sông) lúc này."
+    },
+    {
+     "textHV": "Do di, lệ, cát, lợi thiệp đại xuyên",
+     "gloss": "[Muôn vật] nhờ mình mà được nuôi; [gánh nặng] có nguy nhưng tốt, lợi vượt sông lớn",
+     "modern": "Người gánh trọng trách nuôi cả thiên hạ — vị trí then chốt, ai cũng trông vào. Trách nhiệm nặng nên có nguy, nhưng làm tròn thì tốt lớn, đủ sức làm cả việc lớn."
+    }
+   ]
+  },
+  {
+   "number": 28,
+   "name": "Đại Quá",
+   "hanzi": "大過",
+   "upper": "Đoài",
+   "lower": "Tốn",
+   "bits": "011110",
+   "judgment": "Cây xà oằn xuống; lợi về chỗ có đi, hanh thông (大過：棟橈，利有攸往，亨).",
+   "image": "Nước đầm ngập chết cây, là Đại Quá; người quân tử nhân đó đứng một mình không sợ, lánh đời mà không buồn (澤滅木，大過；君子以獨立不懼，遯世无悶).",
+   "modernShort": "Xà nhà oằn vì quá nặng — tình thế vượt sức bình thường, cần biện pháp khác thường mà vẫn vững gốc.",
+   "lines": [
+    {
+     "textHV": "Tạ dụng bạch mao, vô cữu",
+     "gloss": "Lót [đồ tế] bằng cỏ tranh trắng, không lỗi",
+     "modern": "Trước việc lớn bất thường, khởi đầu bằng sự thận trọng tột bậc — kê lót cẩn thận như dùng cỏ tranh trắng lót đồ quý. Cẩn thận thái quá lúc mở màn thì không lỗi."
+    },
+    {
+     "textHV": "Khô dương sinh đề, lão phu đắc kỳ nữ thê, vô bất lợi",
+     "gloss": "Cây dương khô nảy chồi rễ; ông già lấy được vợ trẻ, không gì không lợi",
+     "modern": "Cái cứng già cỗi gặp cái mềm trẻ trung thì hồi sinh (dương khô đâm chồi). Người mạnh biết kết hợp với sức mềm bổ trợ — tưởng lệch mà lại sinh sôi, không gì không lợi."
+    },
+    {
+     "textHV": "Đống nạo, hung",
+     "gloss": "Cây xà nhà cong oằn [sắp gãy], hung",
+     "modern": "Quá cứng, tự phụ, không chịu ai chống đỡ — như xà nhà oằn xuống sắp gãy. Gồng gánh việc quá sức một mình mà bịt tai với trợ giúp thì sập, hung."
+    },
+    {
+     "textHV": "Đống long, cát, hữu tha, lận",
+     "gloss": "Xà nhà được nâng cao [vững], tốt; [nếu] có lòng khác thì đáng tiếc",
+     "modern": "Có sức mà biết nương người dưới đỡ thì trụ vững như xà nhà cao — tốt. Nhưng nếu sinh lòng riêng, tính toán khác đi thì hỏng chuyện, đáng tiếc. Giữ lòng thẳng thì trụ được."
+    },
+    {
+     "textHV": "Khô dương sinh hoa, lão phụ đắc kỳ sĩ phu, vô cữu vô dự",
+     "gloss": "Cây dương khô nở hoa; bà già lấy được chồng trai tráng, không lỗi cũng không khen",
+     "modern": "Kết hợp gượng gạo, hào nhoáng bề ngoài mà không có gốc (hoa nở trên cây khô thì chóng tàn). Không đến mức lỗi, nhưng cũng chẳng có gì đáng khen — hình thức mà thiếu thực chất."
+    },
+    {
+     "textHV": "Quá thiệp diệt đỉnh, hung, vô cữu",
+     "gloss": "Lội qua chỗ quá sâu, ngập cả đỉnh đầu, hung, [nhưng] không lỗi",
+     "modern": "Vì việc nghĩa mà liều tới mức chết chìm — thất bại (hung) nhưng động cơ cao cả nên không đáng trách. Có những dấn thân biết là nguy vẫn làm; kết cục bi tráng mà không hổ thẹn."
+    }
+   ]
+  },
+  {
+   "number": 29,
+   "name": "Tập Khảm",
+   "hanzi": "坎",
+   "upper": "Khảm",
+   "lower": "Khảm",
+   "bits": "010010",
+   "judgment": "Hiểm trùng hiểm; có lòng thành, cốt ở tâm hanh thông; hành động thì được chuộng (習坎：有孚，維心亨，行有尚).",
+   "image": "Nước tới tấp nối nhau, là Tập Khảm; người quân tử nhân đó giữ đức cho thường hằng, luyện tập việc dạy dỗ (水洊至，習坎；君子以常德行，習教事).",
+   "modernShort": "Vực nước nối vực nước — giữ lòng thành và đều đặn như nước, quen với hiểm để vượt hiểm.",
+   "lines": [
+    {
+     "textHV": "Tập khảm, nhập vu khảm đàm, hung",
+     "gloss": "Hiểm chồng hiểm, sa vào hố sâu trong chỗ hiểm, hung",
+     "modern": "Ở đáy hiểm nạn mà lại càng lún sâu, quen dần với chỗ nguy đến mức mất phương hướng — hung. Khởi đầu trong nguy mà buông xuôi thì càng chìm."
+    },
+    {
+     "textHV": "Khảm hữu hiểm, cầu tiểu đắc",
+     "gloss": "Trong chỗ trũng có hiểm, [chỉ nên] cầu được chút ít",
+     "modern": "Giữa vòng vây hiểm, chưa thể thoát ngay. Đặt mục tiêu nhỏ, gỡ dần từng chút — \"cầu tiểu đắc\". Trong nguy đừng tham lớn, giữ được cái lõi vững đã là quý."
+    },
+    {
+     "textHV": "Lai chi khảm khảm, hiểm thả chẩm, nhập vu khảm đàm, vật dụng",
+     "gloss": "Tới lui đều hiểm, hiểm rồi lại nằm kê gối [lún sâu], sa vào hố hiểm — chớ hành động",
+     "modern": "Tiến cũng hiểm, lui cũng hiểm, càng cựa càng lún. Lúc này mọi hành động đều làm tình thế tệ hơn — tốt nhất là án binh bất động, chờ khe hở. Biết khi nào không nên làm gì."
+    },
+    {
+     "textHV": "Tôn tửu, quỹ nhị, dụng phẫu, nạp ước tự dũ, chung vô cữu",
+     "gloss": "Một chén rượu, hai rá xôi, đựng đồ sành, dâng lễ mọn qua cửa sổ [giản dị chân thành], cuối cùng không lỗi",
+     "modern": "Trong lúc gian nan, mối quan hệ được giữ bằng sự chân thành giản dị, không cần lễ nghi phô trương (chén rượu, rá cơm mộc mạc). Thành thật với nhau thì qua được hoạn nạn, không lỗi."
+    },
+    {
+     "textHV": "Khảm bất doanh, chỉ ký bình, vô cữu",
+     "gloss": "Nước [trong hố] chưa tràn đầy, nhưng đã tới mức phẳng [sắp thoát], không lỗi",
+     "modern": "Hiểm nạn chưa qua hẳn nhưng đã tới điểm cân bằng, sắp vượt được. Giữ vững cái trung, không tràn không thiếu — không lỗi. Người vững lõi thì hiểm nào cũng có lối ra."
+    },
+    {
+     "textHV": "Hệ dụng huy mặc, trí vu tùng cức, tam tuế bất đắc, hung",
+     "gloss": "Trói bằng dây thừng, giam nơi bụi gai, ba năm không thoát ra, hung",
+     "modern": "Lún vào hiểm tới cùng, bị trói buộc như giam trong bụi gai, lâu dài không gỡ được — hung. Sa hiểm mà không giữ được đạo, để mắc kẹt quá lâu thì thành bế tắc dài dặc."
+    }
+   ]
+  },
+  {
+   "number": 30,
+   "name": "Thuần Ly",
+   "hanzi": "離",
+   "upper": "Ly",
+   "lower": "Ly",
+   "bits": "101101",
+   "judgment": "Lợi về giữ chính, hanh thông; nuôi bò cái (đức nhu thuận) thì tốt (離：利貞，亨，畜牝牛吉).",
+   "image": "Hai lần sáng nối nhau làm nên Ly; bậc đại nhân nhân đó nối tiếp ánh sáng, soi tỏ khắp bốn phương (明兩作，離；大人以繼明照于四方).",
+   "modernShort": "Ánh sáng cần chất bám — giữ sự sáng suốt bằng cách nương vào điều đúng, soi mà không thiêu.",
+   "lines": [
+    {
+     "textHV": "Lý thác nhiên, kính chi vô cữu",
+     "gloss": "Bước chân [buổi đầu] rối loạn lẫn lộn, giữ lòng kính cẩn thì không lỗi",
+     "modern": "Khởi đầu còn bối rối, chưa định hướng được bám vào đâu. Giữ thái độ nghiêm cẩn, không hấp tấp bám bừa — thì không lỗi. Cẩn trọng ngay từ bước chân đầu."
+    },
+    {
+     "textHV": "Hoàng ly, nguyên cát",
+     "gloss": "Bám vào [sắc] vàng [màu của trung chính], cả tốt",
+     "modern": "Bám nương đúng vào cái trung chính, đúng mực — như ánh sáng màu vàng ôn hòa. Chọn đúng chỗ để gắn bó/phụ thuộc thì đại tốt. Hào đẹp nhất của quẻ."
+    },
+    {
+     "textHV": "Nhật trắc chi ly, bất cổ phẫu nhi ca, tắc đại điệt chi ta, hung",
+     "gloss": "Mặt trời đã xế còn bám sáng; không gõ nhịp vui ca [thuận lẽ] mà [lại] than thở tuổi già, hung",
+     "modern": "Ánh sáng đã tới lúc xế chiều (một giai đoạn sắp hết). Không an nhiên thuận theo lẽ tuần hoàn mà cứ bi lụy níu kéo, than thân trách phận — thì hung. Biết chấp nhận quy luật lên–xuống."
+    },
+    {
+     "textHV": "Đột như kỳ lai như, phần như, tử như, khí như",
+     "gloss": "Đến đột ngột dữ dội, bốc cháy, [rồi] chết, [bị] bỏ đi",
+     "modern": "Bốc lên hung hãn, chói gắt như lửa dữ bùng lên rồi tàn rụi ngay — không bền. Kẻ dùng sức sáng/quyền lực một cách nóng nảy vô độ thì tự thiêu mình, bị ruồng bỏ. Sáng mà thiếu chừng mực là tai họa."
+    },
+    {
+     "textHV": "Xuất thế đà nhược, thích ta nhược, cát",
+     "gloss": "Nước mắt giàn giụa, than thở buồn thương, [nhưng] tốt",
+     "modern": "Ở ngôi cao giữa hai lằn sáng mạnh, biết lo sợ tới mức rơi lệ, thương cảm chân thành — chính nhờ biết sợ, biết đau mà giữ được mình nên tốt. Sự khiêm nhu và tỉnh thức cứu người ở đỉnh."
+    },
+    {
+     "textHV": "Vương dụng xuất chinh, hữu gia, chiết thủ, hoạch phỉ kỳ xú, vô cữu",
+     "gloss": "Vua dùng [đức sáng] ra quân, có công lớn; chém kẻ đầu sỏ, bắt [nhưng] không phải cả bè lũ, không lỗi",
+     "modern": "Dùng sự sáng suốt (và uy lực) để dẹp loạn: chỉ trừng trị đúng kẻ cầm đầu, không giết lan cả đám bị lôi kéo. Cứng rắn có giới hạn, phân biệt chính phạm với tòng phạm — nên không lỗi."
+    }
+   ]
+  },
+  {
+   "number": 31,
+   "name": "Hàm",
+   "hanzi": "咸",
+   "upper": "Đoài",
+   "lower": "Cấn",
+   "bits": "001110",
+   "judgment": "Hanh thông, lợi về giữ chính; cưới vợ thì tốt (咸：亨，利貞，取女吉).",
+   "image": "Trên núi có đầm (núi rỗng nên chứa được nước), là Hàm; người quân tử nhân đó giữ lòng trống rỗng để đón nhận người (山上有澤，咸；君子以虛受人).",
+   "modernShort": "Rung động cảm ứng đôi bên — chân thành thu hút nhau, lắng nghe cảm xúc để kết nối.",
+   "lines": [
+    {
+     "textHV": "Hàm kỳ mẫu",
+     "gloss": "Cảm ở ngón chân cái",
+     "modern": "Rung động mới chớm ở chỗ nông nhất (ngón chân), chưa đủ để thành hành động. Cảm tình buổi đầu còn mơ hồ, chưa nên vội động."
+    },
+    {
+     "textHV": "Hàm kỳ phi, hung, cư cát",
+     "gloss": "Cảm ở bắp chân; [vọng động thì] hung, ở yên thì tốt",
+     "modern": "Cảm xúc đã mạnh hơn, dễ bị cuốn đi (bắp chân muốn bước). Nếu nôn nóng chạy theo thì hung; biết giữ mình ở yên, chờ đúng lúc thì tốt. Làm chủ cảm xúc chứ đừng để nó kéo."
+    },
+    {
+     "textHV": "Hàm kỳ cổ, chấp kỳ tùy, vãng lận",
+     "gloss": "Cảm ở đùi, giữ [thói] chạy theo người, cứ đi thì đáng tiếc",
+     "modern": "Cảm tới đùi (sắp bước theo), nhưng chỉ biết bám gót người khác, thiếu chủ kiến. Rung động mà đánh mất chính mình, hùa theo — cứ thế thì đáng tiếc."
+    },
+    {
+     "textHV": "Trinh cát, hối vong, đồng đồng vãng lai, bằng tòng nhĩ tư",
+     "gloss": "Giữ chính thì tốt, hết ăn năn; [nếu] rối rít qua lại [cảm riêng tư] thì chỉ vài bạn hẹp theo ý mình",
+     "modern": "Đây là vị trí \"quả tim\" — nơi cảm thật sự khởi. Cảm bằng lòng chính, rộng và thành thì tốt, hết hối. Nhưng nếu cảm bằng tính toán riêng, thiên vị, thì chỉ thu hút được dăm người hợp ý. Cảm bằng cái tâm công thì mới cảm được rộng."
+    },
+    {
+     "textHV": "Hàm kỳ môi, vô hối",
+     "gloss": "Cảm ở thăn thịt lưng (chỗ cứng, ít cử động), không ăn năn",
+     "modern": "Cảm ở chỗ điềm tĩnh, chừng mực — không bị tình cảm lôi kéo thái quá. Rung động mà giữ được sự vững vàng, không nông nổi, nên không phải hối tiếc."
+    },
+    {
+     "textHV": "Hàm kỳ phụ, giáp, thiệt",
+     "gloss": "Cảm ở mép, má, lưỡi [chỉ bằng miệng lưỡi]",
+     "modern": "Cảm hóa người chỉ bằng lời nói suông, hoa mỹ ngoài mép — nông cạn, thiếu thực chất. Rung động thật phải từ lòng, không phải từ đầu lưỡi."
+    }
+   ]
+  },
+  {
+   "number": 32,
+   "name": "Hằng",
+   "hanzi": "恆",
+   "upper": "Chấn",
+   "lower": "Tốn",
+   "bits": "011100",
+   "judgment": "Hanh thông, không lỗi; lợi về giữ chính, lợi về chỗ có đi (恆：亨，无咎，利貞，利有攸往).",
+   "image": "Sấm và gió (luôn đi cùng nhau), là Hằng; người quân tử nhân đó đứng vững, không đổi phương hướng (雷風，恆；君子以立不易方).",
+   "modernShort": "Sự bền bỉ lâu dài — kiên trì theo đạo thường hằng, đổi cách nhưng giữ nguyên cốt lõi.",
+   "lines": [
+    {
+     "textHV": "Tuấn hằng, trinh hung, vô du lợi",
+     "gloss": "Đào sâu [đòi] sự bền ngay [từ đầu], giữ vậy thì hung, không gì lợi",
+     "modern": "Mới bắt đầu đã đòi hỏi sâu sắc, bền chặt tức thì — nóng vội quá hóa hỏng. Quan hệ/sự nghiệp cần thời gian bồi đắp; ép \"bền ngay\" thì phản tác dụng, hung."
+    },
+    {
+     "textHV": "Hối vong",
+     "gloss": "Sự ăn năn mất đi",
+     "modern": "Nhờ giữ được đạo trung (không thái quá, không bất cập), bền bỉ đúng mực nên mọi hối tiếc tan biến. Kiên trì mà biết chừng mực là bí quyết giữ được lâu."
+    },
+    {
+     "textHV": "Bất hằng kỳ đức, hoặc thừa chi tu, trinh lận",
+     "gloss": "Không giữ bền cái đức của mình, có khi rước lấy điều hổ thẹn; giữ [lối ấy] thì đáng tiếc",
+     "modern": "Tính khí thất thường, đức hạnh nay thế này mai thế khác — sớm muộn chuốc lấy xấu hổ. Người không kiên định thì chẳng đâu dung nạp. Thiếu sự nhất quán là cái tiếc lớn."
+    },
+    {
+     "textHV": "Điền vô cầm",
+     "gloss": "Đi săn mà chẳng được con thú nào",
+     "modern": "Bền bỉ, chăm chỉ nhưng sai chỗ, sai hướng thì cũng công cốc — như săn ở nơi không có thú. Kiên trì phải đặt đúng chỗ mới ra kết quả; cần cù nhầm chỗ là uổng phí."
+    },
+    {
+     "textHV": "Hằng kỳ đức, trinh, phụ nhân cát, phu tử hung",
+     "gloss": "Giữ bền cái đức [nhu thuận theo một bề], chính; đàn bà thì tốt, người quân tử thì hung",
+     "modern": "Nhất mực tuân theo một khuôn cố định: hợp với vai cần sự thuận tòng, nhưng với người phải tùy nghi quyền biến (quân tử) thì lại dở. Cùng một sự \"kiên định\", đúng hay sai tùy vai trò và hoàn cảnh."
+    },
+    {
+     "textHV": "Chấn hằng, hung",
+     "gloss": "Xáo động [đòi] cái bền, hung",
+     "modern": "Ở đỉnh mà cứ động loạn, xáo trộn không ngừng thì không thể có sự bền — hung. Muốn lâu dài mà bản thân bất an, thay đổi xoành xoạch thì tự phá vỡ mọi nền tảng."
+    }
+   ]
+  },
+  {
+   "number": 33,
+   "name": "Độn",
+   "hanzi": "遯",
+   "upper": "Càn",
+   "lower": "Cấn",
+   "bits": "001111",
+   "judgment": "Hanh thông; lợi nhỏ về giữ chính (遯：亨，小利貞).",
+   "image": "Dưới trời có núi (núi cố vươn mà trời vẫn lùi xa), là Độn; người quân tử nhân đó xa kẻ tiểu nhân — không tỏ ghét mà vẫn nghiêm (天下有山，遯；君子以遠小人，不惡而嚴).",
+   "modernShort": "Rút lui đúng lúc — biết lùi khi khí xấu lên, giữ khoảng cách để bảo toàn và chờ thời.",
+   "lines": [
+    {
+     "textHV": "Độn vĩ, lệ, vật dụng hữu du vãng",
+     "gloss": "Trốn ở đuôi (chậm chân, sau cùng), nguy; chớ hành động đi đâu",
+     "modern": "Chần chừ đến khi bị dồn ở cuối mới tính rút thì đã nguy. Lúc này càng cựa quậy càng lộ — tốt nhất ẩn mình bất động, đừng manh động."
+    },
+    {
+     "textHV": "Chấp chi dụng hoàng ngưu chi cách, mạc chi thắng thoát",
+     "gloss": "Giữ [chí] chặt như buộc bằng da trâu vàng, không ai bứt nổi",
+     "modern": "Giữ vững ý chí rút lui kiên định như dây da trâu bền chắc — không gì lay chuyển được. Đã quyết giữ mình thì dứt khoát, không ai kéo lại được."
+    },
+    {
+     "textHV": "Hệ độn, hữu tật, lệ; súc thần thiếp, cát",
+     "gloss": "Vướng bận [tình riêng] khi rút lui, có bệnh, nguy; [chỉ hợp] nuôi tôi tớ nàng hầu thì tốt",
+     "modern": "Muốn rút mà còn vướng víu quan hệ, lợi ích — như mang bệnh, nguy. Loại \"níu kéo\" này chỉ hợp việc nhỏ (nuôi kẻ hầu), không làm nổi việc lớn. Rút lui mà nửa vời thì mắc kẹt."
+    },
+    {
+     "textHV": "Hiếu độn, quân tử cát, tiểu nhân phủ",
+     "gloss": "Yêu thích [nhưng vẫn dứt] mà lui, quân tử tốt, tiểu nhân không [làm nổi]",
+     "modern": "Dù còn quyến luyến vẫn dứt khoát buông mà lui — người quân tử làm được nên tốt; kẻ tiểu nhân tham luyến không nỡ bỏ thì hỏng. Bản lĩnh nằm ở chỗ dám rời cái mình còn thích."
+    },
+    {
+     "textHV": "Gia độn, trinh cát",
+     "gloss": "Rút lui một cách tốt đẹp, hợp thời, giữ chính thì tốt",
+     "modern": "Rút lui đúng lúc, ung dung và chính đáng — thời điểm và tư thế đều đẹp. Biết dừng ở đỉnh, lui trong danh dự: đây là cách rút lui lý tưởng."
+    },
+    {
+     "textHV": "Phì độn, vô bất lợi",
+     "gloss": "Rút lui thong dong dư dả (thảnh thơi), không gì không lợi",
+     "modern": "Lui hẳn, nhẹ nhõm, không còn chút vướng bận — tự do tự tại. Người buông được sạch sẽ, không tiếc nuối, thì đường nào cũng thênh thang. Rút lui trọn vẹn nhất là rút trong thanh thản."
+    }
+   ]
+  },
+  {
+   "number": 34,
+   "name": "Đại Tráng",
+   "hanzi": "大壯",
+   "upper": "Chấn",
+   "lower": "Càn",
+   "bits": "111100",
+   "judgment": "Lợi về giữ chính (大壯：利貞).",
+   "image": "Sấm vang trên trời, là Đại Tráng; người quân tử nhân đó: không hợp lễ thì không làm (雷在天上，大壯；君子以非禮弗履).",
+   "modernShort": "Sức cường thịnh dâng cao — mạnh nhưng phải đi đôi với chính đáng, đừng dùng lực bừa.",
+   "lines": [
+    {
+     "textHV": "Tráng vu chỉ, chinh hung, hữu phu",
+     "gloss": "Mạnh ở ngón chân (sức dồn ở chỗ thấp mà hung hăng), đi thì hung; [nên giữ] lòng tin",
+     "modern": "Ở vị trí thấp mà đã hùng hổ muốn xông tới — sức chưa đủ mà nóng nảy thì chuốc họa. Có khí thế nhưng phải giữ, đừng vội ra tay khi chưa đủ thế."
+    },
+    {
+     "textHV": "Trinh cát",
+     "gloss": "Giữ chính thì tốt",
+     "modern": "Sức mạnh đặt ở chỗ đắc trung (không thái quá) — cứ giữ ngay thẳng, đúng mực thì tốt. Mạnh mà điềm tĩnh, không phô trương, là cái mạnh bền."
+    },
+    {
+     "textHV": "Tiểu nhân dụng tráng, quân tử dụng võng, trinh lệ; đê dương xúc phiên, luy kỳ giác",
+     "gloss": "Tiểu nhân cậy sức, quân tử [coi như] không cậy sức; giữ [lối cậy sức] thì nguy. Dê đực húc giậu, mắc kẹt sừng",
+     "modern": "Kẻ tầm thường gặp sức là khoe sức, đâm bừa; người khôn thì như không có sức để dùng. Cậy mạnh mà húc bừa thì kẹt cứng như dê mắc sừng vào giậu — càng vùng càng mắc. Sức mạnh cần cái đầu điều khiển."
+    },
+    {
+     "textHV": "Trinh cát, hối vong; phiên quyết bất luy, tráng vu đại dư chi phúc",
+     "gloss": "Giữ chính thì tốt, hết ăn năn; giậu vỡ ra [sừng] không còn mắc, sức mạnh như trục bánh xe lớn",
+     "modern": "Đúng thời, đúng thế: chướng ngại (giậu) vỡ toang, không còn vướng — sức tiến thông suốt mạnh mẽ như cỗ xe lớn lăn bánh. Khi đã đủ thế và giữ chính thì bung sức, mọi cản trở tự mở."
+    },
+    {
+     "textHV": "Táng dương vu dị, vô hối",
+     "gloss": "Mất con dê [tính hung hăng] một cách nhẹ nhàng dễ dàng, không ăn năn",
+     "modern": "Hóa giải cái hung hăng (dê) một cách ôn hòa, không cần cứng đối cứng — buông cái sức thô đi mà chẳng tiếc. Dùng sự mềm hòa để thu phục cái mạnh thì không phải hối."
+    },
+    {
+     "textHV": "Đê dương xúc phiên, bất năng thoái, bất năng toại, vô du lợi; gian tắc cát",
+     "gloss": "Dê đực húc giậu, không lui được, không tiến được, không gì lợi; [chịu] gian khó [mà xử] thì tốt",
+     "modern": "Dùng sức tới đường cùng: tiến chẳng xong, lui chẳng được, kẹt cứng. Lúc này chỉ còn cách nhẫn nhịn, chịu khó gỡ dần thì mới thoát. Mạnh quá hóa bế tắc — lối ra là sự kiên nhẫn."
+    }
+   ]
+  },
+  {
+   "number": 35,
+   "name": "Tấn",
+   "hanzi": "晉",
+   "upper": "Ly",
+   "lower": "Khôn",
+   "bits": "000101",
+   "judgment": "Bậc hầu yên trị được ban nhiều ngựa, một ngày được tiếp đón ba lần (晉：康侯用錫馬蕃庶，晝日三接).",
+   "image": "Mặt trời mọc lên khỏi mặt đất, là Tấn; người quân tử nhân đó tự làm sáng cái đức sáng của mình (明出地上，晉；君子以自昭明德).",
+   "modernShort": "Vầng dương lên cao — thăng tiến thuận lợi, được tin dùng; tiến lên cởi mở và sáng tỏ.",
+   "lines": [
+    {
+     "textHV": "Tấn như, tồi như, trinh cát; võng phu, dụ vô cữu",
+     "gloss": "Dường tiến, dường bị đẩy lùi; giữ chính thì tốt. Chưa được tin thì cứ khoan thai rộng lượng, không lỗi",
+     "modern": "Buổi đầu thăng tiến còn trắc trở, khi được đẩy lên khi bị dội lại. Giữ ngay thẳng thì tốt; chưa được tin tưởng cũng đừng nôn nóng, cứ ung dung rộng rãi thì không lỗi."
+    },
+    {
+     "textHV": "Tấn như, sầu như, trinh cát; thụ tư giới phúc vu kỳ vương mẫu",
+     "gloss": "Dường tiến, dường lo buồn; giữ chính thì tốt; [rồi sẽ] nhận phúc lớn từ bậc trên (vương mẫu)",
+     "modern": "Tiến lên mà lòng còn lo, chưa thông suốt. Cứ giữ chính bền, đến lúc sẽ được người trên (bậc đức cao) ban ơn nâng đỡ. Kiên trì đúng đắn thì phúc tự đến."
+    },
+    {
+     "textHV": "Chúng doãn, hối vong",
+     "gloss": "Được mọi người tin theo, hết ăn năn",
+     "modern": "Nhờ được lòng số đông, cùng chí hướng tiến lên — mọi hối tiếc tan biến. Đồng lòng thì tiến; sự tín nhiệm của tập thể là bệ phóng."
+    },
+    {
+     "textHV": "Tấn như, thạch thử, trinh lệ",
+     "gloss": "Tiến lên [tham lam] như con chuột đồng, giữ vậy thì nguy",
+     "modern": "Chiếm vị không xứng, vơ vét tham lam mà lại nơm nớp sợ hãi — như con chuột đồng ăn vụng. Tiến bằng lòng tham và bất chính thì luôn bất an, nguy."
+    },
+    {
+     "textHV": "Hối vong, thất đắc vật tuất, vãng cát, vô bất lợi",
+     "gloss": "Hết ăn năn; được mất chớ bận lòng, cứ đi thì tốt, không gì không lợi",
+     "modern": "Ở ngôi cao mà rộng lượng sáng suốt: đừng so đo được mất tiểu tiết, cứ tiến tới với tâm thế lớn thì tốt, không gì không lợi. Buông tính toán hơn thua thì đường rộng mở."
+    },
+    {
+     "textHV": "Tấn kỳ giác, duy dụng phạt ấp, lệ cát vô cữu, trinh lận",
+     "gloss": "Tiến đến [chỗ cực như] cái sừng; chỉ nên dùng [sự cứng ấy] để trị làng mình (tự sửa), nguy nhưng tốt không lỗi; giữ [mãi] thì đáng tiếc",
+     "modern": "Tiến tới chỗ cùng cực, cứng nhọn như đầu sừng. Sự cương quyết ấy chỉ nên quay vào tự chỉnh đốn mình (trị làng mình), tuy có nguy nhưng ổn. Cứ giữ lối cứng cùng ấy [với bên ngoài] thì đáng tiếc."
+    }
+   ]
+  },
+  {
+   "number": 36,
+   "name": "Minh Di",
+   "hanzi": "明夷",
+   "upper": "Khôn",
+   "lower": "Ly",
+   "bits": "101000",
+   "judgment": "Lợi về giữ chính trong gian nan (明夷：利艱貞).",
+   "image": "Ánh sáng lặn vào trong lòng đất, là Minh Di; người quân tử nhân đó cai quản đám đông bằng cách giấu sáng đi mà vẫn sáng suốt (明入地中，明夷；君子以蒞眾，用晦而明).",
+   "modernShort": "Ánh sáng lặn xuống đất — thời tối tăm, giấu tài giữ sáng bên trong, chịu đựng mà không mất mình.",
+   "lines": [
+    {
+     "textHV": "Minh di vu phi, thùy kỳ dực; quân tử vu hành, tam nhật bất thực; hữu du vãng, chủ nhân hữu ngôn",
+     "gloss": "Sáng bị hại khi đang bay, xõa rủ cánh xuống; quân tử ra đi, ba ngày không ăn; đến nơi nào, chủ nhà có lời [chê trách]",
+     "modern": "Thấy thời sắp tối, người hiền sớm rút lui, chịu thiệt thòi gian khổ (ba ngày nhịn đói), thậm chí bị dèm pha. Rời khỏi chỗ nguy sớm dù phải chịu cực và tiếng ra tiếng vào — vẫn hơn ở lại chờ họa."
+    },
+    {
+     "textHV": "Minh di, di vu tả cổ, dụng chửng mã tráng, cát",
+     "gloss": "Sáng bị hại, bị thương ở đùi trái; dùng ngựa khỏe để cứu [thoát], tốt",
+     "modern": "Bị tổn thương nhưng chưa chí mạng (thương ở đùi). Kịp thời dùng phương tiện mạnh (ngựa khỏe) mà tự cứu, thoát hiểm nhanh — tốt. Gặp hại thì mau chóng tự cứu, đừng nấn ná."
+    },
+    {
+     "textHV": "Minh di vu nam thú, đắc kỳ đại thủ, bất khả tật trinh",
+     "gloss": "Sáng bị hại [khi] đi săn phương nam, bắt được kẻ đầu sỏ; [nhưng] chớ nóng vội đòi chỉnh đốn ngay",
+     "modern": "Có cơ hội trừ được kẻ đứng đầu gây ra bóng tối. Nhưng sau bao năm hắc ám, đừng nôn nóng đòi sửa mọi thứ tận gốc tức thì — dục tốc bất đạt. Diệt đầu sỏ rồi phải kiên nhẫn khôi phục dần."
+    },
+    {
+     "textHV": "Nhập vu tả phúc, hoạch minh di chi tâm, vu xuất môn đình",
+     "gloss": "Vào tận bụng bên trái [thâm nhập chỗ tối], thấy rõ lòng dạ kẻ làm hại sáng, [rồi] ra khỏi cửa",
+     "modern": "Ở gần trung tâm quyền lực đen tối, nhìn thấu bản chất của nó — và biết dứt áo ra đi trước khi bị cuốn vào. Hiểu rõ chỗ tối để rời đi kịp, chứ không nấn ná mưu cầu."
+    },
+    {
+     "textHV": "Cơ Tử chi minh di, lợi trinh",
+     "gloss": "Cái sáng bị hại [được xử] như ông Cơ Tử [giả điên giữ mình], lợi về giữ chính bền",
+     "modern": "Ở sát trung tâm hắc ám (như Cơ Tử cạnh vua Trụ), không thể bỏ đi: phải giấu sáng, ẩn trí (giả cuồng) để bảo toàn tính mạng, nhưng bên trong giữ vững chính đạo. Khôn ngoan sống sót qua thời bạo ngược mà không đánh mất mình."
+    },
+    {
+     "textHV": "Bất minh, hối; sơ đăng vu thiên, hậu nhập vu địa",
+     "gloss": "Không sáng, [chìm trong] tăm tối; trước lên tận trời, sau rơi xuống đất",
+     "modern": "Kẻ gây ra bóng tối (như vua Trụ): tưởng leo lên tận đỉnh trời (quyền lực tột cùng), rốt cuộc rơi xuống tận đất. Kẻ dùng bạo ngược che lấp ánh sáng cuối cùng tự hủy — tối tận cùng thì tự diệt."
+    }
+   ]
+  },
+  {
+   "number": 37,
+   "name": "Gia Nhân",
+   "hanzi": "家人",
+   "upper": "Tốn",
+   "lower": "Ly",
+   "bits": "101011",
+   "judgment": "Lợi về sự giữ chính của người nữ (家人：利女貞).",
+   "image": "Gió từ lửa bốc ra (lửa cháy sinh gió, từ trong ra ngoài), là Gia Nhân; người quân tử nhân đó nói thì có nội dung, làm thì có sự bền (風自火出，家人；君子以言有物，而行有恆).",
+   "modernShort": "Trật tự trong nhà — mỗi người đúng vai, kỷ cương và ấm áp từ gốc mà lan ra ngoài.",
+   "lines": [
+    {
+     "textHV": "Nhàn hữu gia, hối vong",
+     "gloss": "Ngăn ngừa (lập quy củ) cho nhà ngay từ đầu, hết ăn năn",
+     "modern": "Trị nhà phải lập nề nếp, ranh giới từ sớm — phòng ngừa trước khi hư hỏng xảy ra. Kỷ cương dựng từ đầu thì về sau khỏi hối tiếc. Gốc của gia đạo là quy củ sớm."
+    },
+    {
+     "textHV": "Vô du toại, tại trung quỹ, trinh cát",
+     "gloss": "Không tự chuyên theo ý riêng, [lo chu toàn] việc bên trong (bếp núc), giữ chính thì tốt",
+     "modern": "Giữ vai trò chăm lo việc nội bộ một cách chu đáo, không tự ý vượt phận — khiêm nhu đúng chỗ. Làm tròn phần việc của mình, giữ chính thì nhà êm ấm, tốt."
+    },
+    {
+     "textHV": "Gia nhân hạc hạc, hối lệ, cát; phụ tử hi hi, chung lận",
+     "gloss": "Người nhà [bị trị] nghiêm khắc đến nem nép, có hối và nguy [nhưng] tốt; [ngược lại] vợ con cười đùa buông tuồng thì cuối cùng đáng tiếc",
+     "modern": "Giữa hai thái cực: quá nghiêm khắc thì người nhà sợ hãi, có phần hối tiếc nhưng còn giữ được nề nếp nên rốt cuộc tốt; còn buông lỏng để cả nhà cười cợt vô kỷ luật thì cuối cùng lụn bại. Thà nghiêm hơi quá còn hơn thả lỏng."
+    },
+    {
+     "textHV": "Phú gia, đại cát",
+     "gloss": "Làm giàu (thịnh vượng) cho nhà, đại tốt",
+     "modern": "Ở đúng vị, chăm lo vun vén khiến nhà cửa sung túc, ấm no — đại tốt. Người biết gánh vác kinh tế gia đình, làm nhà thịnh vượng, là phúc lớn."
+    },
+    {
+     "textHV": "Vương cách hữu gia, vật tuất, cát",
+     "gloss": "Vua [dùng đức] đến với nhà [cảm hóa cả nhà], chớ lo, tốt",
+     "modern": "Người đứng đầu trị nhà bằng đức và tình thương chứ không chỉ bằng uy quyền — cảm hóa được cả nhà một cách tự nhiên. Không cần lo lắng ép buộc, cứ chính mình làm gương thì tốt."
+    },
+    {
+     "textHV": "Hữu phu uy như, chung cát",
+     "gloss": "Có lòng thành tín và giữ được sự uy nghiêm, cuối cùng tốt",
+     "modern": "Trị nhà tới cùng cốt ở lòng thành + sự uy nghiêm đúng mực (uy do đức mà ra, không phải dữ dằn). Trước hết nghiêm với chính mình thì mới có uy — giữ được thế thì cuối cùng tốt."
+    }
+   ]
+  },
+  {
+   "number": 38,
+   "name": "Khuê",
+   "hanzi": "睽",
+   "upper": "Ly",
+   "lower": "Đoài",
+   "bits": "110101",
+   "judgment": "Việc nhỏ thì tốt (睽：小事吉).",
+   "image": "Trên lửa dưới đầm (lửa bốc lên, nước chảy xuống, đi hai ngả), là Khuê; người quân tử nhân đó hòa đồng mà vẫn giữ chỗ riêng khác (上火下澤，睽；君子以同而異).",
+   "modernShort": "Hai bên quay lưng — khác biệt và hiểu lầm; việc nhỏ còn được, cần tìm điểm chung để dung hoà.",
+   "lines": [
+    {
+     "textHV": "Hối vong; táng mã vật trục, tự phục; kiến ác nhân, vô cữu",
+     "gloss": "Hết ăn năn; mất ngựa chớ đuổi theo, [nó] tự về; gặp cả kẻ xấu [cũng cứ tiếp], không lỗi",
+     "modern": "Trong buổi chia lìa, đừng cưỡng cầu níu kéo (ngựa mất khắc tự về); và hãy rộng lượng tiếp cả người mình không ưa để tránh kết oán, hóa giải xa cách. Không lỗi. Bao dung là bước đầu nối lại."
+    },
+    {
+     "textHV": "Ngộ chủ vu hạng, vô cữu",
+     "gloss": "Gặp được người hợp (chúa) nơi ngõ hẻm [không câu nệ hình thức], không lỗi",
+     "modern": "Thời chia lìa, gặp được người đồng chí hướng thì đừng câu nệ nghi thức, hoàn cảnh — gặp nhau chốn ngõ hẻm cũng quý. Linh hoạt, chủ động tìm đến nhau thì không lỗi."
+    },
+    {
+     "textHV": "Kiến dư duệ, kỳ ngưu xiết, kỳ nhân thiên thả tị; vô sơ hữu chung",
+     "gloss": "Thấy xe bị kéo lê, trâu bị ghì lại, người [đánh xe] bị xẻo tóc cắt mũi (trắc trở đủ đường); không có đầu [suôn] nhưng có kết cục [tốt]",
+     "modern": "Giữa lúc chia lìa, gặp trắc trở chồng chất, bị cản trở và tổn thương đủ bề. Khởi đầu gian nan, tưởng chừng bế tắc — nhưng nếu kiên trì thì rốt cuộc vẫn hợp lại được. Đầu khó mà cuối xuôi."
+    },
+    {
+     "textHV": "Khuê cô, ngộ nguyên phu, giao phu, lệ vô cữu",
+     "gloss": "Chia lìa cô độc, [rồi] gặp được người bạn tốt (nguyên phu), tin cậy lẫn nhau; tuy nguy nhưng không lỗi",
+     "modern": "Đang cô đơn giữa cảnh xa cách thì gặp được người bạn chân thành, hai bên lấy lòng tin mà gắn kết. Hoàn cảnh còn nguy nhưng có tri kỷ đồng lòng thì vượt được, không lỗi."
+    },
+    {
+     "textHV": "Hối vong, quyết tông phệ phu, vãng hà cữu",
+     "gloss": "Hết ăn năn; người cùng họ [như] cắn qua lớp da mà gặp lại thân thiết; cứ đi tới thì có lỗi gì?",
+     "modern": "Hối tiếc tan biến khi người thân/đồng minh vượt qua rào cản (cắn thủng lớp da ngăn cách) mà đến với nhau. Đã có người cùng chí thật lòng hợp lực thì cứ tiến tới, còn ngại gì?"
+    },
+    {
+     "textHV": "Khuê cô, kiến thỉ phụ đồ, tái quỷ nhất xa; tiên trương chi hồ, hậu thoát chi hồ; phỉ khấu, hôn cấu; vãng ngộ vũ tắc cát",
+     "gloss": "Chia lìa cô độc [đến mức đa nghi]: thấy lợn dính bùn, [thấy] cả xe chở đầy ma; trước giương cung [định bắn], sau lại buông cung; [hóa ra] chẳng phải giặc mà là người cầu thân; đi tới gặp mưa [nghi tan] thì tốt",
+     "modern": "Đỉnh của sự chia lìa là hoài nghi cực độ: nhìn đâu cũng thấy đe dọa (lợn bẩn, xe ma), giương cung định bắn cả người tốt. Khi hiểu ra \"kẻ thù\" chỉ là người đến kết thân, mối ngờ tan như cơn mưa rào — thì hóa tốt. Nhiều xung đột chỉ là hiểu lầm được thổi phồng bởi nghi kỵ."
+    }
+   ]
+  },
+  {
+   "number": 39,
+   "name": "Kiển",
+   "hanzi": "蹇",
+   "upper": "Khảm",
+   "lower": "Cấn",
+   "bits": "001010",
+   "judgment": "Lợi về phương tây nam, không lợi phương đông bắc; lợi gặp người lớn, giữ chính thì tốt (蹇：利西南，不利東北，利見大人，貞吉).",
+   "image": "Trên núi có nước (đường lên núi lại gặp nước hiểm), là Kiển; người quân tử nhân đó quay lại tự xét mình mà sửa đức (山上有水，蹇；君子以反身修德).",
+   "modernShort": "Núi cao nước hiểm chắn đường — gặp bế tắc thì dừng, quay vào sửa mình và tìm trợ giúp.",
+   "lines": [
+    {
+     "textHV": "Vãng kiển, lai dự",
+     "gloss": "Đi tới thì gặp nạn, dừng/lui lại thì được khen",
+     "modern": "Thấy trước mặt là hiểm mà biết dừng lại — được tán thưởng. Không phải cứ tiến mới là giỏi; ở thời gian nan, biết dừng đúng lúc là sáng suốt."
+    },
+    {
+     "textHV": "Vương thần kiển kiển, phỉ cung chi cố",
+     "gloss": "Bề tôi của vua vượt gian nan chồng chất, chẳng phải vì lợi riêng thân mình",
+     "modern": "Vì việc chung, vì trách nhiệm mà xông pha hết gian nan này đến gian nan khác, không tính thiệt hơn cho bản thân. Dấn thân vào khó vì đại nghĩa, không vì tư lợi — đáng trọng."
+    },
+    {
+     "textHV": "Vãng kiển, lai phản",
+     "gloss": "Đi tới thì gặp nạn, nên quay trở lại",
+     "modern": "Tiến lên chỉ chuốc hiểm, nên quay về [với người dưới đang trông cậy]. Làm chỗ dựa vững cho những người yếu hơn thay vì liều tiến. Lui về giữ nền tảng cũng là một cách vượt nạn."
+    },
+    {
+     "textHV": "Vãng kiển, lai liên",
+     "gloss": "Đi tới thì gặp nạn, lui lại thì liên kết [được người cùng cảnh]",
+     "modern": "Một mình xông tới thì mắc kẹt; lui lại để kết nối, hợp lực với người cùng cảnh ngộ. Gian nan thì đừng đơn độc — quay về gom sức mạnh tập thể mới qua được."
+    },
+    {
+     "textHV": "Đại kiển, bằng lai",
+     "gloss": "Giữa gian nan lớn, bạn bè [người giúp] kéo đến",
+     "modern": "Ở giữa gian nan lớn nhất, nhưng nhờ là người trung chính, đủ uy tín, nên bạn bè và người hiền tìm đến giúp sức. Người có đức thì hoạn nạn không cô đơn — càng khó càng quy tụ được người."
+    },
+    {
+     "textHV": "Vãng kiển, lai thạc, cát, lợi kiến đại nhân",
+     "gloss": "Đi tới thì gặp nạn, lui lại thì lớn/vững vàng (thạc), tốt; lợi về gặp người lớn",
+     "modern": "Ở cuối thời gian nan, cố tiến vẫn mắc; nhưng quay về hợp sức với người trung chính (hào 5) thì thành tựu lớn — tốt. Lợi ở chỗ tìm đến, nương theo người tài đức để cùng vượt nạn."
+    }
+   ]
+  },
+  {
+   "number": 40,
+   "name": "Giải",
+   "hanzi": "解",
+   "upper": "Chấn",
+   "lower": "Khảm",
+   "bits": "010100",
+   "judgment": "Lợi về phương tây nam; nếu không còn chỗ phải đi thì trở về là tốt, nếu còn chỗ phải đi thì đi sớm là tốt (解：利西南，无所往，其來復吉，有攸往夙吉).",
+   "image": "Sấm mưa nổi lên (bầu khí ngột ngạt được giải tỏa), là Giải; người quân tử nhân đó tha thứ lỗi lầm, khoan giảm tội (雷雨作，解；君子以赦過宥罪).",
+   "modernShort": "Băng tan, nút thắt được cởi — vượt qua khó khăn, mau giải quyết tồn đọng và biết tha thứ.",
+   "lines": [
+    {
+     "textHV": "Vô cữu",
+     "gloss": "Không lỗi",
+     "modern": "Vừa ra khỏi gian nan, mọi việc bắt đầu hanh trở lại — ở yên đúng chỗ, không làm gì thái quá thì không lỗi. Sau nạn, sự bình lặng đúng mực tự nó đã là điều tốt."
+    },
+    {
+     "textHV": "Điền hoạch tam hồ, đắc hoàng thỉ, trinh cát",
+     "gloss": "Đi săn bắt được ba con cáo, được mũi tên vàng (đạo trung chính); giữ chính thì tốt",
+     "modern": "Dẹp trừ được đám tiểu nhân gian trá (ba con cáo) nhờ giữ được đạo trung chính (tên vàng). Loại bỏ cái xấu một cách ngay thẳng, đúng mực thì tốt. Giải nạn phải đi kèm trừ gian."
+    },
+    {
+     "textHV": "Phụ thả thừa, trí khấu chí, trinh lận",
+     "gloss": "[Kẻ] vừa đội đồ [như dân] vừa ngồi xe [như quý tộc], khoe của dắt giặc đến; giữ vậy thì đáng tiếc",
+     "modern": "Kẻ tầm thường bỗng chiếm địa vị không xứng, lại phô trương — tự chuốc lấy kẻ cướp (họa). Ngồi nhầm chỗ và khoe khoang trong thời hậu nạn thì đáng tiếc, mời gọi tai họa mới."
+    },
+    {
+     "textHV": "Giải nhi mẫu, bằng chí tư phu",
+     "gloss": "Cởi bỏ [kẻ tiểu nhân bám như] ngón chân cái của mày, thì bạn hiền mới đến mà tin cậy",
+     "modern": "Muốn có bạn tốt, người đáng tin đến với mình thì trước hết phải dứt bỏ đám tiểu nhân đang bám riết. Cắt được mối quan hệ độc hại thì người xứng đáng mới xuất hiện."
+    },
+    {
+     "textHV": "Quân tử duy hữu giải, cát, hữu phu vu tiểu nhân",
+     "gloss": "Người quân tử [khi cần] biết dứt khoát cởi bỏ [tiểu nhân] thì tốt; [khi ấy] cả tiểu nhân cũng phải tin phục [mà rút]",
+     "modern": "Người lãnh đạo dám dứt khoát loại bỏ kẻ xấu quanh mình — hành động ấy tự nó chứng minh khiến ngay cả tiểu nhân cũng phải nể mà tự rút lui. Sự cương quyết đúng chỗ khiến cái xấu tự lùi."
+    },
+    {
+     "textHV": "Công dụng xạ chuẩn vu cao dung chi thượng, hoạch chi, vô bất lợi",
+     "gloss": "Bậc vương công bắn con chim cắt (hung dữ) trên bờ tường cao, bắn trúng, không gì không lợi",
+     "modern": "Với kẻ xấu hung ngoan, ở vị trí cao, chờ đủ thời cơ rồi ra tay dứt điểm một phát — trừ hẳn hậu họa. Không gì không lợi. Loại trừ cái ác cứng đầu thì phải quyết đoán, đúng lúc, và tận gốc."
+    }
+   ]
+  },
+  {
+   "number": 41,
+   "name": "Tổn",
+   "hanzi": "損",
+   "upper": "Cấn",
+   "lower": "Đoài",
+   "bits": "110001",
+   "judgment": "Có lòng thành thì rất tốt, không lỗi, có thể giữ chính, lợi về chỗ có đi. Dùng vào việc gì? Hai bát cơm đạm bạc cũng đủ dâng cúng (損：有孚，元吉，无咎，可貞，利有攸往。曷之用，二簋可用享).",
+   "image": "Dưới núi có đầm (đầm khoét sâu làm núi hao đi), là Tổn; người quân tử nhân đó kiềm chế cơn giận, ngăn lòng dục (山下有澤，損；君子以懲忿窒欲).",
+   "modernShort": "Giảm bớt cái dưới để bồi cái trên — hi sinh có chủ đích; bớt ham muốn thì được lợi lâu dài.",
+   "lines": [
+    {
+     "textHV": "Dĩ sự thoán vãng, vô cữu, chước tổn chi",
+     "gloss": "Xong việc [của mình] thì mau đi [giúp trên], không lỗi; nhưng phải liệu lượng mà bớt [cho vừa]",
+     "modern": "Giúp người, cống hiến thì nên mau mắn — nhưng phải liệu sức, đúng mức, đừng bớt mình quá đến kiệt. Nhiệt tình có chừng mực thì không lỗi."
+    },
+    {
+     "textHV": "Lợi trinh, chinh hung; phất tổn ích chi",
+     "gloss": "Lợi về giữ chính, [vọng động] đi thì hung; đừng tự hạ mình [để chiều trên] — [giữ mình chính] chính là làm lợi [cho trên]",
+     "modern": "Đừng tự đánh mất nguyên tắc để lấy lòng cấp trên; giữ vững chính mình mới thật là đóng góp giá trị. Xu nịnh, hạ thấp mình chỉ có hại. Giữ chính là cách \"cho\" tốt nhất."
+    },
+    {
+     "textHV": "Tam nhân hành tắc tổn nhất nhân, nhất nhân hành tắc đắc kỳ hữu",
+     "gloss": "Ba người cùng đi thì bớt [đi] một người [mới hợp]; một người đi [riêng] thì tìm được bạn",
+     "modern": "Quan hệ khăng khít (đôi lứa, cộng sự) cần vừa đủ, chuyên nhất: ba người thì sinh nghi kỵ, phải bớt một; một mình đi lại tìm được tri kỷ. Bớt cho tinh, đừng thừa cho tạp."
+    },
+    {
+     "textHV": "Tổn kỳ tật, sử thuyên hữu hỷ, vô cữu",
+     "gloss": "Bớt (chữa) cái tật của mình, khiến mau lành thì có mừng, không lỗi",
+     "modern": "Chủ động cắt bỏ tật xấu, thói hư của bản thân càng sớm càng tốt — chữa nhanh thì mau khỏe, đáng mừng. Tự sửa mình kịp thời là điều không lỗi."
+    },
+    {
+     "textHV": "Hoặc ích chi thập bằng chi quy, phất khắc vi, nguyên cát",
+     "gloss": "Có người dâng cho con rùa quý [giá trị] mười bằng, không gì cản nổi [ơn ấy], cả tốt",
+     "modern": "Nhờ khiêm hạ, hư tâm đón nhận mà được trời và người trợ giúp lớn lao ngoài mong đợi (rùa quý mười bằng) — không gì ngăn được. Người biết bớt cái tôi thì được đời bồi đắp: đại tốt."
+    },
+    {
+     "textHV": "Phất tổn ích chi, vô cữu, trinh cát, lợi hữu du vãng, đắc thần vô gia",
+     "gloss": "Không [phải] bớt [người dưới] mà [vẫn] làm lợi cho họ, không lỗi, giữ chính thì tốt, lợi có chỗ đi; được [lòng] người khắp nơi, không riêng một nhà",
+     "modern": "Ở đỉnh của đạo \"tổn\": làm lợi cho mọi người mà chẳng phải hại ai — cái lợi lan tỏa rộng. Giữ chính thì tốt, quy tụ được lòng người khắp chốn. Bớt tới cùng thì hóa thành ban phát rộng khắp."
+    }
+   ]
+  },
+  {
+   "number": 42,
+   "name": "Ích",
+   "hanzi": "益",
+   "upper": "Tốn",
+   "lower": "Chấn",
+   "bits": "100011",
+   "judgment": "Lợi về chỗ có đi, lợi vượt sông lớn (益：利有攸往，利涉大川).",
+   "image": "Gió và sấm (cùng tăng thế cho nhau), là Ích; người quân tử nhân đó thấy điều thiện thì làm theo, có lỗi thì sửa (風雷，益；君子以見善則遷，有過則改).",
+   "modernShort": "Bớt trên giúp dưới — thời được tăng ích; rộng lượng và hành động kịp thời thì lợi lớn.",
+   "lines": [
+    {
+     "textHV": "Lợi dụng vi đại tác, nguyên cát, vô cữu",
+     "gloss": "Lợi về việc làm lớn, cả tốt, không lỗi",
+     "modern": "Được trên tin và trợ lực thì nên đảm đương việc lớn, làm cho ra tấm ra món — đại tốt. Khi có hậu thuẫn, hãy dốc sức vào việc đáng giá thì mới không phụ ơn ấy."
+    },
+    {
+     "textHV": "Hoặc ích chi thập bằng chi quy, phất khắc vi, vĩnh trinh cát; vương dụng hưởng vu đế, cát",
+     "gloss": "Có người dâng rùa quý mười bằng, không gì cản nổi; bền giữ chính thì tốt; vua dùng [lòng thành] tế Thượng Đế, tốt",
+     "modern": "Nhờ hư tâm chân thành mà nhận được trợ lực lớn không ngờ (rùa quý). Chỉ cần bền giữ lòng chính; lòng thành ấy tế cả Trời cũng ứng. Chân thành mở lòng thì phúc lớn tự đến."
+    },
+    {
+     "textHV": "Ích chi dụng hung sự, vô cữu; hữu phu trung hàng, cáo công dụng khuê",
+     "gloss": "Được thêm [nhờ] dùng vào việc khó/cứu nạn, không lỗi; giữ lòng thành và đạo trung, cầm ngọc khuê tâu bậc trên [được tin]",
+     "modern": "Dùng chính nghịch cảnh, việc khó làm cơ hội rèn mình và giúp người thì cái \"thêm\" ấy không lỗi. Cốt ở giữ lòng thành, đi đường trung chính, minh bạch với người trên. Biến hoạn nạn thành dịp làm điều tốt."
+    },
+    {
+     "textHV": "Trung hành, cáo công tòng, lợi dụng vi y thiên quốc",
+     "gloss": "Giữ đạo trung, tâu thì bậc công nghe theo; lợi về việc làm chỗ dựa (dời đô) cho nước",
+     "modern": "Ở vị trí trung gian, giữ được đạo trung chính nên nói ra thì cấp trên tin nghe. Xứng đáng gánh việc trọng đại của quốc gia (như lo việc dời đô). Người công tâm thì lời có trọng lượng để lo việc lớn."
+    },
+    {
+     "textHV": "Hữu phu huệ tâm, vật vấn nguyên cát; hữu phu huệ ngã đức",
+     "gloss": "Có lòng thành và tâm ban ơn, chẳng cần bói hỏi cũng đại tốt; [dân] có lòng tin, cảm cái đức ban ơn của ta",
+     "modern": "Người lãnh đạo thật lòng thi ân, làm lợi cho dân thì khỏi cần hỏi han cũng đại tốt — vì dân tự cảm ơn đức mà tin theo. Cho đi bằng tấm lòng thật thì nhận lại lòng người, đó là cái được lớn nhất."
+    },
+    {
+     "textHV": "Mạc ích chi, hoặc kích chi, lập tâm vật hằng, hung",
+     "gloss": "Chẳng ai làm lợi cho nó [kẻ chỉ vơ vào], có kẻ còn đánh nó; lập tâm bất nhất, hung",
+     "modern": "Ở trên mà chỉ biết vơ lợi về mình, không cho ai — thì chẳng ai giúp, thậm chí bị công kích. Lòng dạ thay đổi thất thường, chỉ biết lấy không biết cho: tất chuốc họa. Ích cho mình mà hại người thì tự rước hung."
+    }
+   ]
+  },
+  {
+   "number": 43,
+   "name": "Quải",
+   "hanzi": "夬",
+   "upper": "Đoài",
+   "lower": "Càn",
+   "bits": "111110",
+   "judgment": "Nêu rõ ở sân vua; thành thật hô hào, có điều nguy; tự răn từ ấp mình, không lợi việc binh đao, lợi về chỗ có đi (夬：揚于王庭，孚號有厲，告自邑，不利即戎，利有攸往).",
+   "image": "Nước đầm dâng lên tận trời (sắp vỡ tràn), là Quải; người quân tử nhân đó ban lộc xuống dưới, kiêng việc tích đức để cậy công (澤上于天，夬；君子以施祿及下，居德則忌).",
+   "modernShort": "Năm dương đẩy bật một âm — dứt khoát loại bỏ cái xấu cuối cùng, nhưng minh bạch chứ không bạo.",
+   "lines": [
+    {
+     "textHV": "Tráng vu tiền chỉ, vãng bất thắng, vi cữu",
+     "gloss": "Mạnh ở ngón chân phía trước [hăng hái xông tới], đi mà không thắng thì thành lỗi",
+     "modern": "Ở vị trí thấp mà đã hùng hổ xông lên trừ cái xấu — sức chưa đủ mà nóng vội, nếu không thắng thì hóa lỗi. Chính nghĩa cũng cần lượng sức và đúng thời, đừng manh động."
+    },
+    {
+     "textHV": "Dịch hào, mộ dạ hữu nhung, vật tuất",
+     "gloss": "Lo sợ mà kêu (cảnh giác), đêm hôm dù có binh biến cũng chớ lo [vì đã phòng bị]",
+     "modern": "Luôn giữ tinh thần cảnh giác, phòng bị chu đáo — thì dù bất trắc ập đến lúc nửa đêm cũng không phải hoảng. Trừ cái xấu thì phải đề phòng cái xấu phản đòn; chuẩn bị kỹ thì vững tâm."
+    },
+    {
+     "textHV": "Tráng vu quyền, hữu hung; quân tử quải quải, độc hành ngộ vũ, nhược nhu hữu uấn, vô cữu",
+     "gloss": "Nóng nảy lộ ra mặt (gò má), có hung; nhưng quân tử [trong lòng] quyết dứt khoát, dù đi riêng gặp mưa ướt, bị hiềm nghi, [rốt cuộc] không lỗi",
+     "modern": "Để lộ sự căm ghét ra mặt thì dễ gặp hung. Người quân tử quyết tâm bên trong nhưng bề ngoài kín đáo; dù có phải hành động đơn độc, bị dính mưa ướt, bị hiểu lầm là \"cùng phe kẻ xấu\" — giữ lòng ngay thì cuối cùng không lỗi. Kiên định mà đừng phô trương thù hằn."
+    },
+    {
+     "textHV": "Đồn vô phu, kỳ hành tư thư; khiên dương hối vong, văn ngôn bất tín",
+     "gloss": "Mông đít không da [ngồi đứng chẳng yên], bước đi chật vật; [nếu chịu] dắt [theo bầy] dê [thuận theo tập thể] thì hết hối; [nhưng] nghe lời phải mà không tin thì [hỏng]",
+     "modern": "Đứng ngồi không yên, tiến thoái đều khó vì cô độc cứng đầu. Nếu chịu thuận theo, đi cùng tập thể (dắt dê theo bầy) thì hết hối tiếc — nhưng tính bướng, nghe lời phải mà không tin thì vẫn hỏng. Bài học: chịu nghe và đi cùng mọi người."
+    },
+    {
+     "textHV": "Nghiễn lục quải quải, trung hàng vô cữu",
+     "gloss": "[Trừ tiểu nhân dứt khoát như nhổ] rau sam (rễ nông dễ nhổ), quyết đoán mà giữ đạo trung thì không lỗi",
+     "modern": "Trừ cái xấu phải dứt khoát, đúng lúc (như nhổ rau sam rễ nông, ra tay là bật) nhưng vẫn giữ đạo trung, không thái quá. Kiên quyết mà chừng mực — không lỗi."
+    },
+    {
+     "textHV": "Vô hào, chung hữu hung",
+     "gloss": "Không [còn ai để] kêu cứu, cuối cùng hung",
+     "modern": "Cái xấu (tiểu nhân) đã bị cô lập hoàn toàn, không còn ai hưởng ứng — kết cục tất bị dẹp trừ, hung [cho nó]. Khi chính nghĩa đã áp đảo, cái xấu đơn độc thì không thể tồn tại."
+    }
+   ]
+  },
+  {
+   "number": 44,
+   "name": "Cấu",
+   "hanzi": "姤",
+   "upper": "Càn",
+   "lower": "Tốn",
+   "bits": "011111",
+   "judgment": "Người nữ cường thịnh (lấn át); chớ cưới người nữ ấy (姤：女壯，勿用取女).",
+   "image": "Dưới trời có gió (gió chạm tới khắp muôn vật), là Cấu; bậc vua nhân đó ban mệnh lệnh, hiểu dụ bốn phương (天下有風，姤；后以施命誥四方).",
+   "modernShort": "Một âm len vào dưới năm dương — mầm cám dỗ chớm nở; cảnh giác sớm trước điều tưởng nhỏ.",
+   "lines": [
+    {
+     "textHV": "Hệ vu kim nê, trinh cát; hữu du vãng, kiến hung, luy thỉ phu trịch trục",
+     "gloss": "Buộc [hãm] vào cái neo bằng kim loại [kiềm chế], giữ chính thì tốt; [nếu buông] có chỗ đi thì gặp hung; như con lợn nái gầy [tuy yếu mà] hay lồng lộn không yên",
+     "modern": "Cái xấu/dục vọng mới chớm (con lợn gầy tưởng yếu mà bồn chồn) phải được hãm lại ngay từ đầu như buộc vào neo sắt. Giữ được thì tốt; buông cho nó chạy thì gặp hung. Ngăn mầm họa khi nó còn nhỏ."
+    },
+    {
+     "textHV": "Bao hữu ngư, vô cữu, bất lợi tân",
+     "gloss": "Trong bọc có cá [giữ được cái âm mới gặp], không lỗi; nhưng không nên [đem cho] khách [để nó lan ra]",
+     "modern": "Nắm giữ, kiểm soát được cái mới gặp (con cá) một cách kín đáo thì không lỗi — nhưng đừng để nó lan rộng ra ngoài (đem cho khách). Xử lý cái mới trong tầm kiểm soát, không để lây lan mất kiểm soát."
+    },
+    {
+     "textHV": "Đồn vô phu, kỳ hành tư thư, lệ, vô đại cữu",
+     "gloss": "Mông đít không da [ngồi đứng không yên], bước đi chật vật, nguy, [nhưng] không lỗi lớn",
+     "modern": "Bồn chồn khó chịu, tiến thoái đều vướng vì muốn \"gặp\" mà không được. Có nguy, nhưng vì rốt cuộc không sa vào (không có cái âm để dính) nên không thành lỗi lớn. Day dứt mà giữ được mình thì tạm ổn."
+    },
+    {
+     "textHV": "Bao vô ngư, khởi hung",
+     "gloss": "Trong bọc không có cá [để tuột mất cái đáng giữ, xa lìa dân], dấy lên thì hung",
+     "modern": "Để tuột mất cái đáng lẽ phải giữ (xa rời người dưới, mất lòng dân) — khi hữu sự mà không còn ai bên mình thì hung. Đánh mất sự gắn kết với người mình phụ trách là mầm tai họa."
+    },
+    {
+     "textHV": "Dĩ kỷ bao qua, hàm chương, hữu vẫn tự thiên",
+     "gloss": "Lấy lá cây kỷ bọc quả dưa [che đậy tài đức], ngậm chứa văn vẻ bên trong, [thành quả tốt] như từ trời rơi xuống",
+     "modern": "Người có đức mà khiêm nhường che giấu tài (bọc quả dưa bằng lá), ngậm vẻ đẹp bên trong không phô ra — thì đến lúc điều tốt tự đến như trời ban. Đức ẩn mà chân thành thì cảm được cả thời vận."
+    },
+    {
+     "textHV": "Cấu kỳ giác, lận, vô cữu",
+     "gloss": "Gặp gỡ [nhưng đứng cứng] ở sừng [chỗ cao cùng, cô cao], đáng tiếc, [nhưng] không lỗi",
+     "modern": "Ở vị trí cao chót vót, cứng cỏi và cô độc đến mức chẳng gặp được ai — đáng tiếc. Nhưng vì tự mình chọn đứng cao xa (không hạ mình), lỗi ấy là ở người khác không đến, nên riêng mình không lỗi. Cao ngạo quá thì lỡ mất những cuộc gặp."
+    }
+   ]
+  },
+  {
+   "number": 45,
+   "name": "Tụy",
+   "hanzi": "萃",
+   "upper": "Đoài",
+   "lower": "Khôn",
+   "bits": "000110",
+   "judgment": "Hanh thông. Vua đến nhà tông miếu; lợi gặp người lớn, hanh thông, lợi về giữ chính; dùng vật tế lớn thì tốt, lợi về chỗ có đi (萃：亨。王假有廟，利見大人，亨，利貞。用大牲吉，利有攸往).",
+   "image": "Nước đầm dâng trên mặt đất (tụ lại), là Tụy; người quân tử nhân đó sửa sang khí giới, phòng điều bất trắc (澤上于地，萃；君子以除戎器，戒不虞).",
+   "modernShort": "Quy tụ đông người — cần trung tâm chính danh và mục tiêu chung để đám đông thành sức mạnh.",
+   "lines": [
+    {
+     "textHV": "Hữu phu bất chung, nãi loạn nãi tụy; nhược hào, nhất ác vi tiếu, vật tuất, vãng vô cữu",
+     "gloss": "Có lòng tin nhưng không bền tới cùng, nên [lòng] khi loạn khi tụ; nếu kêu lên [cầu hợp], thoạt [bị] một nắm tay chê cười, [nhưng] chớ lo, cứ đi [tìm về đúng người] thì không lỗi",
+     "modern": "Lòng còn dao động, chưa dứt khoát nên khi muốn tụ khi lại phân tán. Cứ chân thành kêu gọi tìm về đúng người/chỗ đáng theo, dù thoạt bị dè bỉu cũng đừng nản — đi tới thì không lỗi. Quy tụ bắt đầu từ việc dám tìm về."
+    },
+    {
+     "textHV": "Dẫn cát, vô cữu, phu nãi lợi dụng thược",
+     "gloss": "Được dẫn dắt [về hợp] thì tốt, không lỗi; lòng thành thì [dù] lễ đơn sơ (tế thược) cũng được",
+     "modern": "Thuận theo sự dẫn dắt chính đáng mà quy về thì tốt. Cốt ở lòng thành: thành tâm thì dù chỉ lễ mọn đơn sơ cũng đủ cảm nhau. Tụ họp bằng cái tâm thật, không phải bằng phô trương."
+    },
+    {
+     "textHV": "Tụy như, ta như, vô du lợi; vãng vô cữu, tiểu lận",
+     "gloss": "Muốn họp mà [không được, chỉ] than thở, không gì lợi; [nếu chịu] đi [lên hợp với người trên] thì không lỗi, [chỉ] hơi đáng tiếc",
+     "modern": "Bơ vơ, muốn nhập nhóm mà không ai nhận, chỉ biết than. Nếu chịu bỏ sĩ diện mà vươn lên tìm về chỗ hợp thì không lỗi, chỉ hơi tiếc [vì phải hạ mình]. Thà chịu chút thiệt để thuộc về đúng chỗ."
+    },
+    {
+     "textHV": "Đại cát, vô cữu",
+     "gloss": "Phải cả tốt [đại công vô tư] thì mới không lỗi",
+     "modern": "Ở vị trí quy tụ được đông người (gần ngôi vua), quyền lớn dễ sinh nghi — nên phải hoàn toàn chính đại, vô tư vì việc chung thì mới không lỗi. Tụ người dưới danh nghĩa chung, không vì phe cánh riêng."
+    },
+    {
+     "textHV": "Tụy hữu vị, vô cữu; phỉ phu, nguyên vĩnh trinh, hối vong",
+     "gloss": "Tụ họp [người] mà có ngôi vị [chính đáng], không lỗi; [với] kẻ chưa tin phục, [giữ] đạo lớn, lâu bền, chính đính thì mọi hối tiếc tan",
+     "modern": "Làm hạt nhân quy tụ bằng ngôi vị chính đáng thì không lỗi. Với những người chưa tâm phục, không ép — mà lấy đức lớn, bền bỉ, ngay chính để cảm hóa dần, thì rốt cuộc họ theo về, hết hối. Quy tụ bằng chính danh cộng với đức bền."
+    },
+    {
+     "textHV": "Tê tư thế di, vô cữu",
+     "gloss": "Than thở, nước mắt nước mũi giàn giụa [vì chưa hợp được], [biết lo lắng như thế thì] không lỗi",
+     "modern": "Ở cuối, cô lập không tụ được với ai, buồn tủi đến rơi nước mắt. Nhưng chính vì biết lo lắng, ăn năn mà cầu hợp, nên rốt cuộc không lỗi. Nhận ra sự cô lập của mình và mong muốn kết nối lại là điều cứu vãn."
+    }
+   ]
+  },
+  {
+   "number": 46,
+   "name": "Thăng",
+   "hanzi": "升",
+   "upper": "Khôn",
+   "lower": "Tốn",
+   "bits": "011000",
+   "judgment": "Rất hanh thông; nên đi gặp người lớn, chớ lo, tiến về phương nam thì tốt (升：元亨，用見大人，勿恤，南征吉).",
+   "image": "Trong lòng đất nảy cây, là Thăng; người quân tử nhân đó thuận theo đức, tích cái nhỏ để thành cao lớn (地中生木，升；君子以順德，積小以高大).",
+   "modernShort": "Mầm vươn lên xuyên đất — tiến bộ dần đều; kiên trì từng bước thì lên cao thuận lợi.",
+   "lines": [
+    {
+     "textHV": "Doãn thăng, đại cát",
+     "gloss": "Được tin cậy mà [thuận đà] lên, đại tốt",
+     "modern": "Buổi đầu, nhờ được người trên tin cậy mà thuận đà đi lên — đại tốt. Khởi điểm của thăng tiến là sự tín nhiệm; có được lòng tin thì bước lên nhẹ nhàng."
+    },
+    {
+     "textHV": "Phu nãi lợi dụng thược, vô cữu",
+     "gloss": "Có lòng thành thì [dù] lễ đơn sơ cũng lợi, không lỗi",
+     "modern": "Tiến lên bằng thực chất và lòng thành, không cần hình thức phô trương (lễ mọn cũng đủ). Người cứng cỏi mà chân thành thì được tin dùng, không lỗi. Thăng bằng thực lực chứ không bằng màu mè."
+    },
+    {
+     "textHV": "Thăng hư ấp",
+     "gloss": "Lên [thuận lợi như tiến vào] cái ấp trống không [không gì cản]",
+     "modern": "Đường thăng tiến lúc này hanh thông không chút trở ngại, như vào thành bỏ ngỏ. Thuận lợi quá dễ — nên cũng cần chút cảnh giác, đừng vì trơn tru mà chủ quan lao nhanh."
+    },
+    {
+     "textHV": "Vương dụng hưởng vu Kỳ Sơn, cát, vô cữu",
+     "gloss": "Vua dùng [lễ] tế ở núi Kỳ [thuận thần thuận người], tốt, không lỗi",
+     "modern": "Ở vị trí phò tá, biết thuận theo và ở đúng phận (như dâng lễ tế đúng nơi đúng lối) thì tốt, không lỗi. Thăng tiến mà giữ được sự khiêm thuận, đúng vai, thì bền."
+    },
+    {
+     "textHV": "Trinh cát, thăng giai",
+     "gloss": "Giữ chính thì tốt, [như] bước lên bậc thềm [tiến vững từng nấc]",
+     "modern": "Ở ngôi cao, giữ chính đạo thì mỗi bước lên đều vững chắc như lên từng bậc thềm. Thăng tiến chân chính là tiến từng nấc có nền, không nhảy cóc. Biết dùng người hiền mà lên."
+    },
+    {
+     "textHV": "Minh thăng, lợi vu bất tức chi trinh",
+     "gloss": "Lên trong mù quáng [cứ lên mãi không biết dừng], [chỉ] lợi nếu [chuyển sang] giữ chính không ngừng [tự sửa]",
+     "modern": "Lên đến tột cùng mà vẫn tối tăm ham tiến, không biết điểm dừng — nguy. Lúc này cái duy nhất còn lợi là quay sang tu dưỡng bản thân không ngừng nghỉ. Khi hết đường thăng bên ngoài thì hướng vào việc bồi đắp bên trong."
+    }
+   ]
+  },
+  {
+   "number": 47,
+   "name": "Khốn",
+   "hanzi": "困",
+   "upper": "Đoài",
+   "lower": "Khảm",
+   "bits": "010110",
+   "judgment": "Hanh thông; người lớn giữ chính thì tốt, không lỗi; lúc này có nói cũng chẳng ai tin (困：亨，貞，大人吉，无咎，有言不信).",
+   "image": "Đầm cạn hết nước, là Khốn; người quân tử nhân đó dám liều cả tính mạng để đạt chí của mình (澤无水，困；君子以致命遂志).",
+   "modernShort": "Cạn kiệt và bị vây — lúc cùng quẫn, giữ chí và lời ít việc thật, đừng than để vượt qua.",
+   "lines": [
+    {
+     "textHV": "Đồn khốn vu chu mộc, nhập vu u cốc, tam tuế bất địch",
+     "gloss": "Ngồi khốn dưới gốc cây trơ trụi, sa vào hang tối, ba năm không thấy [ánh sáng]",
+     "modern": "Ở đáy của khốn cùng mà lại tự lún sâu vào chỗ tối tăm, u mê — càng ngồi càng chìm, lâu ngày không lối ra. Khốn mà buông xuôi, tự nhốt mình trong bóng tối thì bế tắc kéo dài."
+    },
+    {
+     "textHV": "Khốn vu tửu thực, chu phất phương lai, lợi dụng hưởng tự, chinh hung, vô cữu",
+     "gloss": "Khốn giữa [thừa mứa] rượu cơm [bế tắc trong an nhàn]; [nhưng] cái ấn đỏ [ơn trên] sắp đến; lợi về việc tế lễ [giữ lòng thành], vọng động đi thì hung, [giữ được thì] không lỗi",
+     "modern": "Một kiểu \"khốn\" nghịch lý: đủ đầy vật chất mà bế tắc về đường tiến (chưa gặp thời). Cứ giữ lòng thành, chờ đợi — thời cơ (ấn đỏ) sắp tới. Nôn nóng vọng động thì hung; kiên nhẫn giữ mình thì không lỗi."
+    },
+    {
+     "textHV": "Khốn vu thạch, cứ vu tật lê, nhập vu kỳ cung, bất kiến kỳ thê, hung",
+     "gloss": "Khốn [vấp] phải đá cản, vịn nhằm cây gai [đâm tay], về đến nhà không thấy vợ, hung",
+     "modern": "Tiến thì vấp đá, lui thì vịn gai — chỗ nào cũng sai, cũng đau; về nhà thì mất cả chỗ dựa (không thấy vợ). Càng vùng vẫy sai cách càng khốn thêm, mất luôn nơi nương tựa: hung. Khốn mà xử sai thì mất tất cả."
+    },
+    {
+     "textHV": "Lai từ từ, khốn vu kim xa, lận, hữu chung",
+     "gloss": "Đến chậm rãi rề rà, khốn vì [vướng] cỗ xe bằng kim loại [của kẻ cản], đáng tiếc, [nhưng] có kết cục [tốt]",
+     "modern": "Muốn đến giúp người [đồng cảnh dưới] mà chậm chạp, lại bị của cải/thế lực (xe sắt) cản trở — đáng tiếc vì chần chừ. Nhưng lòng hướng thiện đúng, nên rốt cuộc vẫn có kết cục tốt. Thành ý dù bị cản vẫn thành."
+    },
+    {
+     "textHV": "Nhị ngoạt, khốn vu xích phất, nãi từ hữu thoát, lợi dụng tế tự",
+     "gloss": "[Như bị] xẻo mũi chặt chân [tổn thương cả trên lẫn dưới], khốn vì cái ấn đỏ [trách nhiệm/quyền lớn]; [nhưng] dần dần sẽ thoát; lợi về việc tế lễ [giữ lòng thành]",
+     "modern": "Người ở ngôi cao cũng chịu khốn: bị tổn thương cả trên lẫn dưới, mắc kẹt bởi chính trọng trách của mình. Nhưng nhờ giữ lòng thành, đạo trung, dần dần sẽ thoát. Khốn của người lớn là kiên nhẫn giữ đức mà chờ chuyển."
+    },
+    {
+     "textHV": "Khốn vu cát luy, vu nghiết ngột; viết động hối, hữu hối, chinh cát",
+     "gloss": "Khốn vì [bị quấn] dây sắn, [đứng] chỗ chênh vênh; [tự] bảo \"động thì hối\", [nhưng biết] có hối [mà sửa], thì đi tới sẽ tốt",
+     "modern": "Khốn đến cùng cực, bị trói buộc, đứng chỗ cheo leo, cứ ngỡ \"hễ động là hối\". Nhưng nếu nhận ra và quyết tâm sửa (biết hối mà hành động) thì bứt ra được — đi tới sẽ tốt. Khốn tận cùng, chỉ cần một quyết tâm đổi thay là thoát."
+    }
+   ]
+  },
+  {
+   "number": 48,
+   "name": "Tỉnh",
+   "hanzi": "井",
+   "upper": "Khảm",
+   "lower": "Tốn",
+   "bits": "011010",
+   "judgment": "Dời ấp chứ không dời giếng; không mất không được, người qua kẻ lại đều dùng giếng. Gần tới nơi mà chưa kịp kéo nước lên, vỡ mất cái bình thì xấu (井：改邑不改井，无喪无得，往來井井。汔至亦未繘井，羸其瓶，凶).",
+   "image": "Trên gỗ có nước (gàu gỗ kéo nước lên), là Tỉnh; người quân tử nhân đó khuyến khích dân siêng năng giúp đỡ lẫn nhau (木上有水，井；君子以勞民勸相).",
+   "modernShort": "Giếng nuôi người không cạn — nguồn lực chung cần giữ sạch và sửa sang để ai cũng dùng được.",
+   "lines": [
+    {
+     "textHV": "Tỉnh nê bất thực, cựu tỉnh vô cầm",
+     "gloss": "Giếng [đáy] bùn không [ai] ăn [uống], giếng cũ [bỏ hoang] chim cũng không [đến]",
+     "modern": "Ở đáy, tự để mình đục ngầu như giếng bùn — không ai dùng, thậm chí chim cũng chẳng ghé. Người tự buông bỏ, không trau dồi thì bị đời quên lãng. Muốn hữu dụng phải giữ mình trong."
+    },
+    {
+     "textHV": "Tỉnh cốc xạ phụ, úng tệ lậu",
+     "gloss": "Giếng [nước chỉ] chảy [rò] vào hang [bắn cá nhỏ], cái vò [đựng nước] sứt mẻ rò rỉ",
+     "modern": "Có nguồn (tài) nhưng dùng sai chỗ, phí hoài: nước giếng chỉ để bắn cá con, gàu vò lại thủng. Người có năng lực mà không có chỗ dùng đúng, hoặc thiếu phương tiện phát huy, thì tài năng rò rỉ uổng phí."
+    },
+    {
+     "textHV": "Tỉnh tiết bất thực, vi ngã tâm trắc; khả dụng cấp, vương minh, tịnh thụ kỳ phúc",
+     "gloss": "Giếng đã nạo trong mà không [ai] ăn, khiến lòng ta xót; đáng lẽ có thể múc dùng; [nếu] vua sáng suốt [dùng đến] thì mọi người cùng hưởng phúc",
+     "modern": "Người đã tu dưỡng trong sạch, đủ tài (giếng đã nạo trong) mà không được trọng dụng — thật xót xa, uổng phí. Chỉ mong gặp minh chủ biết dùng, thì cả mình lẫn mọi người cùng được phúc. Nỗi niềm của người tài chờ thời."
+    },
+    {
+     "textHV": "Tỉnh trứu, vô cữu",
+     "gloss": "Giếng được xây kè [tu sửa lại], không lỗi",
+     "modern": "Dành thời gian tu bổ, chỉnh trang chính mình (xây kè giếng) — tuy chưa lợi cho ai ngay, nhưng là việc cần thiết nên không lỗi. Có lúc phải lo hoàn thiện bản thân trước khi giúp được người."
+    },
+    {
+     "textHV": "Tỉnh liệt, hàn tuyền thực",
+     "gloss": "Giếng nước trong, suối lạnh [ngọt lành] cho người [đến] uống",
+     "modern": "Nguồn nước trong mát, ngọt lành, ai đến cũng uống được — tài đức đã chín, được đem ra nuôi dưỡng mọi người. Đây là hào đẹp nhất: người có thực đức và được dùng đúng, làm lợi cho cả cộng đồng."
+    },
+    {
+     "textHV": "Tỉnh thu, vật mạc, hữu phu, nguyên cát",
+     "gloss": "Giếng [đầy nước] múc lên [dùng chung], chớ đậy lại [che giấu]; có lòng thành [chia sẻ không cạn], cả tốt",
+     "modern": "Đỉnh cao của đạo giếng: thành quả, đức hạnh thì đem ra chia sẻ rộng khắp, không đậy lại giữ riêng. Cho đi bằng lòng thành mà không sợ cạn — đó là đại tốt. Giá trị của cái giếng nằm ở chỗ nó cho đi không ngừng."
+    }
+   ]
+  },
+  {
+   "number": 49,
+   "name": "Cách",
+   "hanzi": "革",
+   "upper": "Đoài",
+   "lower": "Ly",
+   "bits": "101110",
+   "judgment": "Đến ngày Tỵ thì có lòng tin theo; rất hanh thông, lợi về giữ chính, hối hận tiêu tan (革：巳日乃孚，元亨，利貞，悔亡).",
+   "image": "Trong đầm có lửa (nước lửa khắc nhau, tất phải đổi), là Cách; người quân tử nhân đó làm lịch pháp để rõ thời tiết (澤中有火，革；君子以治歷明時).",
+   "modernShort": "Thay cũ đổi mới — khi đã chín muồi và được tin, mạnh dạn cải tổ tận gốc.",
+   "lines": [
+    {
+     "textHV": "Củng dụng hoàng ngưu chi cách",
+     "gloss": "Buộc chặt (giữ vững) bằng da trâu vàng",
+     "modern": "Buổi đầu, thời cơ chưa chín, vị thế chưa đủ — chớ vội động, hãy giữ mình vững chắc như buộc bằng dây da trâu. Cải cách nóng vội khi chưa đủ điều kiện thì hỏng; kiên trì chờ thời."
+    },
+    {
+     "textHV": "Dĩ nhật nãi cách chi, chinh cát, vô cữu",
+     "gloss": "Đến đúng thời (đủ ngày) mới thay đổi, tiến thì tốt, không lỗi",
+     "modern": "Khi thời cơ đã chín muồi thì ra tay cải cách dứt khoát — tiến thì tốt, không lỗi. Đúng thời điểm là yếu tố quyết định: sớm quá thì non, đúng lúc thì thành."
+    },
+    {
+     "textHV": "Chinh hung, trinh lệ; cách ngôn tam tựu, hữu phu",
+     "gloss": "Vọng động đi thì hung, cố giữ [cứng] cũng nguy; bàn việc đổi chín chắn tới ba lần thống nhất thì [mới] có lòng tin [theo]",
+     "modern": "Cải cách mà nóng vội thì hung, mà bảo thủ không đổi cũng nguy. Lối đi đúng: bàn bạc kỹ lưỡng nhiều lần cho tới khi đạt đồng thuận thì mới có được sự tin theo. Đổi lớn cần thận trọng và sự nhất trí."
+    },
+    {
+     "textHV": "Hối vong, hữu phu, cải mệnh cát",
+     "gloss": "Hết ăn năn, có lòng tin, đổi mệnh (cải cách) thì tốt",
+     "modern": "Đến thời điểm và có được lòng tin của mọi người, thì cuộc cải cách lớn (\"đổi mệnh\") thành công, tốt lành — mọi hối tiếc tan biến. Chính đáng cộng với niềm tin là điều kiện để đại cải cách."
+    },
+    {
+     "textHV": "Đại nhân hổ biến, vị chiêm hữu phu",
+     "gloss": "Bậc đại nhân biến đổi rực rỡ như con hổ [thay lông vằn sáng], chưa cần bói cũng có lòng tin [của người]",
+     "modern": "Nhà lãnh đạo lớn thực hiện cải cách một cách quang minh, dứt khoát và rực rỡ như hổ thay bộ lông vằn mới — hiệu quả rõ ràng đến mức không cần chứng minh, ai cũng tin phục. Cải cách chân chính tự nó thuyết phục lòng người."
+    },
+    {
+     "textHV": "Quân tử báo biến, tiểu nhân cách diện, chinh hung, cư trinh cát",
+     "gloss": "Quân tử biến đổi [tinh tế] như con báo [đổi lông], kẻ tiểu nhân [chỉ] đổi ngoài mặt; [cố] tiến [đổi thêm] thì hung, ở yên giữ chính thì tốt",
+     "modern": "Sau đại cải cách: người quân tử đổi mới từng nét tinh tế (như báo thay lông), còn kẻ tiểu nhân chỉ đổi bộ mặt bên ngoài mà lòng không đổi. Lúc này nên củng cố, ổn định, đừng cải cách thêm nữa — cố đổi tiếp thì hung, giữ yên thì tốt. Đổi thật là đổi từ tâm."
+    }
+   ]
+  },
+  {
+   "number": 50,
+   "name": "Đỉnh",
+   "hanzi": "鼎",
+   "upper": "Ly",
+   "lower": "Tốn",
+   "bits": "011101",
+   "judgment": "Rất tốt lành, hanh thông (鼎：元吉，亨).",
+   "image": "Trên gỗ có lửa (đun cái vạc), là Đỉnh; người quân tử nhân đó giữ ngôi vị cho ngay chính, vững vàng gánh mệnh (木上有火，鼎；君子以正位凝命).",
+   "modernShort": "Vạc nấu biến nguyên liệu thành tinh hoa — nuôi dưỡng và chuyển hoá, ổn định để tạo giá trị mới.",
+   "lines": [
+    {
+     "textHV": "Đỉnh điên chỉ, lợi xuất bĩ; đắc thiếp dĩ kỳ tử, vô cữu",
+     "gloss": "Vạc chổng chân [lật ngược], [nhưng] lợi ở chỗ đổ được cặn bẩn ra; [như] lấy vợ lẽ mà được con nối dõi, không lỗi",
+     "modern": "Lật ngược cái cũ tưởng là hỏng, hóa ra lại hay: đổ được hết cặn bã để đón cái mới sạch. Có những \"đảo lộn\" ban đầu lại là cơ hội gột rửa, khởi đầu tốt — nên không lỗi."
+    },
+    {
+     "textHV": "Đỉnh hữu thật, ngã cừu hữu tật, bất ngã năng tức, cát",
+     "gloss": "Vạc có đồ ăn (đầy thực chất); kẻ đối/thù ta có bệnh [không tới gần được], không thể đụng đến ta, tốt",
+     "modern": "Có thực lực, thực chất (vạc đầy) và giữ mình đúng đắn thì kẻ xấu, đối thủ dù muốn hại cũng không đụng tới được. Bản thân vững vàng thực chất là sự bảo vệ tốt nhất."
+    },
+    {
+     "textHV": "Đỉnh nhĩ cách, kỳ hành tắc, trĩ cao bất thực; phương vũ khuy hối, chung cát",
+     "gloss": "Tai vạc bị đổi [khiêng lệch], việc bị nghẽn, [có] mỡ chim trĩ ngon mà không được ăn; đến khi mưa xuống [hòa] thì bớt hối, cuối cùng tốt",
+     "modern": "Có tài, có \"món ngon\" (giá trị) nhưng nhất thời bị cản trở, không được trọng dụng — như vạc lệch tai không khiêng được. Kiên nhẫn chờ đến khi mọi sự điều hòa (\"mưa xuống\") thì tài năng lại được dùng, cuối cùng tốt."
+    },
+    {
+     "textHV": "Đỉnh chiết túc, phúc công tốc, kỳ hình ốc, hung",
+     "gloss": "Vạc gãy chân, đổ đồ ăn của nhà vua, [mặt] ướt đẫm [xấu hổ], hung",
+     "modern": "Gánh việc quá sức, dùng người sai, làm hỏng việc lớn — như vạc gãy chân đổ hết mâm cỗ của vua. Trách nhiệm nặng mà năng lực/nhân sự không kham nổi thì đổ bể, hung. Biết lượng sức mình và chọn người."
+    },
+    {
+     "textHV": "Đỉnh hoàng nhĩ kim huyễn, lợi trinh",
+     "gloss": "Vạc tai vàng, quai (đòn khiêng) bằng kim loại vàng; lợi về giữ chính",
+     "modern": "Ở ngôi tôn mà hư tâm, đắc trung (tai vàng — sẵn sàng đón nhận), lại vững vàng cứng cáp (quai vàng) để dùng người tài. Khiêm mà có bản lĩnh, giữ chính thì lợi. Lãnh đạo giỏi là biết mở lòng dùng người."
+    },
+    {
+     "textHV": "Đỉnh ngọc huyễn, đại cát, vô bất lợi",
+     "gloss": "Vạc quai ngọc [quý và ôn nhuận], đại tốt, không gì không lợi",
+     "modern": "Đỉnh cao: cương và nhu điều hòa hoàn hảo như quai ngọc (cứng mà ôn nhuận). Vừa vững vàng nguyên tắc vừa mềm mại độ lượng — đại tốt, không gì không lợi. Hào đẹp nhất: sự chín muồi của đức nuôi dưỡng."
+    }
+   ]
+  },
+  {
+   "number": 51,
+   "name": "Thuần Chấn",
+   "hanzi": "震",
+   "upper": "Chấn",
+   "lower": "Chấn",
+   "bits": "100100",
+   "judgment": "Hanh thông. Sấm đến làm sợ run, rồi lại nói cười vui vẻ; sấm vang trăm dặm mà không đánh rơi thìa cúng, chén rượu (震：亨。震來虩虩，笑言啞啞，震驚百里，不喪匕鬯).",
+   "image": "Sấm nối tiếp sấm, là Chấn; người quân tử nhân lúc sợ hãi mà tu sửa, xét lại mình (洊雷，震；君子以恐懼修省).",
+   "modernShort": "Sấm nối sấm gây kinh động — biến cố đánh thức; giữ bình tĩnh giữa rung chuyển thì hoá lành.",
+   "lines": [
+    {
+     "textHV": "Chấn lai khích khích, hậu tiếu ngôn ách ách, cát",
+     "gloss": "Sấm đến thì sợ hãi nơm nớp, sau [qua rồi] thì cười nói vui vẻ, tốt",
+     "modern": "Khi biến cố ập đến, biết lo sợ, cảnh giác đề phòng ngay từ đầu — nhờ vậy vượt qua và về sau lại an vui. Sợ đúng lúc (để phòng bị) là điều tốt, không phải hèn nhát."
+    },
+    {
+     "textHV": "Chấn lai lệ, ức táng bối, tê vu cửu lăng; vật trục, thất nhật đắc",
+     "gloss": "Sấm đến nguy, e mất của [tiền bạc], phải chạy lên gò cao chín tầng [lánh]; chớ đuổi theo [của mất], bảy ngày sẽ lại được",
+     "modern": "Biến động lớn đe dọa cả tài sản — hãy bỏ của giữ thân, lánh lên chỗ an toàn. Đừng tiếc của mà lao theo; giữ được mình thì sau (bảy ngày) tự khôi phục. Trong khủng hoảng, ưu tiên bảo toàn cái cốt."
+    },
+    {
+     "textHV": "Chấn tô tô, chấn hành vô sảnh",
+     "gloss": "Sấm làm thom thóp bất an; [nhưng nếu nhân cái] sợ ấy mà hành động [cẩn thận] thì không lỗi",
+     "modern": "Nơm nớp bất an trước biến động. Nhưng nếu biết biến nỗi sợ thành sự thận trọng trong hành động thì tránh được lỗi. Sợ mà tỉnh táo hành xử cẩn trọng thì không sao."
+    },
+    {
+     "textHV": "Chấn toại nê",
+     "gloss": "Sấm [làm cho] sa lầy [mắc kẹt]",
+     "modern": "Bị vây giữa biến động mà sa lầy, không phấn chấn dậy nổi — chìm nghỉm giữa các thế lực xung quanh. Khi mất khí thế và bị bủa vây, người ta dễ mắc kẹt bất động. (Hào kém.)"
+    },
+    {
+     "textHV": "Chấn vãng lai lệ, ức vô táng hữu sự",
+     "gloss": "Sấm đi đến đều nguy; nhưng [nếu giữ đạo trung] thì không mất mát gì, [vẫn còn] có việc [để giữ]",
+     "modern": "Biến động dồn dập tứ phía, nguy hiểm khắp nơi. Nhưng nhờ giữ được đạo trung, vị thế trung tâm nên tuy nguy mà không mất mát, vẫn nắm được việc. Ở tâm bão mà giữ vững cái trung thì không đổ."
+    },
+    {
+     "textHV": "Chấn tác tác, thị quắc quắc, chinh hung; chấn bất vu kỳ cung, vu kỳ lân, vô cữu, hôn cấu hữu ngôn",
+     "gloss": "Sấm làm xơ xác, mắt nhìn ngơ ngác hoảng loạn; tự đi [lúc này] thì hung; [nếu biết sợ khi] chấn động chưa tới thân mình mà [mới] tới hàng xóm [đã lo phòng] thì không lỗi; [tuy] chuyện thân thích có lời [trách]",
+     "modern": "Hoảng loạn tột độ, mất phương hướng — cứ manh động lúc này thì hung. Bài học: thấy tai họa giáng xuống người bên cạnh (hàng xóm) mà biết răn mình, phòng bị trước thì tránh được họa cho mình. Biết sợ trước khi tới lượt mình là khôn ngoan (dù có thể bị người thân trách là lo xa)."
+    }
+   ]
+  },
+  {
+   "number": 52,
+   "name": "Thuần Cấn",
+   "hanzi": "艮",
+   "upper": "Cấn",
+   "lower": "Cấn",
+   "bits": "001001",
+   "judgment": "Dừng ở lưng (chỗ không sinh ham muốn), không thấy được thân mình; đi trong sân mà chẳng thấy người, không lỗi (艮其背，不獲其身，行其庭，不見其人，无咎).",
+   "image": "Hai núi chồng nhau, là Cấn; người quân tử nhân đó suy nghĩ không vượt ra ngoài cương vị của mình (兼山，艮；君子以思不出其位).",
+   "modernShort": "Núi chồng núi đứng yên — dừng đúng lúc, an trú trong hiện tại, tĩnh tâm để sáng.",
+   "lines": [
+    {
+     "textHV": "Cấn kỳ chỉ, vô cữu, lợi vĩnh trinh",
+     "gloss": "Dừng ở ngón chân [dừng ngay từ đầu, trước khi bước], không lỗi; lợi về giữ [sự dừng chính đáng] lâu dài",
+     "modern": "Biết dừng ngay từ khi chưa kịp hành động sai (dừng ở ngón chân) — thì không lỗi. Ngăn mình lại trước bước đầu tiên là dễ nhất; giữ được sự tự chủ ấy lâu dài thì lợi."
+    },
+    {
+     "textHV": "Cấn kỳ phì, bất chửng kỳ tùy, kỳ tâm bất khoái",
+     "gloss": "Dừng ở bắp chân, không cứu được cái [mình phải] theo [bị cấp trên kéo đi], trong lòng không vui",
+     "modern": "Muốn dừng lại nhưng bị cuốn theo người trên (bắp chân phải theo đùi), không tự chủ được — trong lòng ấm ức. Có lúc ta buộc phải đi theo cái mình không muốn; sự bất lực ấy khiến không vui."
+    },
+    {
+     "textHV": "Cấn kỳ hạn, liệt kỳ dần, lệ huân tâm",
+     "gloss": "Dừng ở lưng eo (khớp giữa thân), [ép cứng đến] rách cả thịt lưng, nguy nóng như lửa đốt lòng",
+     "modern": "Ép mình dừng một cách cứng nhắc, cưỡng bức — như bẻ gãy eo lưng, chia cắt trên dưới, đau đớn nguy hiểm, lòng nóng như lửa đốt. Dừng mà gồng ép, đè nén thô bạo thì sinh nguy. Dừng phải tự nhiên, không phải tự hành hạ."
+    },
+    {
+     "textHV": "Cấn kỳ thân, vô cữu",
+     "gloss": "Dừng được cả thân mình [tự chủ an trú], không lỗi",
+     "modern": "Làm chủ được toàn thân, an trú, giữ mình yên tĩnh đúng lúc — không lỗi. Biết dừng cả con người mình lại khi cần, không để thân tâm chạy theo ngoại cảnh."
+    },
+    {
+     "textHV": "Cấn kỳ phụ, ngôn hữu tự, hối vong",
+     "gloss": "Dừng ở miệng (mép), lời nói có thứ tự chừng mực, hết ăn năn",
+     "modern": "Biết dừng ở lời nói — nói năng có chừng mực, đúng lúc, có thứ tự, không lỡ miệng. Giữ được cái miệng thì tránh vô số hối tiếc. \"Uốn lưỡi bảy lần\" chính là đây."
+    },
+    {
+     "textHV": "Đôn cấn, cát",
+     "gloss": "Dừng một cách đôn hậu, dốc lòng (an tĩnh tới cùng, vững chãi), tốt",
+     "modern": "Đạt tới sự tĩnh tại đôn hậu, vững chãi tới cùng — an nhiên tự tại, không gì lay động. Đây là cảnh giới cao của sự \"dừng\": nội tâm an định dày dặn như núi, tốt lành."
+    }
+   ]
+  },
+  {
+   "number": 53,
+   "name": "Tiệm",
+   "hanzi": "漸",
+   "upper": "Tốn",
+   "lower": "Cấn",
+   "bits": "001011",
+   "judgment": "Người con gái về nhà chồng thì tốt, lợi về giữ chính (漸：女歸吉，利貞).",
+   "image": "Trên núi có cây (cây lớn dần trên núi), là Tiệm; người quân tử nhân đó vun đắp đức hiền, làm tốt phong tục (山上有木，漸；君子以居賢德善俗).",
+   "modernShort": "Tiến từ từ như cây mọc — phát triển đúng trình tự, vững chãi và kiên nhẫn thì bền.",
+   "lines": [
+    {
+     "textHV": "Hồng tiệm vu can, tiểu tử lệ, hữu ngôn, vô cữu",
+     "gloss": "Con sếu tiến dần tới bờ nước; kẻ nhỏ [non] thấy nguy, có lời [trách], [nhưng] không lỗi",
+     "modern": "Bước đầu tiến lên còn non nớt, bị nghi ngại và điều tiếng. Nhưng nếu thận trọng, giữ mình thì dù bị chê cũng không lỗi. Khởi đầu bao giờ cũng dễ bị dèm; cứ vững vàng từng bước."
+    },
+    {
+     "textHV": "Hồng tiệm vu bàn, ẩm thực hãn hãn, cát",
+     "gloss": "Sếu tiến tới tảng đá [chỗ vững], ăn uống thong dong vui vẻ, tốt",
+     "modern": "Tiến lên tới chỗ yên ổn, vững chãi (tảng đá), an nhàn thư thái — tốt. Đi đúng bước thì đến được chỗ an; và biết hưởng sự an ổn ấy một cách thong dong, chia sẻ với người."
+    },
+    {
+     "textHV": "Hồng tiệm vu lục, phu chinh bất phục, phụ dựng bất dục, hung; lợi ngự khấu",
+     "gloss": "Sếu tiến lên đất liền khô [không phải chỗ của sếu]; chồng đi [chinh chiến] không về, vợ có mang mà không nuôi [được], hung; [chỉ] lợi về việc chống giặc",
+     "modern": "Tiến sai chỗ, quá đà, đơn độc mạo hiểm — như sếu bỏ nước lên đất khô. Hậu quả là ly tán, mất mát (chồng đi không về). Lúc này chỉ nên phòng thủ, giữ mình chứ đừng tiến tới. Tiến bừa không đúng chỗ thì hung."
+    },
+    {
+     "textHV": "Hồng tiệm vu mộc, hoặc đắc kỳ giác, vô cữu",
+     "gloss": "Sếu tiến lên cây [chân màng khó đậu cành]; may tìm được cành ngang bằng phẳng [tạm đậu], không lỗi",
+     "modern": "Ở vào hoàn cảnh không thật hợp với mình (sếu vốn không đậu cây), nhưng nếu khéo tìm được chỗ tạm ổn, an toàn (cành ngang) thì cũng không lỗi. Biết thích nghi, tìm chỗ đặt mình đúng trong cảnh không thuận."
+    },
+    {
+     "textHV": "Hồng tiệm vu lăng, phụ tam tuế bất dựng, chung mạc chi thắng, cát",
+     "gloss": "Sếu tiến lên gò cao; vợ ba năm không thụ thai [bị ngăn cách], [nhưng] cuối cùng không gì thắng nổi [sự gắn kết chính đáng], tốt",
+     "modern": "Tiến tới vị trí cao (gò), nhưng bị hiểu lầm/cách trở tạm thời (ba năm son sẻ). Vì mối liên kết là chính đáng và bền vững, nên rốt cuộc không gì cản nổi — cuối cùng tốt đẹp. Chính đáng thì trắc trở nhất thời rồi cũng vượt qua."
+    },
+    {
+     "textHV": "Hồng tiệm vu quỳ, kỳ vũ khả dụng vi nghi, cát",
+     "gloss": "Sếu tiến lên đường mây cao (đỉnh); lông cánh nó [đẹp, rụng xuống] có thể dùng làm đồ trang nghi [làm gương], tốt",
+     "modern": "Tiến đến đỉnh cao nhất, thoát tục thanh cao như sếu bay trên tầng mây. Thành tựu và phong thái ấy trở thành mẫu mực, để lại giá trị làm gương cho đời (lông vũ dùng làm nghi lễ). Đỉnh của sự tiến dần là thành tựu có ý nghĩa lưu lại."
+    }
+   ]
+  },
+  {
+   "number": 54,
+   "name": "Quy Muội",
+   "hanzi": "歸妹",
+   "upper": "Chấn",
+   "lower": "Đoài",
+   "bits": "110100",
+   "judgment": "Tiến tới thì xấu, không có gì lợi (歸妹：征凶，无攸利).",
+   "image": "Trên đầm có sấm (sấm động làm đầm dao động), là Quy Muội; người quân tử nhân đó nghĩ tới sự bền đến cùng mà biết trước chỗ hỏng (澤上有雷，歸妹；君子以永終知敝).",
+   "modernShort": "Vào cuộc ở thế phụ — hiểu giới hạn vai trò, giữ đúng mực để không sinh hối tiếc.",
+   "lines": [
+    {
+     "textHV": "Qui muội dĩ đệ, bả năng lý, chinh cát",
+     "gloss": "Em gái về [làm] vợ lẽ; [như người] què mà vẫn đi được [làm tròn phần mình], tiến thì tốt",
+     "modern": "Ở vào vị thế thấp, phụ (vợ lẽ, cấp phó) nhưng nếu giữ đức, làm tròn phần việc của mình (như người què vẫn cố đi) thì vẫn tốt. Vị trí thấp không xấu; xấu là ở vị thấp mà không giữ được mình."
+    },
+    {
+     "textHV": "Diểu năng thị, lợi u nhân chi trinh",
+     "gloss": "[Như người] chột mà vẫn nhìn được; lợi về sự chính bền của người ẩn dật (u nhân)",
+     "modern": "Gặp cảnh không như ý (đối tác/hoàn cảnh không xứng), như người chột chỉ nhìn được một phần. Lúc này giữ trinh chính, ẩn nhẫn như người ẩn dật là hơn cả. Cảnh không trọn vẹn thì càng phải giữ mình."
+    },
+    {
+     "textHV": "Qui muội dĩ tu, phản qui dĩ đệ",
+     "gloss": "Em gái [mong] về [chính thất] mà phải chờ đợi, [rốt cuộc] quay lại về [làm] vợ lẽ",
+     "modern": "Mong cầu quá phận (muốn vị chính thất) mà không được, đành phải hạ xuống vị thấp. Kỳ vọng vượt quá thực lực/vị thế của mình thì cuối cùng vẫn phải chấp nhận thực tế. Biết phận thì đỡ khổ."
+    },
+    {
+     "textHV": "Qui muội khiên kỳ, trì qui hữu thì",
+     "gloss": "Em gái về [bị] lỡ hẹn (quá kỳ), chậm về [vì] có [chờ] đúng thời",
+     "modern": "Thà chờ đợi để có được điều đúng đắn, đúng người, đúng lúc, còn hơn vội vàng kết hợp bừa. Chậm mà đúng thì hơn nhanh mà sai. Người có giá trị biết chờ cơ hội xứng đáng."
+    },
+    {
+     "textHV": "Đế Ất qui muội, kỳ quân chi khiết bất như kỳ đệ chi khiết lương; nguyệt cơ vọng, cát",
+     "gloss": "Vua Đế Ất gả em gái; áo [giản dị] của nàng [công chúa] không đẹp bằng áo của cô hầu; [như] trăng gần rằm [đẹp mà chưa tròn đầy, khiêm], tốt",
+     "modern": "Người cao quý (công chúa) mà khiêm nhường, giản dị, trọng đức hơn phục sức — ăn mặc còn đơn sơ hơn cả người hầu. Như vầng trăng gần rằm: sáng đẹp mà chưa tự mãn tròn đầy. Cao mà biết khiêm thì tốt."
+    },
+    {
+     "textHV": "Nữ thừa khuông vô thật, sĩ khuê dương vô huyết, vô du lợi",
+     "gloss": "Cô gái bưng giỏ [tế] mà giỏ rỗng không đồ, chàng trai đâm dê mà không có máu; không gì lợi",
+     "modern": "Kết hợp/việc làm chỉ có hình thức mà rỗng ruột, thiếu thực chất — như lễ cưới với giỏ không, con dê tế không máu. Rốt cuộc vô nghĩa, không đem lại gì. Quan hệ hay việc gì thiếu cái thật bên trong thì trống rỗng vô ích."
+    }
+   ]
+  },
+  {
+   "number": 55,
+   "name": "Phong",
+   "hanzi": "豐",
+   "upper": "Chấn",
+   "lower": "Ly",
+   "bits": "101100",
+   "judgment": "Hanh thông; bậc vua đạt tới sự sung mãn, chớ lo, nên như mặt trời đứng bóng (豐：亨，王假之，勿憂，宜日中).",
+   "image": "Sấm chớp cùng đến (uy và sáng cực thịnh), là Phong; người quân tử nhân đó xử kiện và thi hành hình phạt (雷電皆至，豐；君子以折獄致刑).",
+   "modernShort": "Đỉnh cao rực rỡ như mặt trời đứng bóng — tận hưởng thịnh vượng nhưng nhớ bóng xế kề bên.",
+   "lines": [
+    {
+     "textHV": "Ngộ kỳ phối chủ, tuy tuần vô cữu, vãng hữu thượng",
+     "gloss": "Gặp được người chủ tương xứng (đồng đức); dù [ngang nhau] một tuần [mười ngày] cũng không lỗi, cứ đi tới thì được coi trọng",
+     "modern": "Buổi tạo dựng thịnh vượng, gặp được đối tác/cộng sự ngang tầm, đồng lòng (minh + động bổ trợ nhau). Dù hai bên ngang nhau, hợp tác thì không lỗi mà còn được trọng dụng. Người tài gặp người tài thì cùng làm nên nghiệp lớn."
+    },
+    {
+     "textHV": "Phong kỳ bộ, nhật trung kiến Đẩu; vãng đắc nghi tật, hữu phu phát nhược, cát",
+     "gloss": "[Bị] màn che dày làm tối, giữa trưa mà thấy sao Bắc Đẩu [tối như đêm]; đi tới thì bị nghi ghét; [nhưng nếu] lấy lòng thành khơi mở [cảm hóa] thì tốt",
+     "modern": "Ở giữa thời sáng mà bị che lấp, hiểu lầm, ghen ghét (giữa trưa mà tối như thấy sao). Đừng nóng nảy phân bua; hãy lấy lòng thành chân thật kiên trì khơi mở thì cảm hóa được người, hóa tốt. Chân thành phá tan ngờ vực."
+    },
+    {
+     "textHV": "Phong kỳ bái, nhật trung kiến muội; chiết kỳ hữu quăng, vô cữu",
+     "gloss": "[Bị] màn lớn che, giữa trưa thấy sao nhỏ mờ; [như] gãy cánh tay phải [mất trợ thủ], [đành chịu] không lỗi",
+     "modern": "Bị che lấp nặng nề đến mức như mất đi cánh tay phải (mất người trợ giúp đắc lực). Trong hoàn cảnh bị vùi lấp và mất chỗ dựa ấy, không làm được gì lớn — nhưng cũng không phải lỗi của mình. Có những lúc bó tay là do thời, không phải do ta."
+    },
+    {
+     "textHV": "Phong kỳ bộ, nhật trung kiến Đẩu; ngộ kỳ di chủ, cát",
+     "gloss": "[Bị] màn che tối, giữa trưa thấy sao Đẩu; [nhưng] gặp được người chủ ngang hàng (đồng đức) thì tốt",
+     "modern": "Vẫn trong cảnh u ám bị che, nhưng gặp được người đồng chí hướng ngang tầm (hào sơ) thì cùng nhau thoát khỏi bóng tối — tốt. Giữa lúc mờ mịt, tìm được người cùng chí là lối ra."
+    },
+    {
+     "textHV": "Lai chương, hữu khánh dự, cát",
+     "gloss": "Vời được người tài đức đẹp (chương) đến, thì có phúc lành và tiếng khen, tốt",
+     "modern": "Người đứng đầu biết chiêu vời, trọng dụng người tài giỏi (chương) về giúp mình — nhờ đó mà có phúc và được ca ngợi, tốt. Duy trì thịnh vượng cốt ở biết cầu hiền, dùng người sáng, không tự bó mình."
+    },
+    {
+     "textHV": "Phong kỳ ốc, bộ kỳ gia, khuy kỳ hộ, khuých kỳ vô nhân, tam tuế bất địch, hung",
+     "gloss": "Nhà cửa [to] thịnh lớn, [nhưng] tự che phủ nhà mình [kín mít]; nhòm qua cửa thì vắng tanh không người, ba năm chẳng thấy [ai], hung",
+     "modern": "Đỉnh của thịnh mà kiêu ngạo, tự phong bế, che kín mình lại — thì dù nhà to cửa rộng cũng trở nên trống vắng, không ai lui tới, cô lập nhiều năm. Hung. Thịnh mà tự cao tự đóng cửa với thiên hạ thì tự chuốc lấy suy vong."
+    }
+   ]
+  },
+  {
+   "number": 56,
+   "name": "Lữ",
+   "hanzi": "旅",
+   "upper": "Ly",
+   "lower": "Cấn",
+   "bits": "001101",
+   "judgment": "Hơi hanh thông; kẻ lữ hành giữ chính thì tốt (旅：小亨，旅貞吉).",
+   "image": "Trên núi có lửa (lửa cháy lan không ở yên), là Lữ; người quân tử nhân đó sáng suốt thận trọng khi dùng hình, không giam giữ kéo dài (山上有火，旅；君子以明慎用刑，而不留獄).",
+   "modernShort": "Kẻ đi xa, tạm bợ nơi đất khách — khiêm nhường, thận trọng và tử tế để được nương nhờ.",
+   "lines": [
+    {
+     "textHV": "Lữ tỏa tỏa, tư kỳ sở thủ tai",
+     "gloss": "Lữ khách [mà] hèn mọn ti tiện (tủn mủn, bủn xỉn), ấy là tự chuốc lấy vạ",
+     "modern": "Nơi đất khách mà nhỏ nhen, bám víu tiểu tiết, ti tiện — thì tự rước lấy tai vạ, bị người khinh. Ở thế yếu càng phải giữ nhân cách; đánh mất tư cách vì mấy cái lợi vụn thì tự hại mình."
+    },
+    {
+     "textHV": "Lữ tức thứ, hoài kỳ tư, đắc đồng bộc trinh",
+     "gloss": "Lữ khách tới được chỗ trọ [yên], mang theo của cải phòng thân, có được người đầy tớ trung thành",
+     "modern": "Ở đất khách mà biết tìm được chỗ nương an ổn, có chút phòng thân, và được người trung tín giúp đỡ — đó là cảnh lữ khách lý tưởng. Khiêm nhường đúng mực thì được người tin cậy, có chỗ dựa."
+    },
+    {
+     "textHV": "Lữ phần kỳ thứ, táng kỳ đồng bộc, trinh lệ",
+     "gloss": "Lữ khách [để] cháy mất chỗ trọ, mất luôn người đầy tớ [trung]; giữ [lối cứng ấy] thì nguy",
+     "modern": "Quá cứng cỏi, kiêu ngạo nơi đất khách — thì mất cả chỗ nương (cháy nhà trọ) lẫn người giúp (mất đầy tớ). Ở thế khách mà tự cao, không biết mềm mỏng thì tự cô lập, nguy. Đất khách không phải chỗ để phô trương cái tôi."
+    },
+    {
+     "textHV": "Lữ vu xử, đắc kỳ tư phủ, ngã tâm bất khoái",
+     "gloss": "Lữ khách [tạm] có chỗ ở, kiếm được của cải và [rìu] phương tiện phòng thân, [nhưng] lòng ta chẳng vui",
+     "modern": "Tạm có nơi trú và phương tiện, nhưng chưa có được vị trí chính đáng, chưa thật sự an lòng — vẫn thấp thỏm bất an. Có chỗ đứng tạm bợ mà chưa được thừa nhận đúng mức thì trong lòng vẫn không yên."
+    },
+    {
+     "textHV": "Xạ trĩ, nhất thỉ vong, chung dĩ dự mệnh",
+     "gloss": "Bắn con chim trĩ [đẹp], [chỉ] mất một mũi tên [mà được], cuối cùng được khen thưởng và [nhận] mệnh [chức]",
+     "modern": "Khéo léo, hành xử đúng cách và văn minh nơi đất khách (bắn trúng chim trĩ đẹp chỉ tốn một mũi tên) — nhờ đó được người bản xứ nể trọng, cuối cùng được ban danh tiếng và chức phận. Ở thế khách mà có tài và đúng mực thì vẫn tiến thân được."
+    },
+    {
+     "textHV": "Điểu phần kỳ sào, lữ nhân tiên tiếu hậu hào đào; táng ngưu vu dị, hung",
+     "gloss": "Chim [để] cháy mất tổ; lữ khách trước cười sau khóc than; mất con trâu [đức thuận hòa] nơi biên ải một cách dễ dàng, hung",
+     "modern": "Ở tột đỉnh mà kiêu ngạo tự mãn như chim làm tổ trên cao — rốt cuộc cháy mất tổ, trước còn cười sau phải khóc. Vì buông thả đánh mất đức nhu thuận (mất trâu) mà chẳng hay biết. Ở thế khách mà lên cao rồi tự cao thì mất sạch, hung."
+    }
+   ]
+  },
+  {
+   "number": 57,
+   "name": "Thuần Tốn",
+   "hanzi": "巽",
+   "upper": "Tốn",
+   "lower": "Tốn",
+   "bits": "011011",
+   "judgment": "Hơi hanh thông; lợi về chỗ có đi, lợi gặp người lớn (巽：小亨，利有攸往，利見大人).",
+   "image": "Gió tiếp gió (gió theo nhau), là Tốn; người quân tử nhân đó ban lại mệnh lệnh rồi mới làm việc (隨風，巽；君子以申命行事).",
+   "modernShort": "Gió nối gió thấm khắp — ảnh hưởng nhẹ mà bền; kiên trì lặp lại để thấm sâu.",
+   "lines": [
+    {
+     "textHV": "Tiến thoái, lợi vũ nhân chi trinh",
+     "gloss": "Do dự tiến lui [thiếu quyết đoán]; lợi về sự chính bền cương quyết của người võ (người có khí phách)",
+     "modern": "Quá mềm yếu nên chần chừ tiến lui không quyết. Lúc này cần bổ sung sự cương quyết, dứt khoát (khí phách người võ) thì mới lợi. Khiêm thuận mà thiếu quyết đoán thì thành nhu nhược."
+    },
+    {
+     "textHV": "Tốn tại sàng hạ, dụng sử vu phân nhược, cát, vô cữu",
+     "gloss": "Nhún [quá mức] đến ở dưới gầm giường; [nhưng nếu chân thành như] dùng thầy cúng thầy bói khấn thần nhiều lần, thì tốt, không lỗi",
+     "modern": "Khiêm nhún đến mức thái quá (nằm rạp dưới giường) — nhưng nếu xuất phát từ lòng thành khẩn chân thật (như người thành tâm khấn vái) thì vẫn tốt, không lỗi. Nhún nhiều mà lòng thành thì được tha thứ."
+    },
+    {
+     "textHV": "Tần tốn, lận",
+     "gloss": "Nhún nhường liên tục miễn cưỡng (nhún đi nhún lại), đáng tiếc",
+     "modern": "Thuận theo một cách gượng gạo, liên tục cúi mình mà trong lòng miễn cưỡng — đánh mất tự chủ, đáng tiếc. Khiêm nhún giả tạo, lặp đi lặp lại vì ép buộc thì mất cả khí chất."
+    },
+    {
+     "textHV": "Hối vong, điền hoạch tam phẩm",
+     "gloss": "Hết ăn năn, đi săn được ba loại thú [dâng lễ]",
+     "modern": "Khiêm thuận đúng chỗ, đúng lúc (mềm mà ở vị chính, trên dưới đều thuận) nên gặt được thành quả trọn vẹn (săn được ba loại thú) — hết hối tiếc. Nhún đúng cách thì có công."
+    },
+    {
+     "textHV": "Trinh cát, hối vong, vô bất lợi; vô sơ hữu chung; tiên canh tam nhật, hậu canh tam nhật, cát",
+     "gloss": "Giữ chính thì tốt, hết ăn năn, không gì không lợi; không có đầu suôn nhưng có kết cục tốt; trước ngày canh ba ngày, sau ngày canh ba ngày [suy tính trước sau kỹ khi thay đổi], tốt",
+     "modern": "Ban hành thay đổi/mệnh lệnh thì phải cân nhắc kỹ cả trước lẫn sau (tính toán chu đáo \"ba ngày trước, ba ngày sau\"). Khởi đầu có thể chưa suôn, nhưng nhờ thận trọng đúng đắn nên kết cục tốt. Thay đổi khôn ngoan là thay đổi có chuẩn bị."
+    },
+    {
+     "textHV": "Tốn tại sàng hạ, táng kỳ tư phủ, trinh hung",
+     "gloss": "Nhún [quá] đến dưới gầm giường, mất cả của cải và [rìu] phương tiện tự vệ; giữ [lối nhu nhược ấy] thì hung",
+     "modern": "Khiêm nhún tới cực đoan đến mức đánh mất cả bản thân, cả phương tiện tự bảo vệ mình — thì hung. Nhu thuận mà tự hạ thấp, tự tước bỏ sức mạnh của mình đến vô nguyên tắc là tự hủy. Khiêm có giới hạn của nó."
+    }
+   ]
+  },
+  {
+   "number": 58,
+   "name": "Thuần Đoài",
+   "hanzi": "兌",
+   "upper": "Đoài",
+   "lower": "Đoài",
+   "bits": "110110",
+   "judgment": "Hanh thông, lợi về giữ chính (兌：亨，利貞).",
+   "image": "Hai đầm liền nhau (thấm tưới cho nhau), là Đoài; người quân tử nhân đó cùng bạn bè giảng giải, học tập (麗澤，兌；君子以朋友講習).",
+   "modernShort": "Đầm nối đầm, niềm vui chân thành — chia sẻ và khích lệ nhau, vui đúng cách thì sức bền.",
+   "lines": [
+    {
+     "textHV": "Hòa đoài, cát",
+     "gloss": "Hòa nhã mà vui, tốt",
+     "modern": "Niềm vui đến từ sự hòa hợp bình thản trong lòng, không lệ thuộc, không cầu cạnh ai — nên tốt. Vui một cách quân bình, tự tại là niềm vui lành mạnh nhất."
+    },
+    {
+     "textHV": "Phu đoài, cát, hối vong",
+     "gloss": "Vui bằng lòng thành tín, tốt, hết ăn năn",
+     "modern": "Niềm vui dựa trên sự chân thành, tin cậy — vững chắc và trong sáng, nên tốt và hết hối tiếc. Vui vì thật lòng với nhau thì bền; vui giả tạo thì chóng tan."
+    },
+    {
+     "textHV": "Lai đoài, hung",
+     "gloss": "[Hạ mình] tìm đến cầu vui [một cách bất chính], hung",
+     "modern": "Hạ mình chạy theo, cầu cạnh lạc thú hay lấy lòng người trên để mua vui — mất phẩm giá, hung. Niềm vui phải tự trong mình mà ra, đi xin xỏ vui thú bên ngoài thì chuốc họa."
+    },
+    {
+     "textHV": "Thương đoài vị ninh, giới tật hữu hỷ",
+     "gloss": "Đắn đo cân nhắc [giữa hai nguồn vui] chưa yên; [nếu] dứt khoát tránh xa cái xấu (giới tật) thì có mừng",
+     "modern": "Đang phân vân giữa niềm vui chính đáng và thú vui tà vạy, lòng chưa yên. Nếu dứt khoát tránh xa cái xấu, chọn cái lành thì có điều mừng. Biết cắt bỏ cám dỗ để giữ niềm vui trong sạch."
+    },
+    {
+     "textHV": "Phu vu bác, hữu lệ",
+     "gloss": "Tin [nhầm] vào kẻ [tiểu nhân chuyên] gặm mòn/bóc lột (bác), có nguy",
+     "modern": "Đặt lòng tin nhầm vào kẻ chuyên lấy lời ngon ngọt để gặm mòn mình (tiểu nhân xu nịnh) — có nguy. Ở ngôi cao càng phải cảnh giác với những kẻ mua vui lấy lòng để trục lợi."
+    },
+    {
+     "textHV": "Dẫn đoài",
+     "gloss": "Dụ dỗ, lôi kéo [người khác] vào chỗ vui [vô độ]",
+     "modern": "Ở đỉnh của niềm vui mà dẫn dụ, lôi kéo người khác cùng sa vào lạc thú vô độ — không dứt ra được. (Không lành: vui đã thành thói buông thả, còn kéo cả người khác theo.)"
+    }
+   ]
+  },
+  {
+   "number": 59,
+   "name": "Hoán",
+   "hanzi": "渙",
+   "upper": "Tốn",
+   "lower": "Khảm",
+   "bits": "010011",
+   "judgment": "Hanh thông; vua đến nhà tông miếu, lợi vượt sông lớn, lợi về giữ chính (渙：亨。王假有廟，利涉大川，利貞).",
+   "image": "Gió đi trên mặt nước (làm nước tản ra), là Hoán; các tiên vương nhân đó tế Thượng Đế, lập tông miếu (風行水上，渙；先王以享于帝立廟).",
+   "modernShort": "Băng tan gió thổi tản — gỡ bỏ ngăn cách và cứng nhắc, khơi thông để gắn lại quanh điều chung.",
+   "lines": [
+    {
+     "textHV": "Chửng mã tráng, cát",
+     "gloss": "Dùng con ngựa khỏe để cứu [vãn ngay từ đầu], tốt",
+     "modern": "Khi ly tán mới chớm, ra tay cứu vãn ngay bằng biện pháp mạnh mẽ, kịp thời (như dùng ngựa khỏe) — thì tốt. Ngăn sự rạn nứt từ sớm, đừng để nó lan thành đổ vỡ lớn."
+    },
+    {
+     "textHV": "Hoán bôn kỳ ki, hối vong",
+     "gloss": "Trong lúc ly tán, chạy tới nương vào chỗ dựa (ki = ghế/án tựa), hết ăn năn",
+     "modern": "Giữa lúc tan rã, biết tìm đến nương tựa vào chỗ dựa vững chắc (người/nền tảng đáng tin) thì hết hối tiếc. Khi mọi thứ đang rã, tìm được một điểm tựa để bám vào là điều cứu vãn."
+    },
+    {
+     "textHV": "Hoán kỳ cung, vô hối",
+     "gloss": "Tan [bỏ] cái thân mình [quên mình vì việc chung], không ăn năn",
+     "modern": "Dám quên đi lợi ích cá nhân, xả thân vì việc lớn chung — thì không phải hối tiếc. Muốn hóa giải chia rẽ thì trước hết phải bỏ được cái tôi vị kỷ của mình."
+    },
+    {
+     "textHV": "Hoán kỳ quần, nguyên cát; hoán hữu khâu, phỉ di sở tư",
+     "gloss": "Giải tán bè nhóm [phe cánh riêng], cả tốt; [rồi] tụ họp lại thành gò lớn [khối đoàn kết lớn], điều mà người thường không nghĩ tới",
+     "modern": "Phá bỏ những phe nhóm nhỏ, bè cánh vị kỷ thì lại đại tốt — vì sau đó mới quy tụ được thành khối đoàn kết lớn hơn nhiều. Điều nghịch lý mà người thường không ngờ: tan cái nhỏ để hợp cái lớn."
+    },
+    {
+     "textHV": "Hoán hãn kỳ đại hiệu, hoán vương cư, vô cữu",
+     "gloss": "Ban bố hiệu lệnh lớn [thấm khắp] như mồ hôi toát ra [không thu lại được]; giải tán/phân phát của cải nơi vua ở [cho dân], không lỗi",
+     "modern": "Người lãnh đạo ban hiệu lệnh chính đáng, rõ ràng, thấm sâu (như mồ hôi đã toát thì không rút lại), và xả của cải riêng của mình để chia cho dân — nhờ đó quy tụ lại lòng người trong thời ly tán, không lỗi. Cho đi và hiệu triệu chính danh thì hợp lại được."
+    },
+    {
+     "textHV": "Hoán kỳ huyết khứ, địch xuất, vô cữu",
+     "gloss": "Làm tan [mối] đổ máu [tai họa], khiến sự nguy hiểm/sợ hãi tránh ra xa, không lỗi",
+     "modern": "Hóa giải được nguy cơ đổ máu, đẩy lùi được tai họa và sợ hãi ra xa — thoát khỏi hiểm nguy, không lỗi. Ở cuối thời ly tán, biết đưa mình và người ra khỏi vòng nguy hiểm là thành công."
+    }
+   ]
+  },
+  {
+   "number": 60,
+   "name": "Tiết",
+   "hanzi": "節",
+   "upper": "Khảm",
+   "lower": "Đoài",
+   "bits": "110010",
+   "judgment": "Hanh thông; nhưng tiết chế đến mức khắc khổ thì không thể giữ lâu (節：亨。苦節不可貞).",
+   "image": "Trên đầm có nước (đầm chứa nước có hạn), là Tiết; người quân tử nhân đó đặt ra chế độ, mức độ, bàn định đức hạnh (澤上有水，節；君子以制數度，議德行).",
+   "modernShort": "Đặt giới hạn hợp lý — như nước trong đầm có bờ; điều độ giúp bền, nhưng chớ hà khắc quá.",
+   "lines": [
+    {
+     "textHV": "Bất xuất hộ đình, vô cữu",
+     "gloss": "Không ra khỏi sân cửa (trong nhà), không lỗi",
+     "modern": "Biết giữ mình, chưa hành động khi chưa đến lúc (không ra khỏi cửa) — đúng chừng mực, nên không lỗi. Có lúc sự kiềm chế, án binh đúng thời chính là điều nên làm."
+    },
+    {
+     "textHV": "Bất xuất môn đình, hung",
+     "gloss": "Không ra khỏi sân cổng [đáng ra phải hành động mà lại đóng cửa], hung",
+     "modern": "Ngược với hào 1: đã đến lúc phải hành động, thời cơ đã mở mà vẫn quá dè dặt, đóng cửa không ra — lỡ mất thời cơ, hung. Tiết chế mà thành do dự nhút nhát, bỏ lỡ thời điểm thì tai hại."
+    },
+    {
+     "textHV": "Bất tiết nhược, tắc ta nhược, vô cữu",
+     "gloss": "Không biết tiết chế thì [rồi sẽ] than thở [hối tiếc]; [nếu tự biết nhận lỗi] thì không [ai trách] lỗi",
+     "modern": "Không biết tự kiềm chế thì sớm muộn phải than thân trách phận. Nhưng nếu tự mình nhận ra và chịu trách nhiệm về sự buông thả ấy thì không đổ lỗi được cho ai — bài học tự thân."
+    },
+    {
+     "textHV": "An tiết, hanh",
+     "gloss": "Yên ổn, tự nhiên tiết chế [không gượng ép], hanh thông",
+     "modern": "Tiết chế đã trở thành nếp sống tự nhiên, thoải mái, không gò ép — nên hanh thông. Chừng mực thật sự là khi điều độ trở thành thói quen dễ chịu, chứ không phải sự gồng mình."
+    },
+    {
+     "textHV": "Cam tiết, cát, vãng hữu thượng",
+     "gloss": "Tiết chế [vừa phải, dễ chịu như vị] ngọt, tốt; đi tới thì được chuộng",
+     "modern": "Tiết chế đúng mực, hài hòa đến mức dễ chịu (\"ngọt\") — bản thân làm được và khiến người khác vui lòng noi theo. Nên tốt, và tiến tới thì được quý trọng. Đây là hào đẹp nhất: chừng mực mà không khắc khổ."
+    },
+    {
+     "textHV": "Khổ tiết, trinh hung, hối vong",
+     "gloss": "Tiết chế [khắc khổ quá mức thành] cay đắng, cố giữ thì hung, [biết bỏ bớt thì] hết ăn năn",
+     "modern": "Tiết chế hà khắc, khắc khổ đến mức cay đắng — cố giữ lối ấy thì hung (tự hành hạ mình và người). Nếu biết nới lỏng bớt thì hết hối. Chừng mực quá đà thành cực đoan cũng tai hại như buông thả."
+    }
+   ]
+  },
+  {
+   "number": 61,
+   "name": "Trung Phu",
+   "hanzi": "中孚",
+   "upper": "Tốn",
+   "lower": "Đoài",
+   "bits": "110011",
+   "judgment": "Lòng thành thấu đến cả heo cá (loài vô tri) thì tốt; lợi vượt sông lớn, lợi về giữ chính (中孚：豚魚吉，利涉大川，利貞).",
+   "image": "Trên đầm có gió (gió chạm thấu cả mặt nước sâu), là Trung Phu; người quân tử nhân đó bàn xét án ngục, hoãn án tử (澤上有風，中孚；君子以議獄緩死).",
+   "modernShort": "Lòng thành thấu suốt — chân thật từ bên trong cảm hoá được cả người ở xa; niềm tin là gốc.",
+   "lines": [
+    {
+     "textHV": "Ngu cát, hữu tha bất yên",
+     "gloss": "[Chuyên nhất] tin cậy [một chỗ] thì yên định, tốt; nếu có lòng khác (chia sẻ tin cậy nơi khác) thì không yên",
+     "modern": "Lòng tin, sự thành thật phải chuyên nhất, dồn vào một chỗ đáng tin thì mới an. Nếu lòng dạ chia năm xẻ bảy, tin cả chỗ này chỗ kia thì bất an. Chân thành bắt đầu từ sự chuyên nhất."
+    },
+    {
+     "textHV": "Minh hạc tại âm, kỳ tử họa chi; ngã hữu hảo tước, ngô dữ nhĩ mĩ chi",
+     "gloss": "Con hạc mẹ gáy nơi khuất, hạc con họa theo; ta có chén rượu ngon, [muốn] cùng ngươi chia sẻ",
+     "modern": "Lòng thành chân thật thì tự có cảm ứng, dù ở nơi khuất kín cũng có người đồng điệu hô ứng (như hạc mẹ gáy, hạc con đáp; có rượu ngon muốn chia sẻ). \"Đồng thanh tương ứng, đồng khí tương cầu\" — chân thành thu hút chân thành, không cần phô trương."
+    },
+    {
+     "textHV": "Đắc địch, hoặc cổ hoặc bãi, hoặc khấp hoặc ca",
+     "gloss": "Gặp phải kẻ ngang sức (đối); khi thì khua trống [hăng], khi thì ngừng, khi thì khóc, khi thì ca [thất thường]",
+     "modern": "Đặt lòng tin và tâm trạng của mình lệ thuộc hoàn toàn vào đối tượng bên ngoài — nên khi hăng khi nản, khi khóc khi cười, dao động thất thường. Thành tín mà không có gốc rễ tự chủ thì bị ngoại cảnh cuốn đi."
+    },
+    {
+     "textHV": "Nguyệt cơ vọng, mã thất vong, vô cữu",
+     "gloss": "Trăng gần rằm [sáng gần tròn, khiêm]; con ngựa [trong đôi] mất bạn [dứt bỏ bè bên dưới để hướng lên trên], không lỗi",
+     "modern": "Như vầng trăng gần rằm (sáng đẹp mà còn khiêm, chưa tự mãn tròn đầy); biết dứt bỏ những mối bè bạn ngang hàng để một lòng hướng về điều cao hơn (dứt tình riêng theo chính đạo) — thì không lỗi. Chuyên nhất với cái đúng, buông cái vướng bận."
+    },
+    {
+     "textHV": "Hữu phu loan như, vô cữu",
+     "gloss": "Có lòng thành liên kết mọi người [khăng khít như buộc lại], không lỗi",
+     "modern": "Người ở ngôi cao có lòng chân thành đủ để cố kết, gắn bó mọi người lại với nhau khăng khít — không lỗi. Lòng thành của người lãnh đạo là sợi dây buộc chặt lòng người, tạo nên sự đoàn kết thật."
+    },
+    {
+     "textHV": "Hàn âm đăng vu thiên, trinh hung",
+     "gloss": "Tiếng [gà] gáy vọng lên tận trời [danh vượt quá thực, tiếng suông bay cao]; giữ [lối ấy] thì hung",
+     "modern": "Hư danh, lời lẽ suông bay cao mà rỗng ruột, thiếu thực chất — như tiếng gà gáy vọng lên trời mà chẳng có gì thật. Cố giữ lối phô trương lòng thành bằng miệng ấy thì hung. Thành tín phải có thực chất, không phải tiếng suông."
+    }
+   ]
+  },
+  {
+   "number": 62,
+   "name": "Tiểu Quá",
+   "hanzi": "小過",
+   "upper": "Chấn",
+   "lower": "Cấn",
+   "bits": "001100",
+   "judgment": "Hanh thông, lợi về giữ chính; làm được việc nhỏ, không làm được việc lớn. Chim bay để lại tiếng kêu: không nên bay lên cao mà nên đậu xuống thấp, thì rất tốt (小過：亨，利貞，可小事，不可大事。飛鳥遺之音，不宜上宜下，大吉).",
+   "image": "Trên núi có sấm (tiếng sấm hơi quá chỗ thường), là Tiểu Quá; người quân tử nhân đó cư xử hơi quá ở sự cung kính, để tang hơi quá ở sự thương, tiêu dùng hơi quá ở sự tiết kiệm (山上有雷，小過；君子以行過乎恭，喪過乎哀，用過乎儉).",
+   "modernShort": "Làm hơi quá ở việc nhỏ thì được — khiêm tốn, cẩn trọng tiểu tiết; chớ với cao quá tầm.",
+   "lines": [
+    {
+     "textHV": "Phi điểu dĩ hung",
+     "gloss": "Chim bay [vượt quá cao] mà chuốc hung",
+     "modern": "Ở vị trí thấp, sức còn non mà đã vọng động bay vút lên cao vượt phận — chuốc lấy hung. Chưa đủ lực mà đòi vượt quá thì tự chuốc họa; chim non chớ bay cao."
+    },
+    {
+     "textHV": "Quá kỳ tổ, ngộ kỳ tỷ; bất cập kỳ quân, ngộ kỳ thần; vô cữu",
+     "gloss": "[Đi] quá [khỏi] ông [nội], gặp bà; không tới [lấn] vua, [chỉ] gặp/giữ phận bề tôi; không lỗi",
+     "modern": "Có thể hơi vượt chừng mực thông thường một chút, nhưng vẫn giữ đúng phận, không lấn vượt việc/người lớn. Vượt qua cái nhỏ mà không phạm cái lớn (không lấn vua) — nên không lỗi. Linh hoạt trong giới hạn."
+    },
+    {
+     "textHV": "Phất quá phòng chi, tòng hoặc thương chi, hung",
+     "gloss": "Không [chịu] đề phòng cẩn thận quá mức [trong thời cần cẩn trọng], thì [kẻ xấu] theo sau có khi làm hại, hung",
+     "modern": "Trong thời \"tiểu quá\", cần cẩn trọng đề phòng hơn mức bình thường. Nếu chủ quan, không phòng bị thì bị kẻ xấu thừa cơ làm hại, hung. Thời cần cẩn thận mà lại lơ là thì gặp họa."
+    },
+    {
+     "textHV": "Vô cữu, phất quá ngộ chi; vãng lệ tất giới, vật dụng vĩnh trinh",
+     "gloss": "Không lỗi; đừng vượt quá [mức], [cứ] gặp/xử đúng mực; đi [tới] thì nguy, ắt phải răn dè; chớ cố giữ mãi [một lối cứng]",
+     "modern": "Giữ đúng mực, không vượt quá; luôn cảnh giác răn dè; và đừng cố chấp bám mãi một cách làm cứng nhắc. Biết dừng, biết uyển chuyển tùy thời thì không lỗi; cứ lao tới hoặc khăng khăng một lối thì nguy."
+    },
+    {
+     "textHV": "Mật vân bất vũ, tự ngã tây giao; công dặc thủ bỉ tại huyệt",
+     "gloss": "Mây dày mà không mưa, [kéo] từ cõi tây của ta [khí chưa hòa]; [như] bậc công dùng dây tên bắn bắt con [thú] kia ở trong hang",
+     "modern": "Ở ngôi cao nhưng sức (âm nhu) chưa đủ để làm nên việc lớn — như mây dày mà không thành mưa (điều kiện chưa chín). Lúc này chỉ nên làm việc vừa sức: thu phục, tìm dùng người tài đang ẩn (bắn bắt con thú trong hang). Biết giới hạn của mình mà làm việc phù hợp."
+    },
+    {
+     "textHV": "Phất ngộ quá chi, phi điểu ly chi, hung, thị vị tai sảnh",
+     "gloss": "Không [chịu] gặp/giữ đúng mực mà [cứ] vượt quá; [như] chim bay [cao] rời xa [tổ], hung — ấy gọi là tai họa",
+     "modern": "Vượt quá tới cùng cực, không biết điểm dừng — như con chim bay mãi lên cao rời xa tổ, không về được. Hung, và đó chính là tự chuốc tai họa. Cái \"hơi quá\" mà đẩy đến vô độ thì thành thảm họa."
+    }
+   ]
+  },
+  {
+   "number": 63,
+   "name": "Ký Tế",
+   "hanzi": "既濟",
+   "upper": "Khảm",
+   "lower": "Ly",
+   "bits": "101010",
+   "judgment": "Hanh thông ở việc nhỏ, lợi về giữ chính; ban đầu tốt nhưng cuối thì rối (既濟：亨小，利貞，初吉終亂).",
+   "image": "Nước ở trên lửa (đặt đúng thế nấu chín), là Ký Tế; người quân tử nhân đó lo nghĩ tới hoạn nạn mà phòng bị từ trước (水在火上，既濟；君子以思患而豫防之).",
+   "modernShort": "Mọi hào đã đúng chỗ — việc vừa hoàn tất, nhưng đỉnh điểm là lúc dễ rối; giữ gìn cẩn thận kẻo trượt.",
+   "lines": [
+    {
+     "textHV": "Duệ kỳ luân, nhu kỳ vĩ, vô cữu",
+     "gloss": "Kéo ghì bánh xe [lại cho chậm], làm ướt cái đuôi [dò dẫm thận trọng khi qua sông], không lỗi",
+     "modern": "Ngay khi bắt đầu thành công, vẫn biết kiềm chế, dò dẫm thận trọng (ghì bánh xe lại, thử ướt đuôi trước) — không lao nhanh. Nhờ vậy mà không lỗi. Thành công buổi đầu càng cần đi chậm chắc."
+    },
+    {
+     "textHV": "Phụ táng kỳ phất, vật trục, thất nhật đắc",
+     "gloss": "Người đàn bà mất cái khăn trùm [che xe]; chớ đuổi tìm, bảy ngày sẽ lại được",
+     "modern": "Gặp mất mát nhỏ, trắc trở nhỏ (mất khăn) — đừng cuống cuồng đuổi theo tìm lại; cứ giữ chính, ít lâu (bảy ngày) tự khắc phục hồi. Khi thời đang thuận, những mất mát nhỏ rồi sẽ tự bù đắp; đừng vì tiểu tiết mà loạn."
+    },
+    {
+     "textHV": "Cao Tông phạt Quỷ Phương, tam niên khắc chi, tiểu nhân vật dụng",
+     "gloss": "Vua Cao Tông đánh nước Quỷ Phương, ba năm mới thắng; chớ dùng kẻ tiểu nhân",
+     "modern": "Làm việc lớn (như vua Cao Tông chinh phạt) thì tốn hao, gian khổ, kéo dài (ba năm mới xong) — phải kiên trì bền bỉ. Và tuyệt đối không dùng kẻ tiểu nhân vào việc lớn. Thành quả lớn đổi bằng cái giá lớn và người ngay chính."
+    },
+    {
+     "textHV": "Nhu hữu y như, chung nhật giới",
+     "gloss": "[Thuyền/áo] ướt thì có sẵn giẻ rách [để bít lỗ rò, phòng bị], trọn ngày cảnh giác",
+     "modern": "Dù thuyền đã sang gần bờ (đã thành), vẫn chuẩn bị sẵn cái để vá chỗ rò và cảnh giác suốt cả ngày. Thành công rồi vẫn phải lo xa, phòng bị cho những rò rỉ, rủi ro có thể phát sinh. Cảnh giác không ngừng là cách giữ thành quả."
+    },
+    {
+     "textHV": "Đông lân sát ngưu, bất như tây lân chi thược tế, thật thụ kỳ phúc",
+     "gloss": "Láng giềng phía Đông giết trâu [tế lớn phô trương], không bằng láng giềng phía Tây tế mọn [mà chân thành], [nên] thực nhận được phúc",
+     "modern": "Lễ lớn phô trương (giết trâu) không bằng lễ mọn mà chân thành đúng thời (tế thược của nhà Tây). Khi đã thành đạt, cái được phúc thật không nằm ở sự phô trương hình thức, mà ở lòng thành và sự đúng lúc, giản dị. Đừng phô trương khi đã đủ đầy."
+    },
+    {
+     "textHV": "Nhu kỳ thủ, lệ",
+     "gloss": "Ướt cả đầu [qua sông mà chìm ngập tới đầu], nguy",
+     "modern": "Ở cuối trạng thái \"đã xong\" mà lơ là, sa đà đến mức chìm ngập cả đầu — nguy. Thành công đến đỉnh mà buông lơi, đắm mình thì lại đổ vỡ. \"Cuối cùng thì loạn\" chính là ở đây: giữ thành quả khó hơn giành được nó."
+    }
+   ]
+  },
+  {
+   "number": 64,
+   "name": "Vị Tế",
+   "hanzi": "未濟",
+   "upper": "Ly",
+   "lower": "Khảm",
+   "bits": "010101",
+   "judgment": "Hanh thông; con cáo nhỏ gần qua được sông thì ướt cái đuôi, không có gì lợi (未濟：亨。小狐汔濟，濡其尾，无攸利).",
+   "image": "Lửa ở trên nước (không đúng thế nấu), là Vị Tế; người quân tử nhân đó thận trọng phân biệt sự vật, đặt mỗi thứ vào đúng chỗ (火在水上，未濟；君子以慎辨物居方).",
+   "modernShort": "Sắp xong mà chưa xong — đầy hứa hẹn nhưng cần một bước cuối thận trọng; sắp đặt đúng để cán đích.",
+   "lines": [
+    {
+     "textHV": "Nhu kỳ vĩ, lận",
+     "gloss": "Làm ướt cái đuôi [mới lội đã ướt đuôi, hấp tấp qua sông], đáng tiếc",
+     "modern": "Khi mọi sự còn chưa chín, nóng vội xông vào khi chưa đủ sức — như con cáo mới lội đã ướt đuôi, chẳng qua nổi sông. Đáng tiếc. Chưa đủ lực mà hấp tấp hành động thì tự chuốc thất bại."
+    },
+    {
+     "textHV": "Duệ kỳ luân, trinh cát",
+     "gloss": "Kéo ghì bánh xe [tự kiềm chế, chậm lại], giữ chính thì tốt",
+     "modern": "Trong lúc chưa thành, biết tự kiềm chế, ghìm mình lại chờ thời, không manh động — giữ chính đạo thì tốt. Kiên nhẫn tích lũy, chờ đúng lúc mới tiến, đó là cái khôn của thời \"chưa xong\"."
+    },
+    {
+     "textHV": "Vị tế, chinh hung; lợi thiệp đại xuyên",
+     "gloss": "Chưa xong mà [vội] tiến thì hung; [nhưng thời đã chuyển,] lợi về việc vượt sông lớn [nếu chuẩn bị đúng]",
+     "modern": "Sức mình còn chưa đủ mà vọng tiến thì hung. Tuy nhiên, thời thế đã bắt đầu chuyển (sắp ra khỏi hiểm) — nếu chuẩn bị đúng và có người/thế giúp thì lại nên mạnh dạn dấn thân vượt khó. Biết mình chưa đủ nhưng cũng nhận ra lúc đáng liều."
+    },
+    {
+     "textHV": "Trinh cát, hối vong; chấn dụng phạt Quỷ Phương, tam niên hữu thưởng vu đại quốc",
+     "gloss": "Giữ chính thì tốt, hết ăn năn; ra sức (chấn) đánh nước Quỷ Phương, ba năm [gian khổ rồi] được thưởng nơi nước lớn",
+     "modern": "Đã qua điểm giữa, đến lúc dốc sức phấn đấu quyết liệt (như đánh nước Quỷ Phương). Kiên trì chịu đựng gian khổ dài lâu (ba năm) và giữ chính thì cuối cùng thành công, được tưởng thưởng lớn. Từ \"chưa xong\" tới \"xong\" phải trả giá bằng nỗ lực bền bỉ."
+    },
+    {
+     "textHV": "Trinh cát, vô hối; quân tử chi quang, hữu phu, cát",
+     "gloss": "Giữ chính thì tốt, không ăn năn; ánh sáng của người quân tử, có lòng thành, tốt",
+     "modern": "Đến gần thành công: đức sáng và lòng thành của người quân tử tỏa rạng, được lòng người tin theo — tốt, không hối tiếc. Thành quả sắp đến với người giữ được chính đạo, sự sáng suốt và chân thành. Đây là hào đẹp nhất của quẻ."
+    },
+    {
+     "textHV": "Hữu phu vu ẩm tửu, vô cữu; nhu kỳ thủ, hữu phu thất thị",
+     "gloss": "Có lòng thành [tự tin] mà thong dong uống rượu [chờ thời], không lỗi; [nhưng nếu] ướt cả đầu [chè chén quá độ, mất chừng mực], thì dù có lòng tin cũng mất cả sự đúng đắn (thất thị)",
+     "modern": "Thành công đã gần kề: tự tin, an vui thong dong (uống rượu chờ thời) là điều nên — không lỗi. Nhưng nếu quá đà, sa vào hưởng lạc mất chừng mực (ướt cả đầu) thì dù có lòng tin cũng đánh mất tất cả. Kinh Dịch khép lại bằng chính lời răn này: đến ngưỡng thành công vẫn phải giữ chừng mực, biết điểm dừng."
+    }
+   ]
+  }
+ ]
+}

@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 type Params = Record<string, string | string[] | undefined>;
 
-const ROUTES = [{ id: 'interpret', label: 'Luận giải' }, { id: 'heming', label: 'Hợp bàn' }];
+const ROUTES = [{ id: 'interpret', label: 'Luận giải' }, { id: 'heming', label: 'Hợp bàn' }, { id: 'kinh-dich', label: 'Kinh Dịch' }];
 const STATUSES = [{ id: 'ok', label: 'Xong' }, { id: 'error', label: 'Lỗi' }, { id: 'aborted', label: 'Bị hủy' }, { id: 'pending', label: 'Đang chạy' }];
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 

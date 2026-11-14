@@ -7,7 +7,7 @@ const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'ma
 const twin = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', twinMethod: 'huynh_de' } as never);
 const intent = { type: 'topic' as const, key: 'career' };
 
-assert.deepEqual(PROMPT_VERSIONS.map(v => v.id), ['v1', 'v2']);
+assert.deepEqual(PROMPT_VERSIONS.map(v => v.id), ['v1', 'v2', 'v3']);
 
 const v1 = getPromptSet('v1');
 const v2 = getPromptSet('v2');
@@ -43,5 +43,33 @@ for (const set of [v1, v2]) {
 assert.equal(defaultPromptVersion({}), 'v2');
 assert.equal(defaultPromptVersion({ DEFAULT_PROMPT_VERSION: 'v1' }), 'v1');
 assert.equal(defaultPromptVersion({ DEFAULT_PROMPT_VERSION: 'v9' }), 'v2');
+
+// v3: hỏi lại TRƯỚC khi luận (tool hoi_nguoi_dung), luận khung 3 tháng âm lịch, có tính sẵn lưu nguyệt.
+const v3 = getPromptSet('v3');
+const p3 = v3.buildInterpretationSystemPrompt(chart, intent, { window: { lunarYear: 2026, startMonth: 10 } });
+assert.ok(p3.includes('hoi_nguoi_dung'));
+assert.ok(p3.includes('Dữ kiện lưu nguyệt khung 3 tháng (JSON):'));
+assert.ok(p3.includes('tháng 10'));
+assert.ok(p3.includes('KHÔNG nhắc tên sao'), 'v3 dựa trên v2');
+assert.ok(!p3.includes('Hỏi lại tối đa một câu'));
+assert.ok(!p3.includes('Cách luận vận hạn cho sâu'));
+for (const p of [p1, p2]) {
+  assert.ok(p.includes('Hỏi lại tối đa một câu'));
+  assert.ok(p.includes('Cách luận vận hạn cho sâu'));
+  assert.ok(!p.includes('hoi_nguoi_dung'));
+  assert.ok(!p.includes('Dữ kiện lưu nguyệt khung 3 tháng'));
+}
+assert.ok(v3.initialInterpretationQuestion({ type: 'topic', key: 'career' }).includes('3 tháng'));
+assert.ok(v3.initialInterpretationQuestion({ type: 'palace', branch: 3 }).includes('3 tháng'));
+assert.ok(!v3.initialInterpretationQuestion({ type: 'topic', key: 'personality' }).includes('3 tháng'));
+const p3p = v3.buildInterpretationSystemPrompt(chart, { type: 'topic', key: 'personality' }, { window: { lunarYear: 2026, startMonth: 10 } });
+assert.ok(!p3p.includes('Dữ kiện lưu nguyệt khung 3 tháng (JSON):'));
+assert.ok(p3p.includes('hoi_nguoi_dung'));
+// Khung vắt năm: tháng 11/2026 → 1/2027
+const p3y = v3.buildInterpretationSystemPrompt(chart, intent, { window: { lunarYear: 2026, startMonth: 11 } });
+const facts = JSON.parse(p3y.split('Dữ kiện lưu nguyệt khung 3 tháng (JSON):\n\n')[1].split('\n\n')[0]);
+assert.ok(facts.khung_đang_chọn.startsWith('tháng 11/2026 – 1/2027 âm'));
+assert.deepEqual(facts.các_tháng.map((f: { năm_âm_lịch: number; tháng_âm: number }) => [f.năm_âm_lịch, f.tháng_âm]), [[2026, 11], [2026, 12], [2027, 1]]);
+assert.ok(facts.các_tháng[0].lưu_nguyệt.dương_lịch);
 
 console.log('prompt-versions: ok');

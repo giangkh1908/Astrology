@@ -10,6 +10,11 @@ import {
 import type { ZiweiChart, Palace } from '@/lib/ziwei/types';
 import type { TimeView } from './TimeNav';
 import { viStar, viPalace, viSiHua } from '@/lib/vn/terms';
+import AskCard, { isCardAnswer } from './AskCard';
+import AiContent from './AiContent';
+import { encodeAsk, extractAsk, SKIP_ANSWER } from '@/lib/ai/ask-user';
+import { defaultWindow, isBeforeDefault, shiftWindow, windowLabel, type MonthWindow } from '@/lib/ziwei/month-window';
+import { suggestionsFor } from '@/lib/chat/suggestions';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -19,6 +24,9 @@ interface Message {
   steps?: string[]; // các bước tra cứu AI đã làm (hiện như Claude Code hiện tool)
   note?: string; // câu trả lời bị gián đoạn giữa chừng: giữ phần đã viết, báo thêm
 }
+
+/** Tùy chọn cho một lượt gửi: trả lời thẻ hỏi lại (không trừ lượt nếu server xác minh), khung 3 tháng (v3). */
+interface SendOptions { answering?: boolean; window?: MonthWindow }
 
 interface SelectedSiHua {
   starName: string;
@@ -31,44 +39,6 @@ interface InsightPanelProps {
   selectedPalace?: Palace | null;
   selectedSiHua?: SelectedSiHua | null;
   selectedTime?: { view: TimeView; lunarYear: number };
-}
-
-/** Render AI markdown: **【Title】** → gold header, **bold** → strong */
-function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
-  const lines = text.split('\n');
-  return (
-    <div className="space-y-0.5">
-      {lines.map((line, i) => {
-        const sectionMatch = line.match(/^\*\*【(.+?)】\*\*$/);
-        if (sectionMatch) {
-          return (
-            <div key={i} className="pt-3 pb-0.5 first:pt-0">
-              <span className="text-[11px] font-semibold tracking-wide" style={{ color: 'var(--t-gold)' }}>
-                【{sectionMatch[1]}】
-              </span>
-            </div>
-          );
-        }
-        if (line.trim() === '') return <div key={i} className="h-1" />;
-        const parts = line.split(/\*\*(.+?)\*\*/);
-        return (
-          <div key={i} className="text-[11px] leading-relaxed" style={{ color: 'var(--t-text2)' }}>
-            {parts.map((part, j) =>
-              j % 2 === 0
-                ? part
-                : <strong key={j} className="font-medium" style={{ color: 'var(--t-text)' }}>{part}</strong>
-            )}
-          </div>
-        );
-      })}
-      {streaming && (
-        <span
-          className="inline-block w-1.5 h-3 ml-0.5 animate-pulse rounded-sm align-middle"
-          style={{ background: 'var(--t-gold)', opacity: 0.6 }}
-        />
-      )}
-    </div>
-  );
 }
 
 /** Các bước tra cứu, kiểu Claude Code: đang chạy thì liệt kê từng bước ✓ + "Đang tổng hợp…", xong thì gọn một dòng */
@@ -150,6 +120,15 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   useEffect(() => { activeRef.current = active; }, [active]);
   // Hạn mức câu hỏi AI: null = chưa biết hoặc không giới hạn
   const [quota, setQuota] = useState<{ used: number; limit: number } | null>(null);
+  // Version prompt đang chạy: v3 bật thẻ hỏi lại, khung 3 tháng và gợi ý câu hỏi
+  const [promptVersion, setPromptVersion] = useState<string | null>(null);
+  const isV3 = promptVersion === 'v3';
+  const isV3Ref = useRef(false);
+  useEffect(() => { isV3Ref.current = isV3; }, [isV3]);
+  // Khung 3 tháng âm lịch theo từng mục (v3); chưa chọn thì khung mặc định
+  const [windows, setWindows] = useState<Record<ThreadKey, MonthWindow>>({});
+  const windowsRef = useRef<Record<ThreadKey, MonthWindow>>({});
+  const windowOf = (key: ThreadKey) => windowsRef.current[key] ?? defaultWindow();
 
   const readQuota = (value: string | null) => {
     const m = value?.match(/^(\d+)\/(\d+)$/);
@@ -161,8 +140,9 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     let cancelled = false;
     apiRequest('/api/account')
       .then(r => (r.ok ? r.json() : null))
-      .then((a: { used?: number; limit?: number | null } | null) => {
+      .then((a: { used?: number; limit?: number | null; promptVersion?: string } | null) => {
         if (cancelled || !a) return;
+        if (typeof a.promptVersion === 'string') setPromptVersion(a.promptVersion);
         setQuota(typeof a.used === 'number' && typeof a.limit === 'number' ? { used: a.used, limit: a.limit } : null);
       })
       .catch(() => { /* không biết hạn mức: ẩn dòng này */ });
@@ -177,7 +157,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     });
   }, []);
 
-  const stream = async (key: ThreadKey, apiMessages: { role: 'user' | 'assistant'; content: string }[]) => {
+  const stream = async (key: ThreadKey, apiMessages: { role: 'user' | 'assistant'; content: string }[], opts: SendOptions = {}) => {
     const ctrl = new AbortController();
     controllers.current[key] = ctrl;
     setStreaming(s => ({ ...s, [key]: true }));
@@ -186,10 +166,16 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
       const res = await apiRequest('/api/interpret', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chart, intent: intentFor(key), threadKey: key, messages: apiMessages, timeContext: selectedTime }),
+        body: JSON.stringify({
+          chart, intent: intentFor(key), threadKey: key, messages: apiMessages,
+          timeContext: isV3Ref.current && key !== 'personality' ? { ...selectedTime, window: opts.window ?? windowOf(key) } : selectedTime,
+          ...(opts.answering ? { answering: true } : {}),
+        }),
         signal: ctrl.signal,
       });
       readQuota(res.headers.get('X-Chat-Quota'));
+      const version = res.headers.get('X-Prompt-Version');
+      if (version) { setPromptVersion(version); isV3Ref.current = version === 'v3'; }
       if (!res.ok) {
         const err = await res.json().catch(() => null) as { error?: string } | null;
         throw new Error(err?.error ? `server:${err.error}` : 'Yêu cầu thất bại');
@@ -222,6 +208,8 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
             if (typeof event.error === 'string') streamError = event.error;
             const delta = event.delta?.text ?? '';
             if (delta) { text += delta; changed = true; }
+            // AI hỏi lại trước khi luận: lưu như lịch sử nạp lại (câu dẫn + khối ask) để vẽ thẻ
+            if (event.ask && typeof event.ask === 'object') { text = encodeAsk(event.ask); changed = true; }
           } catch { /* skip */ }
         }
         if (changed) {
@@ -259,16 +247,26 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     }
   };
 
-  const send = (key: ThreadKey, text: string) => {
+  const send = (key: ThreadKey, text: string, opts: SendOptions & { hidden?: boolean } = {}) => {
     if (!text.trim()) return;
     controllers.current[key]?.abort();
-    const userMsg: Message = { role: 'user', content: text };
+    const userMsg: Message = { role: 'user', content: text, ...(opts.hidden ? { hidden: true } : {}) };
     const history = threadsRef.current[key] ?? [];
-    const apiMessages = [...history, userMsg]
-      .filter(m => !m.error && !m.hidden && m.content.trim())
+    const apiMessages = [...history.filter(m => !m.hidden), userMsg]
+      .filter(m => !m.error && m.content.trim())
       .map(m => ({ role: m.role, content: m.content }));
     updateThread(key, m => [...m, userMsg]);
-    stream(key, apiMessages);
+    stream(key, apiMessages, opts);
+  };
+
+  /** v3: dời khung 3 tháng của mục rồi hỏi ngầm luận khung mới (cùng mục, có trừ lượt). */
+  const moveWindow = (key: ThreadKey, steps: number) => {
+    const next = shiftWindow(windowOf(key), steps);
+    if (isBeforeDefault(next)) return;
+    windowsRef.current = { ...windowsRef.current, [key]: next };
+    setWindows(windowsRef.current);
+    send(key, `Luận ${labelOf(key)} cho ${windowLabel(next).months}.`, { hidden: true, window: next });
+    scrollToBottom();
   };
 
   /** Mở một mục; auto=false khi sắp hỏi luôn một câu trong mục đó (khỏi luận tổng quát trước) */
@@ -473,6 +471,11 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   const hasAnswer = (k: ThreadKey) => !!threads[k]?.some(m => m.role === 'assistant' && !m.error && m.content);
   const isDone = (cmd: SlashCommand) => cmd.action.type === 'open' && hasAnswer(cmd.action.key);
   const isEmpty = !messages.length && !activeStreaming;
+  const showWindowBar = isV3 && active !== 'personality' && !isEmpty;
+  const activeWindow = windows[active] ?? defaultWindow();
+  const activeWindowLabel = windowLabel(activeWindow);
+  const showSuggestions = isV3 && !activeStreaming && lastMsg?.role === 'assistant' && !lastMsg.error && !!lastMsg.content
+    && !extractAsk(lastMsg.content).ask && active !== 'personality';
 
   return (
     <div className="ls-insight flex flex-col rounded-xl overflow-hidden card-glass">
@@ -494,11 +497,43 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
         </div>
       )}
 
+      {/* ── v3: khung 3 tháng âm lịch của mục, nhảy 3 tháng một lần ── */}
+      {showWindowBar && (
+        <div className="flex-shrink-0 flex items-center justify-between gap-2 px-3 py-1.5 text-[10px]" style={{ borderBottom: '1px solid var(--t-border)', color: 'var(--t-text2)' }}>
+          <button
+            type="button"
+            onClick={() => moveWindow(active, -1)}
+            disabled={isBeforeDefault(shiftWindow(activeWindow, -1))}
+            className="px-2 py-0.5 rounded disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Khung 3 tháng trước"
+            title="3 tháng trước"
+          >
+            ◀
+          </button>
+          <span className="text-center">
+            <span style={{ color: 'var(--t-gold)' }}>{activeWindowLabel.months}</span>
+            {activeWindowLabel.solar && <span style={{ color: 'var(--t-faint)' }}> ({activeWindowLabel.solar})</span>}
+          </span>
+          <button
+            type="button"
+            onClick={() => moveWindow(active, 1)}
+            className="px-2 py-0.5 rounded"
+            aria-label="Khung 3 tháng sau"
+            title="3 tháng sau"
+          >
+            ▶
+          </button>
+        </div>
+      )}
+
       {/* ── Nội dung mục đang mở (cuộn riêng) ── */}
       <div ref={scrollRef} onScroll={onScroll} className="ls-insight-scroll flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
 
         {messages.map((msg, i) => {
           if (msg.role === 'user' && msg.hidden) return null;
+          // Tin trả lời thẻ hỏi: thẻ thu gọn đã hiện đáp án, không cần bong bóng
+          const prev = messages[i - 1];
+          if (msg.role === 'user' && prev?.role === 'assistant' && extractAsk(prev.content).ask && isCardAnswer(msg.content)) return null;
           if (msg.role === 'user') {
             return (
               <div key={i} className="flex justify-end">
@@ -513,6 +548,22 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
           }
           const live = activeStreaming && i === messages.length - 1;
           if (!msg.content && !msg.steps?.length) return null;
+          const { text: askLead, ask } = msg.error ? { text: '', ask: null } : extractAsk(msg.content);
+          if (ask) {
+            const next = messages[i + 1];
+            return (
+              <div key={i}>
+                {msg.steps?.length ? <ToolSteps steps={msg.steps} running={false} /> : null}
+                <AskCard
+                  ask={{ ...ask, loi_dan: askLead || ask.loi_dan }}
+                  answered={next?.role === 'user' ? next.content : undefined}
+                  disabled={activeStreaming}
+                  onSubmit={text => { send(active, text, { answering: true }); scrollToBottom(); }}
+                  onSkip={() => { send(active, SKIP_ANSWER, { answering: true }); scrollToBottom(); }}
+                />
+              </div>
+            );
+          }
           return (
             <div key={i}>
               {msg.steps?.length ? <ToolSteps steps={msg.steps} running={live && !msg.content} /> : null}
@@ -523,6 +574,22 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
             </div>
           );
         })}
+
+        {showSuggestions && (
+          <div className="flex flex-wrap gap-1.5">
+            {suggestionsFor(active, windowOf(active)).map(s => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => { send(active, s); scrollToBottom(); }}
+                className="rounded-full px-2.5 py-1 text-[10px] text-left"
+                style={{ border: '1px solid var(--t-border)', color: 'var(--t-text2)' }}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
 
         {isEmpty && historyState === 'loading' && (
           <p className="text-[11px] animate-pulse" style={{ color: 'var(--t-faint)' }}>Đang tải các mục đã luận…</p>

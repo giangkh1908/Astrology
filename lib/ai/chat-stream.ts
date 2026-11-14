@@ -2,11 +2,13 @@
  * Gọi dịch vụ chat AI (hiện là OpenRouter) và trả về Response SSE theo định dạng nội bộ:
  *   data: {"delta":{"text":"..."}}   — chữ của câu trả lời
  *   data: {"status":"..."}           — AI đang dùng tool (hiển thị cho người dùng)
+ *   data: {"ask":{...}}              — AI hỏi lại người dùng trước khi luận (prompt v3); lượt kết thúc ngay sau đó
  *   data: {"error":"..."}            — đứt giữa chừng: phần chữ đã gửi vẫn giữ, client báo gián đoạn
  *   data: [DONE]
  * Có `tools` thì chạy vòng lặp agent: model tự gọi tool, kết quả được gửi lại, lặp tới khi model trả lời.
  */
 import type { ChartTool } from './tools/ziwei-tools';
+import { ASK_TOOL_NAME, askToolDefinition, encodeAsk, parseAskArgs } from './ask-user';
 import type { ToolCallLog, TurnResult } from '@/lib/store/chat-store';
 
 export interface ChatStreamMessage {
@@ -27,6 +29,7 @@ const RETRY_DELAY_MS = 700;
 const MAX_TOOL_RESULT_CHARS = 30_000;
 
 type WireMessage = Record<string, unknown>;
+type ToolDef = { name: string; description: string; parameters: Record<string, unknown> };
 interface ToolCall { id: string; type: 'function'; function: { name: string; arguments: string } }
 
 /** Model đang gửi lên nhà cung cấp (dùng cho log). */
@@ -54,7 +57,7 @@ const sleep = (ms: number, signal: AbortSignal) => new Promise<void>((resolve, r
 });
 
 /** Mở một lượt stream tới nhà cung cấp, tự thử lại lỗi tạm thời. Trả về body đã sẵn sàng đọc. */
-async function openUpstream(apiKey: string, messages: WireMessage[], tools: ChartTool[] | undefined, signal: AbortSignal) {
+async function openUpstream(apiKey: string, messages: WireMessage[], tools: ToolDef[] | undefined, signal: AbortSignal) {
   const body = JSON.stringify({
     model: currentModel(),
     stream: true,
@@ -194,7 +197,11 @@ function runTool(tools: ChartTool[], call: ToolCall, cache: Map<string, string>)
 export interface StreamOptions {
   /** Gọi đúng một lần khi lượt kết thúc (xong, lỗi hoặc bị hủy) với toàn bộ chữ đã gửi cho client. */
   onFinish?: (result: TurnResult) => void;
+  /** Cho model dùng tool hoi_nguoi_dung (prompt v3). */
+  askUser?: boolean;
 }
+
+const ASK_ARGS_ERROR = JSON.stringify({ lỗi: 'Tham số câu hỏi không hợp lệ, hãy luận luôn theo dữ kiện hiện có.' });
 
 export async function streamChatResponse(
   messages: ChatStreamMessage[],
@@ -207,13 +214,14 @@ export async function streamChatResponse(
   let firstTokenMs: number | undefined;
   const toolCalls: ToolCallLog[] = [];
   let usage: Usage | undefined;
+  let asked = false;
   let finished = false;
   const finish = (status: TurnResult['status'], error?: string) => {
     if (finished) return;
     finished = true;
     try {
       options.onFinish?.({
-        text: answer, status, ...(error ? { error } : {}), toolCalls, firstTokenMs, durationMs: Date.now() - startedAt,
+        text: answer, status, ...(error ? { error } : {}), ...(asked ? { asked: true } : {}), toolCalls, firstTokenMs, durationMs: Date.now() - startedAt,
         ...(usage ? { usage: { ...usage } } : {}),
       });
     } catch (e) {
@@ -233,9 +241,11 @@ export async function streamChatResponse(
   }
 
   const wire: WireMessage[] = messages.map(m => ({ ...m }));
+  const toolDefs: ToolDef[] = [...(tools ?? []), ...(options.askUser ? [askToolDefinition] : [])];
+  const hasTools = toolDefs.length > 0;
   let first: Awaited<ReturnType<typeof openUpstream>>;
   try {
-    first = await openUpstream(apiKey, wire, tools, signal);
+    first = await openUpstream(apiKey, wire, hasTools ? toolDefs : undefined, signal);
   } catch (error) {
     if (signal.aborted) { finish('aborted'); return new Response(null, { status: 499 }); }
     const status = error instanceof UpstreamError ? error.status : undefined;
@@ -263,7 +273,7 @@ export async function streamChatResponse(
           // vòng nào có tool call thì bỏ, không thì phát ra (quá ngưỡng là phát luôn để không trễ chữ).
           let text = '';
           let held = '';
-          let flushing = !tools?.length;
+          let flushing = !hasTools;
           let sawToolCall = false;
           const emit = (chunk: string) => {
             if (!sentText) firstTokenMs = Date.now() - startedAt;
@@ -277,17 +287,36 @@ export async function streamChatResponse(
             if (flushing) emit(chunk);
             else if (!sawToolCall) { held += chunk; if (held.length > PREAMBLE_HOLD_CHARS) flush(); }
           }, () => { sawToolCall = true; held = ''; }, addUsage);
-          if (!calls.length || !tools?.length || round > MAX_TOOL_ROUNDS) { flush(); break; }
+          // Hỏi lại chỉ hợp lệ khi chưa phát chữ nào cho người dùng; đã lỡ phát bài luận thì bỏ lần hỏi.
+          const askCall = calls.find(c => c.function.name === ASK_TOOL_NAME);
+          const pending = askCall && sentText ? calls.filter(c => c !== askCall) : calls;
+          if (askCall && sentText) console.warn('hoi_nguoi_dung bị bỏ: model đã phát bài luận trước khi hỏi');
+          if (!pending.length || !hasTools || round > MAX_TOOL_ROUNDS) { flush(); break; }
 
-          wire.push({ role: 'assistant', content: text || null, tool_calls: calls });
-          for (const call of calls) toolCalls.push({ name: call.function.name, arguments: call.function.arguments });
-          for (const call of calls) {
-            const { status, content } = runTool(tools, call, toolCache);
+          if (askCall && !sentText) {
+            const payload = parseAskArgs(askCall.function.arguments);
+            if (payload) {
+              toolCalls.push({ name: askCall.function.name, arguments: askCall.function.arguments });
+              answer = encodeAsk(payload);
+              asked = true;
+              send({ ask: payload });
+              break;
+            }
+          }
+
+          wire.push({ role: 'assistant', content: text || null, tool_calls: pending });
+          for (const call of pending) toolCalls.push({ name: call.function.name, arguments: call.function.arguments });
+          for (const call of pending) {
+            if (call.function.name === ASK_TOOL_NAME) {
+              wire.push({ role: 'tool', tool_call_id: call.id, content: ASK_ARGS_ERROR });
+              continue;
+            }
+            const { status, content } = runTool(tools ?? [], call, toolCache);
             send({ status });
             wire.push({ role: 'tool', tool_call_id: call.id, content });
           }
           // Vòng cuối: không gửi tool nữa để model buộc phải trả lời.
-          upstream = await openUpstream(apiKey, wire, round < MAX_TOOL_ROUNDS ? tools : undefined, signal);
+          upstream = await openUpstream(apiKey, wire, round < MAX_TOOL_ROUNDS ? toolDefs : undefined, signal);
         }
       } catch (error) {
         if (signal.aborted) { finish('aborted'); safeClose(); return; }

@@ -497,6 +497,13 @@ export default function HomePage() {
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+            onClick={() => router.push('/kinh-dich')}
+            className="text-[11px] sm:text-xs px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full transition-all duration-300"
+            style={{ border: `1px solid ${c.navBorder}`, color: c.textMuted }}>
+            Kinh Dịch
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             onClick={() => router.push('/chart')}
             className="text-[11px] sm:text-xs px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full transition-all duration-300"
             style={{ border: `1px solid ${c.goldLine}`, color: c.goldSolid }}>

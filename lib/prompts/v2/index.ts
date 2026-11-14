@@ -4,8 +4,8 @@ import {
   type InitialQuestions, type InterpretationStyle, type PromptSet,
 } from '../shared';
 
-const style: InterpretationStyle = {
-  answerRules: [
+/** Dùng lại ở v3. */
+export const v2AnswerRules: string[] = [
     'Trả lời trực tiếp câu hỏi mới nhất trước. Nêu mặt thuận và điều cần lưu ý khi cả hai đều có căn cứ.',
     [
       'Cách trình bày cho người dùng (phân tích bên trong vẫn đầy đủ theo sao, tứ hóa, các tầng):',
@@ -14,9 +14,11 @@ const style: InterpretationStyle = {
       '- Phần kết luận phải CHI TIẾT và cụ thể vào đời sống: chuyện gì có thể xảy ra, mức độ rõ của tín hiệu, diễn biến theo từng giai đoạn/tháng (kèm khoảng dương lịch), điều nên làm và nên tránh trong từng giai đoạn, gắn với hoàn cảnh người dùng đã kể.',
       '- Chỉ khi người dùng hỏi rõ "sao nào", "căn cứ chi tiết", "vì sao" theo kiểu chuyên môn thì mới giải thích bằng tên sao và tứ hóa.',
     ].join('\n'),
-  ],
-  yesNoRule: '- Với câu hỏi có/không về sự kiện (có người yêu không, có đổi việc không…): nêu nhận định chính và mức độ rõ của tín hiệu (rõ / vừa / mờ) ngay câu đầu, tóm tắt căn cứ theo cung (không nêu tên sao), rồi luận chi tiết diễn biến và thời điểm nổi bật.',
-};
+];
+
+export const v2YesNoRule = '- Với câu hỏi có/không về sự kiện (có người yêu không, có đổi việc không…): nêu nhận định chính và mức độ rõ của tín hiệu (rõ / vừa / mờ) ngay câu đầu, tóm tắt căn cứ theo cung (không nêu tên sao), rồi luận chi tiết diễn biến và thời điểm nổi bật.';
+
+const style: InterpretationStyle = { answerRules: v2AnswerRules, yesNoRule: v2YesNoRule };
 
 const questions: InitialQuestions = {
   palace: 'Hãy luận giải cung được chọn trong lá số này. Nêu kết luận chi tiết trước, căn cứ chỉ tóm ngắn theo tam phương tứ chính bằng tên cung, không nêu tên sao.',
@@ -31,11 +33,11 @@ const questions: InitialQuestions = {
   },
 };
 
-const COMPATIBILITY_PRESENTATION = 'Cách trình bày: KHÔNG nhắc tên sao, tên hóa gắn với sao hay độ sáng Miếu/Hãm; chuyển thành ý nghĩa đời thường. Căn cứ chỉ tóm ngắn 1–2 câu theo tên cung (cung nào của ai hợp/xung với cung nào của người kia). Phần kết luận phải chi tiết: hai người hợp ở đâu, dễ va chạm chuyện gì, giai đoạn nào cần lưu ý, nên làm gì. Chỉ khi người dùng hỏi rõ "sao nào"/căn cứ chuyên môn mới nêu tên sao.';
+export const V2_COMPATIBILITY_PRESENTATION = 'Cách trình bày: KHÔNG nhắc tên sao, tên hóa gắn với sao hay độ sáng Miếu/Hãm; chuyển thành ý nghĩa đời thường. Căn cứ chỉ tóm ngắn 1–2 câu theo tên cung (cung nào của ai hợp/xung với cung nào của người kia). Phần kết luận phải chi tiết: hai người hợp ở đâu, dễ va chạm chuyện gì, giai đoạn nào cần lưu ý, nên làm gì. Chỉ khi người dùng hỏi rõ "sao nào"/căn cứ chuyên môn mới nêu tên sao.';
 
 export const promptSetV2: PromptSet = {
   buildInterpretationSystemPrompt: (chart, intent, time, priorNotes) => buildInterpretationPrompt(chart, intent, time, style, priorNotes),
   initialInterpretationQuestion: intent => pickInitialQuestion(intent, questions),
-  buildCompatibilitySystemPrompt: (a, b, notes) => buildCompatibilityPrompt(a, b, COMPATIBILITY_PRESENTATION, notes),
+  buildCompatibilitySystemPrompt: (a, b, notes) => buildCompatibilityPrompt(a, b, V2_COMPATIBILITY_PRESENTATION, notes),
   defaultCompatibilityQuestion: DEFAULT_COMPATIBILITY_QUESTION,
 };

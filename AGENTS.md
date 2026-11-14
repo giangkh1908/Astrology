@@ -27,3 +27,13 @@
 ## Lệnh và tài liệu
 
 Chạy từ `ziwei-doushu/` với Node.js 22+: `npm ci`, `npm run harness:quick` (kiểm tra đăng ký test + typecheck + regression), `npm run harness` (quick + production build). Windows PowerShell có thể dùng `npm.cmd`. Xem `docs/harness/README.md` để biết phạm vi và giới hạn.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

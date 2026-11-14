@@ -56,10 +56,23 @@ const FINISH_DEADLINE_MS = 5 * 60_000;
  * Gọi hàm này SAU khi đã dựng xong prompt/tool (để lỗi dựng prompt không để lại lượt treo).
  */
 export async function beginTurn(store: ChatStore, turn: TurnStart): Promise<{ onFinish: (r: TurnResult) => void }> {
-  if (!store.enabled) return { onFinish: () => undefined };
+  return beginTurnWith(
+    store.enabled,
+    () => store.recordTurnStart({ ...turn, question: turn.question.slice(0, MAX_QUESTION) }),
+    (requestId, r) => store.recordTurnEnd(requestId, r),
+  );
+}
+
+/** Như beginTurn nhưng nhận hàm ghi bắt đầu / kết thúc lượt (cho các kho khác ChatStore, vd Kinh Dịch). */
+export async function beginTurnWith(
+  enabled: boolean,
+  start: () => Promise<{ requestId: string }>,
+  end: (requestId: string, r: TurnResult) => Promise<void>,
+): Promise<{ onFinish: (r: TurnResult) => void }> {
+  if (!enabled) return { onFinish: () => undefined };
   const startedAt = Date.now();
   const started = Promise.resolve()
-    .then(() => store.recordTurnStart({ ...turn, question: turn.question.slice(0, MAX_QUESTION) }))
+    .then(start)
     .catch((error: unknown) => {
       console.error('recordTurnStart failed:', error instanceof Error ? error.message : 'unknown error');
       return null;
@@ -73,7 +86,7 @@ export async function beginTurn(store: ChatStore, turn: TurnStart): Promise<{ on
       await withTimeout(done, FINISH_DEADLINE_MS).catch(() => undefined);
       const start = await withTimeout(started, FINISH_DEADLINE_MS).catch(() => null);
       if (!start?.requestId) return;
-      await store.recordTurnEnd(start.requestId, result ?? {
+      await end(start.requestId, result ?? {
         text: '', status: 'error', error: 'stream không báo kết thúc', toolCalls: [], durationMs: Date.now() - startedAt,
       });
     } catch (error) {

@@ -6,7 +6,7 @@ import type { RequestLog } from '@/lib/store/chat-store';
 import { StatusBadge } from '@/app/admin/ui';
 import s from '@/app/admin/admin.module.css';
 
-const ROUTE_LABEL: Record<string, string> = { interpret: 'Luận giải', heming: 'Hợp bàn' };
+const ROUTE_LABEL: Record<string, string> = { interpret: 'Luận giải', heming: 'Hợp bàn', 'kinh-dich': 'Kinh Dịch' };
 
 function seconds(ms: number | null): string {
   return ms == null ? '–' : `${(ms / 1000).toFixed(1)}s`;

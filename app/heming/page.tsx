@@ -1,12 +1,12 @@
 'use client';
 import { apiRequest } from '@/lib/api/client';
 import { useState, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import BirthForm, { type BirthFormState } from '@/components/BirthForm';
 import { formToBirthInfo } from '@/lib/ziwei/share';
 import { generateChart as buildChart } from '@/lib/ziwei/algorithm';
 import type { BirthInfo, ZiweiChart } from '@/lib/ziwei/types';
 import { useTheme } from '@/components/ThemeProvider';
+import PageTopBar from '@/components/PageTopBar';
 
 // ─── AiContent 渲染器（与 InsightPanel 一致）────────────────
 function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
@@ -78,7 +78,6 @@ interface HemingTurn {
 }
 
 export default function HemingPage() {
-  const router = useRouter();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -231,28 +230,10 @@ export default function HemingPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-0)' }}>
       {/* 顶栏 */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 50,
-        background: isDark ? 'rgba(2,8,16,0.88)' : 'rgba(250,245,235,0.92)',
-        backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--bdr)',
-        display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px', gap: '16px',
-      }}>
-        <button
-          onClick={() => router.push('/')}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px',
-            color: 'var(--tx-3)', background: 'none', border: 'none', cursor: 'pointer',
-          }}
-        >
-          <span style={{ fontSize: '16px' }}>‹</span>
-          <span>Quay lại</span>
-        </button>
-        <div style={{ width: '1px', height: '20px', background: 'var(--bdr-med)' }} />
-        <span style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.2em' }}>Hợp bàn hai người</span>
-        <div style={{ flex: 1 }} />
-        <span style={{ fontSize: '11px', color: 'var(--tx-3)' }}>Tình duyên · Hợp tác · Cha mẹ con cái · Bạn bè</span>
-      </header>
+      <PageTopBar
+        title="Hợp bàn hai người"
+        right={<span style={{ fontSize: '11px', color: 'var(--tx-3)' }}>Tình duyên · Hợp tác · Cha mẹ con cái · Bạn bè</span>}
+      />
 
       {/* 主体 */}
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '32px 24px 80px' }}>
