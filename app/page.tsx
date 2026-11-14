@@ -115,8 +115,9 @@ const FEATURES = [
     subtitle: 'Cơ sở tri thức hệ Nghê Hải Hạ × mô hình AI',
     points: [
       'Phân tích mệnh cách: xuất phát từ chính tinh cung Mệnh, kết hợp Tam phương Tứ chính, đưa ra nhận định toàn diện về tính cách và cục diện cuộc đời',
-      'Theo dõi Đại hạn và Lưu niên: trọng điểm của Đại hạn 10 năm hiện tại, gợi ý cụ thể cho cung Lưu niên năm nay',
-      'Các tính năng AI cần máy chủ được cấu hình dịch vụ AI.',
+      'Hỏi lại khi thiếu thông tin: AI đưa thẻ câu hỏi có sẵn lựa chọn (hỏi cho ai, việc gì, lúc nào) trước khi luận, trả lời thẻ không tốn lượt',
+      'Xem vận theo khung 3 tháng âm lịch, bấm ◀ ▶ để dời sang 3 tháng trước hoặc sau; kèm gợi ý câu hỏi tiếp theo',
+      'Nhớ những gì bạn đã kể ở các mục khác của cùng lá số; lịch sử chat lưu theo tài khoản, mở lại là thấy',
     ],
   },
   {
@@ -376,13 +377,30 @@ function FeatureVisual({ index, colors: c }: { index: number; colors: ReturnType
 
   if (index === 2) {
     const msgs = [
-      { role: 'user', text: 'Vận sự nghiệp năm nay của tôi thế nào?' },
-      { role: 'ai', text: 'Cung Mệnh có Thiên Cơ hóa Lộc, năm nay Đại hạn đi cung Quan Lộc, tam phương có Tả Phụ trợ giúp, sự nghiệp có quý nhân nâng đỡ, nên chủ động mở rộng… (ví dụ minh họa)' },
-      { role: 'user', text: 'Khi nào vận tình cảm tốt nhất?' },
+      { role: 'user', text: 'Vận sự nghiệp sắp tới của tôi thế nào?' },
+      { role: 'ask', text: 'Bạn đang cân nhắc việc gì?' },
+      { role: 'ai', text: 'Tháng 4–6 âm lịch, Đại hạn đi cung Quan Lộc, tam phương có Tả Phụ trợ giúp: nên giữ việc hiện tại, chủ động nhận thêm trách nhiệm… (ví dụ minh họa)' },
     ];
     return (
       <div className="flex flex-col gap-2 h-full justify-center">
-        {msgs.map((m, i) => (
+        {msgs.map((m, i) => m.role === 'ask' ? (
+          <motion.div key={i}
+            initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.15 }}
+            className="max-w-[85%] rounded-lg px-3 py-2.5"
+            style={{ border: `1px solid ${c.goldLine}`, background: c.featureBg }}>
+            <div className="text-[10px] mb-1.5" style={{ color: c.tagText }}>AI hỏi lại · trả lời không tốn lượt</div>
+            <div className="text-[11px] mb-2" style={{ color: c.textSecond }}>{m.text}</div>
+            <div className="flex flex-wrap gap-1.5">
+              {['Giữ hay đổi việc', 'Xin tăng lương', 'Khởi nghiệp'].map((o, j) => (
+                <span key={o} className="text-[10px] px-2 py-0.5 rounded-full"
+                  style={{ border: `1px solid ${c.goldLine}`, color: j === 0 ? c.goldSolid : c.textMuted, background: j === 0 ? c.starBg : 'transparent' }}>
+                  {o}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
           <motion.div key={i}
             initial={{ opacity: 0, x: m.role === 'user' ? 10 : -10 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -560,7 +578,7 @@ export default function HomePage() {
             transition={{ duration: 0.7, delay: 0.65 }}
             className="text-sm max-w-xl mx-auto leading-relaxed mb-10"
             style={{ color: c.textMuted }}>
-            Nhập ngày giờ sinh để lập lá số Tử Vi Đẩu Số riêng của bạn — các học phần Thiên Kỷ, Địa Kỷ, Nhân Kỷ sẽ lần lượt mở.
+            Lập lá số Tử Vi Đẩu Số, hợp bàn hai người và gieo quẻ Kinh Dịch — có AI luận giải, hỏi lại khi cần để trả lời đúng việc của bạn.
           </motion.p>
 
           {/* CTA */}
@@ -574,6 +592,17 @@ export default function HomePage() {
               style={{ background: c.ctaBg, color: c.ctaText }}>
               Lập lá số ngay
             </motion.button>
+            <div className="flex flex-wrap justify-center gap-2">
+              {[{ href: '/heming', label: 'Hợp bàn hai người' }, { href: '/kinh-dich', label: 'Gieo quẻ Kinh Dịch' }].map(l => (
+                <motion.button key={l.href}
+                  whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }}
+                  onClick={() => router.push(l.href)}
+                  className="px-5 py-2 text-xs tracking-widest rounded-full"
+                  style={{ border: `1px solid ${c.goldLine}`, color: c.goldSolid }}>
+                  {l.label}
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
 
           {/* 十四主星 */}
@@ -976,55 +1005,73 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 合盘入口 ══════════════════════════════════════ */}
+      {/* ══ Hợp bàn · Kinh Dịch ═══════════════════════════ */}
       <section className="relative z-10 px-6 md:px-10 lg:px-14 py-20">
-        <div className="mx-auto" style={{ maxWidth: '1280px' }}>
-          <div className="rounded-2xl p-10 md:p-14 text-center"
-            style={{
-              background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.8)',
-              border: `1px solid ${c.cardBorder}`,
-              boxShadow: c.cardShadow,
-            }}>
-            <FadeIn>
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="h-px w-8" style={{ background: c.goldLine }} />
-                <span className="text-[10px] tracking-[0.5em] uppercase" style={{ color: c.tagText }}>Hợp bàn · Phân tích</span>
-                <div className="h-px w-8" style={{ background: c.goldLine }} />
-              </div>
-              <h2 className={`grad-text ${theme === 'dark' ? 'grad-text-dark' : 'grad-text-light'} font-bold mb-4 tracking-tight`}
-                style={{ fontSize: 'clamp(26px, 3.5vw, 40px)' }}>
-                Hợp bàn Tử Vi
-              </h2>
-              <p className="text-sm leading-relaxed mb-8 max-w-lg mx-auto" style={{ color: c.textSecond }}>
-                Nhập thông tin ngày sinh của hai người để đối chiếu cung Phu Thê, mức tương hợp của cung Mệnh và sự giao thoa Tam phương Tứ chính theo hệ Nghê Hải Hạ<br className="hidden md:block" />
-                (phần giải đọc bằng AI cần tự triển khai).
-              </p>
-              <div className="flex justify-center gap-3 flex-wrap mb-6">
-                {['Mức hợp tình cảm', 'Đánh giá hợp tác làm ăn', 'Duyên phận cha mẹ - con cái', 'Xem hợp trước hôn nhân'].map(item => (
-                  <span key={item} style={{
-                    fontSize: '12px', padding: '5px 14px', borderRadius: '20px',
-                    background: theme === 'dark' ? 'rgba(212,168,67,0.08)' : 'rgba(212,168,67,0.12)',
-                    border: `1px solid ${c.goldLine}`,
-                    color: c.goldSolid,
-                  }}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                onClick={() => router.push('/heming')}
-                className="px-10 py-3 font-medium text-sm tracking-widest rounded-full"
+        <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ maxWidth: '1280px' }}>
+          {[
+            {
+              tag: 'Hợp bàn · Phân tích',
+              title: 'Hợp bàn Tử Vi',
+              desc: 'Nhập ngày sinh của hai người để đối chiếu cung Phu Thê, mức tương hợp của cung Mệnh và sự giao thoa Tam phương Tứ chính theo hệ Nghê Hải Hạ, có AI luận giải.',
+              chips: ['Mức hợp tình cảm', 'Hợp tác làm ăn', 'Cha mẹ - con cái', 'Xem hợp trước hôn nhân'],
+              cta: 'Bắt đầu hợp bàn',
+              href: '/heming',
+            },
+            {
+              tag: 'Kinh Dịch · Gieo quẻ',
+              title: 'Gieo quẻ Kinh Dịch',
+              desc: 'Hỏi một việc cụ thể, AI giúp làm rõ câu hỏi rồi bạn tự gieo 3 đồng xu 6 lần. Xem quẻ chính, hào động, quẻ biến kèm lời kinh theo bản dịch Ngô Tất Tố và bài luận chi tiết.',
+              chips: ['Gieo 3 đồng xu', 'Quẻ chính · quẻ biến', 'Lời kinh Ngô Tất Tố', 'Hỏi tiếp về quẻ'],
+              cta: 'Gieo quẻ ngay',
+              href: '/kinh-dich',
+            },
+          ].map(card => (
+            <FadeIn key={card.href}>
+              <div className="h-full rounded-2xl p-10 md:p-12 text-center flex flex-col"
                 style={{
-                  background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(140,100,20,0.1)',
-                  border: `1px solid ${c.goldLine}`,
-                  color: c.goldSolid,
-                  cursor: 'pointer',
+                  background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.8)',
+                  border: `1px solid ${c.cardBorder}`,
+                  boxShadow: c.cardShadow,
                 }}>
-                Bắt đầu hợp bàn
-              </motion.button>
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="h-px w-8" style={{ background: c.goldLine }} />
+                  <span className="text-[10px] tracking-[0.5em] uppercase" style={{ color: c.tagText }}>{card.tag}</span>
+                  <div className="h-px w-8" style={{ background: c.goldLine }} />
+                </div>
+                <h2 className={`grad-text ${theme === 'dark' ? 'grad-text-dark' : 'grad-text-light'} font-bold mb-4 tracking-tight`}
+                  style={{ fontSize: 'clamp(26px, 3vw, 38px)' }}>
+                  {card.title}
+                </h2>
+                <p className="text-sm leading-relaxed mb-8 max-w-lg mx-auto" style={{ color: c.textSecond }}>{card.desc}</p>
+                <div className="flex justify-center gap-2 flex-wrap mb-8">
+                  {card.chips.map(item => (
+                    <span key={item} style={{
+                      fontSize: '12px', padding: '5px 14px', borderRadius: '20px',
+                      background: theme === 'dark' ? 'rgba(212,168,67,0.08)' : 'rgba(212,168,67,0.12)',
+                      border: `1px solid ${c.goldLine}`,
+                      color: c.goldSolid,
+                    }}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-auto">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    onClick={() => router.push(card.href)}
+                    className="px-10 py-3 font-medium text-sm tracking-widest rounded-full"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(140,100,20,0.1)',
+                      border: `1px solid ${c.goldLine}`,
+                      color: c.goldSolid,
+                      cursor: 'pointer',
+                    }}>
+                    {card.cta}
+                  </motion.button>
+                </div>
+              </div>
             </FadeIn>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -1038,7 +1085,7 @@ export default function HomePage() {
           </h2>
           <p className="text-sm mb-10 max-w-md mx-auto leading-relaxed" style={{ color: c.textSecond }}>
             Nhập ngày giờ sinh, chỉ vài giây là có lá số riêng của bạn<br />
-            Có thể kết nối AI (tự triển khai) để giải đọc sâu theo hệ Nghê Hải Hạ
+            AI giải đọc sâu theo hệ Nghê Hải Hạ, hỏi lại khi cần và nhớ những gì bạn đã kể
           </p>
           <motion.button
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
