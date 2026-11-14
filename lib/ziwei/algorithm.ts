@@ -791,9 +791,7 @@ export function generateChart(
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getHoroscope(birthInfo: BirthInfo, target: { year: number; month: number; day: number }, opts?: { leapMonth?: LunarMonthPolicy }): any {
-  const { astrolabe, vnEffective, vnSubstitute } = buildAstrolabe(birthInfo, opts);
-  const offset = vnSubstitute && vnEffective ? vnSubstitute.lunarYear - vnEffective.lunarYear : 0;
-  return astrolabe.horoscope(`${target.year + offset}-${target.month}-${target.day}`);
+  return createHoroscopeReader(birthInfo, opts)(target);
 }
 
 /** Như getHoroscope nhưng dựng astrolabe một lần, dùng lại cho nhiều ngày xem (tool quét tháng/năm). */
@@ -801,5 +799,26 @@ export function getHoroscope(birthInfo: BirthInfo, target: { year: number; month
 export function createHoroscopeReader(birthInfo: BirthInfo, opts?: { leapMonth?: LunarMonthPolicy }): (target: { year: number; month: number; day: number }) => any {
   const { astrolabe, vnEffective, vnSubstitute } = buildAstrolabe(birthInfo, opts);
   const offset = vnSubstitute && vnEffective ? vnSubstitute.lunarYear - vnEffective.lunarYear : 0;
-  return target => astrolabe.horoscope(`${target.year + offset}-${target.month}-${target.day}`);
+  return target => astrolabe.horoscope(vnTargetDate(target, offset));
+}
+
+/**
+ * Ngày xem đưa cho iztro. iztro tự đổi ngày dương sang âm lịch TQ, nên khi âm lịch VN (UTC+7) của ngày xem
+ * khác lịch TQ thì thay bằng ngày dương mà lịch TQ cho đúng ngày âm VN đó (vd. 2/2/2030 là Tết ở VN).
+ * `offset` là độ lệch bội số 60 năm của lá số dựng từ ngày dương thay thế.
+ */
+function vnTargetDate(target: { year: number; month: number; day: number }, offset: number): string {
+  const plain = `${target.year + offset}-${target.month}-${target.day}`;
+  const vn = solarToLunarVN(target.day, target.month, target.year, 7);
+  if (sameLunarDate(vn, solarToLunarVN(target.day, target.month, target.year, 8))) return plain;
+  const ly = vn.year + offset;
+  const monthKey = vn.leap ? -vn.month : vn.month;
+  try {
+    const sol = Lunar.fromYmd(ly, monthKey, vn.day).getSolar();
+    const back = sol.getLunar();
+    if (Number(back.getYear()) === ly && Number(back.getMonth()) === monthKey && Number(back.getDay()) === vn.day) {
+      return `${sol.getYear()}-${sol.getMonth()}-${sol.getDay()}`;
+    }
+  } catch { /* ngày âm VN không có trong lịch TQ (vd. ngày 30 của tháng thiếu): giữ ngày gốc */ }
+  return plain;
 }
