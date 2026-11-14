@@ -9,6 +9,6 @@ export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, '');
 
 /** Tên site và khẩu hiệu */
 export const SITE_NAME = 'Tử Vi Đẩu Số';
-export const SITE_TAGLINE = 'Lập lá số theo Thiên Kỷ';
+export const SITE_TAGLINE = 'Lá số, hợp bàn và Kinh Dịch có AI luận giải';
 export const SITE_DESCRIPTION =
-  'Lập lá số Tử Vi Đẩu Số theo hệ thống Thiên Kỷ của Nghê Hải Hạ: cách cục mệnh bàn, đại hạn, lưu niên, tình cảm, sự nghiệp, tài lộc, sức khỏe.';
+  'Lập lá số Tử Vi Đẩu Số, hợp bàn hai người và gieo quẻ Kinh Dịch. Lịch âm Việt Nam, giờ mặt trời thật, AI luận giải và hỏi lại khi cần.';

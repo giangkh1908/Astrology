@@ -26,7 +26,7 @@ const TITLE = `${SITE_NAME} · ${SITE_TAGLINE}`;
 export const metadata: Metadata = {
   title: TITLE,
   description: SITE_DESCRIPTION,
-  keywords: 'Tử Vi Đẩu Số, Nghê Hải Hạ, Thiên Kỷ, lá số tử vi, lập lá số, mệnh bàn, 14 chính tinh, 12 cung, đại hạn, lưu niên',
+  keywords: 'Tử Vi Đẩu Số, Kinh Dịch, gieo quẻ, hợp bàn, lá số tử vi, lập lá số, mệnh bàn, 14 chính tinh, 12 cung, đại hạn, lưu niên',
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
