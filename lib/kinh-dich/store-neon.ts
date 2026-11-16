@@ -5,6 +5,7 @@
 import { neon } from '@neondatabase/serverless';
 import { buildHistory, UUID_RE } from '@/lib/store/chat-store';
 import { recordTurnEndSql } from '@/lib/store/neon-chat-store';
+import { getMessageCipher, type MessageCipher } from '@/lib/crypto/message-cipher';
 import { parseLines } from './core';
 import { ROUTE_NAME, type CastSummary, type KinhDichStore, type Owner } from './store';
 
@@ -13,18 +14,18 @@ const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
 const ownerId = (id: Owner) => (id && UUID_RE.test(id) ? id : null);
 const lim = (n: number) => Math.max(0, Math.floor(n));
 
-function toSummary(r: Row): CastSummary {
+async function toSummary(r: Row, cipher: MessageCipher): Promise<CastSummary> {
   const meta = (r.meta ?? {}) as Record<string, unknown>;
   return {
     castId: String(r.thread_key),
-    question: typeof meta.question === 'string' ? meta.question : '',
+    question: typeof meta.question === 'string' ? await cipher.open(meta.question) : '',
     lines: parseLines(meta.lines),
     castAt: typeof meta.castAt === 'string' ? meta.castAt : null,
     createdAt: iso(r.created_at),
   };
 }
 
-export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
+export function createNeonKinhDichStore(databaseUrl: string, cipher: MessageCipher = getMessageCipher()): KinhDichStore {
   const sql = neon(databaseUrl);
 
   return {
@@ -32,9 +33,10 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
 
     async createCast(owner, question) {
       const castId = crypto.randomUUID();
+      const sealed = await cipher.seal(question);
       await sql`
         insert into conversations (kind, chart_id, thread_key, user_id, meta)
-        values ('kinhdich', null, ${castId}, ${ownerId(owner)}::uuid, ${JSON.stringify({ question, lines: null, castAt: null })}::jsonb)`;
+        values ('kinhdich', null, ${castId}, ${ownerId(owner)}::uuid, ${JSON.stringify({ question: sealed, lines: null, castAt: null })}::jsonb)`;
       return { castId };
     },
 
@@ -49,10 +51,11 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
         select role, content, hidden, request_id, status, created_at from messages
         where conversation_id = ${conv.id}::uuid order by id`;
       const assistants = rows.filter(r => r.role === 'assistant');
+      const contents = await Promise.all(rows.map(r => cipher.open(String(r.content))));
       return {
-        ...toSummary(conv),
-        messages: buildHistory(rows.map(r => ({
-          threadKey: castId, updatedAt: iso(r.created_at), role: r.role as 'user' | 'assistant', content: String(r.content),
+        ...(await toSummary(conv, cipher)),
+        messages: buildHistory(rows.map((r, i) => ({
+          threadKey: castId, updatedAt: iso(r.created_at), role: r.role as 'user' | 'assistant', content: contents[i],
           hidden: !!r.hidden, requestId: r.request_id ? String(r.request_id) : null,
         })))[0]?.messages ?? [],
         lastAssistantStatus: assistants.length ? ((assistants[assistants.length - 1].status as string | null) ?? null) : null,
@@ -65,7 +68,7 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
         select thread_key, meta, created_at from conversations
         where kind = 'kinhdich' and user_id is not distinct from ${ownerId(owner)}::uuid
         order by created_at desc limit ${lim(limit)}`;
-      return rows.map(toSummary);
+      return Promise.all(rows.map(r => toSummary(r, cipher)));
     },
 
     async saveLines(owner, castId, lines) {
@@ -80,6 +83,7 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
     },
 
     async recordTurnStart(owner, castId, t) {
+      const question = await cipher.seal(t.question);
       const rows = await sql`
         with conv as (
           update conversations set updated_at = now()
@@ -87,11 +91,11 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
           returning id
         ), r as (
           insert into ai_requests (conversation_id, route, prompt_version, model, question, status, user_id)
-          select conv.id, ${ROUTE_NAME}, ${t.promptVersion}, ${t.model}, ${t.question}, 'pending', ${ownerId(owner)}::uuid from conv
+          select conv.id, ${ROUTE_NAME}, ${t.promptVersion}, ${t.model}, ${question}, 'pending', ${ownerId(owner)}::uuid from conv
           returning id, conversation_id
         ), m as (
           insert into messages (conversation_id, role, content, request_id, hidden)
-          select conversation_id, 'user', ${t.question}, id, ${t.hidden} from r
+          select conversation_id, 'user', ${question}, id, ${t.hidden} from r
         )
         select id from r`;
       if (!rows.length) throw new Error('Không có lần gieo này');
@@ -99,7 +103,7 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
     },
 
     async recordTurnEnd(requestId, r) {
-      await recordTurnEndSql(sql, requestId, r);
+      await recordTurnEndSql(sql, requestId, r, cipher);
     },
 
     async loadMemoryRows(owner, excludeCastId, limit) {
@@ -119,8 +123,8 @@ export function createNeonKinhDichStore(databaseUrl: string): KinhDichStore {
           order by m.id desc limit ${lim(limit)}`,
       ]);
       return {
-        casts: casts.map(toSummary),
-        notes: notes.map(r => ({ castId: String(r.thread_key), content: String(r.content), createdAt: iso(r.created_at) })),
+        casts: await Promise.all(casts.map(r => toSummary(r, cipher))),
+        notes: await Promise.all(notes.map(async r => ({ castId: String(r.thread_key), content: await cipher.open(String(r.content)), createdAt: iso(r.created_at) }))),
       };
     },
   };

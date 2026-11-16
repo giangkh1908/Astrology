@@ -1,5 +1,7 @@
-import { randomUUID } from 'node:crypto';
+import assert from 'node:assert/strict';
+import { randomBytes, randomUUID } from 'node:crypto';
 import { neon } from '@neondatabase/serverless';
+import { ADMIN_HIDDEN, createMessageCipher, isEncrypted } from '../../lib/crypto/message-cipher';
 import { createNeonChatStore } from '../../lib/store/neon-chat-store';
 import { runChatStoreContract } from './chat-store-memory.test';
 
@@ -12,7 +14,22 @@ async function main() {
   const sql = neon(url);
   const before = await sql`select value from settings where key = 'active_prompt_version'`;
   try {
-    await runChatStoreContract(createNeonChatStore(url), tag);
+    const cipher = createMessageCipher(randomBytes(32).toString('base64url'));
+    await runChatStoreContract(createNeonChatStore(url, { cipher, revealToAdmin: false }), tag, () => ADMIN_HIDDEN);
+    // Máy local tự bật xem: admin thấy đúng nội dung đã giải mã.
+    await runChatStoreContract(createNeonChatStore(url, { cipher, revealToAdmin: true }), `${tag}-r`);
+    // Trong DB chỉ còn bản mã: câu hỏi, câu trả lời, log câu hỏi, tham số tool.
+    const raw = await sql`
+      select m.content, r.question, r.tool_calls from messages m
+      join conversations v on v.id = m.conversation_id join charts c on c.id = v.chart_id
+      left join ai_requests r on r.id = m.request_id
+      where c.chart_key like ${`test-${tag}-%`}`;
+    assert.ok(raw.length > 0);
+    for (const r of raw) {
+      assert.ok(isEncrypted(String(r.content)), 'messages.content đã mã hoá');
+      if (r.question !== null) assert.ok(isEncrypted(String(r.question)), 'ai_requests.question đã mã hoá');
+      for (const t of (r.tool_calls as { arguments: string }[] | null) ?? []) assert.ok(isEncrypted(t.arguments), 'tool_calls đã mã hoá');
+    }
     console.log('neon-store: ok');
   } finally {
     const charts = await sql`select id from charts where chart_key like ${`test-${tag}-%`}`;

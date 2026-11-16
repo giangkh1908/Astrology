@@ -4,7 +4,8 @@ import { createMemoryChatStore } from '../../lib/store/memory-chat-store';
 import { chartKey } from '../../lib/ziwei/chart-key';
 
 // Hợp đồng ChatStore (bản bộ nhớ). neon-store.test.ts chạy lại cùng kịch bản trên Postgres thật.
-export async function runChatStoreContract(store: ChatStore, tag: string) {
+// adminView: nội dung tin nhắn trang admin thấy (Postgres: luôn bị ẩn vì đã mã hoá).
+export async function runChatStoreContract(store: ChatStore, tag: string, adminView: (s: string) => string = s => s) {
   const birthA = { year: 1990, month: 3, day: 5, hour: 2, gender: 'male', name: `fake-${tag}` };
   const birthB = { year: 1992, month: 8, day: 20, hour: 7, gender: 'female' };
   const keyA = `test-${tag}-a`;
@@ -27,7 +28,7 @@ export async function runChatStoreContract(store: ChatStore, tag: string) {
   const detail = (await store.getChart(summary.id))!;
   assert.equal(detail.conversations.length, 1);
   const msgs = detail.conversations[0].messages;
-  assert.deepEqual(msgs.map(m => [m.role, m.content]), [['user', 'Hỏi 1'], ['assistant', 'Đáp 1'], ['user', 'Hỏi 2'], ['assistant', 'Đáp dở']]);
+  assert.deepEqual(msgs.map(m => [m.role, m.content]), [['user', adminView('Hỏi 1')], ['assistant', adminView('Đáp 1')], ['user', adminView('Hỏi 2')], ['assistant', adminView('Đáp dở')]]);
   assert.equal(msgs[1].promptVersion, 'v2');
   assert.equal(msgs[3].promptVersion, 'v1');
   assert.equal(msgs[3].status, 'aborted');
@@ -49,7 +50,7 @@ export async function runChatStoreContract(store: ChatStore, tag: string) {
   // Hợp bàn một lá số với chính nó → vẫn ghi được (Postgres không cho upsert cùng dòng 2 lần trong 1 câu lệnh).
   const self = await store.recordTurnStart(turn({ kind: 'heming', partnerChart: { key: keyA, birthInfo: birthA }, threadKey: 'heming', question: 'Tự hợp?' }));
   await store.recordTurnEnd(self.requestId, { text: 'ok', status: 'ok', toolCalls: [], durationMs: 10 });
-  const selfConv = (await store.getChart(summary.id))!.conversations.find(c => c.kind === 'heming' && c.messages.some(m => m.content === 'Tự hợp?'));
+  const selfConv = (await store.getChart(summary.id))!.conversations.find(c => c.kind === 'heming' && c.partner?.id === summary.id);
   assert.ok(selfConv, 'hợp bàn với chính mình được ghi');
   assert.equal(selfConv!.partner?.id, summary.id);
 
@@ -57,12 +58,12 @@ export async function runChatStoreContract(store: ChatStore, tag: string) {
   const logs = await store.listRequests({ promptVersion: 'v1' });
   const mine = logs.find(l => l.id === r2.requestId)!;
   assert.equal(mine.status, 'aborted');
-  assert.equal(mine.question, 'Hỏi 2');
-  assert.equal(mine.answer, 'Đáp dở');
+  assert.equal(mine.question, adminView('Hỏi 2'));
+  assert.equal(mine.answer, adminView('Đáp dở'));
   const okLog = (await store.listRequests({ status: 'ok' })).find(l => l.id === r1.requestId)!;
   assert.equal(okLog.promptTokens, 10);
   assert.equal(okLog.costUsd, 0.0001);
-  assert.deepEqual(okLog.toolCalls, [{ name: 'xem_van_han', arguments: '{"nam":2026}' }]);
+  assert.deepEqual(okLog.toolCalls, [{ name: 'xem_van_han', arguments: adminView('{"nam":2026}') }]);
   assert.equal(okLog.chartId, summary.id);
   assert.ok(!(await store.listRequests({ status: 'ok' })).some(l => l.id === r2.requestId));
 
