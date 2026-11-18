@@ -4,6 +4,8 @@ import { getChatStore } from '@/lib/store';
 import { beginTurn, chartRef } from '@/lib/store/persist-turn';
 import { priorNotesOf } from '@/lib/store/prior-notes';
 import { getPromptSet } from '@/lib/prompts';
+import { buildHemingTools } from '@/lib/ai/tools/heming-tools';
+import { cleanPersonName } from '@/lib/ai/heming-names';
 import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
@@ -31,6 +33,14 @@ export async function POST(request: Request) {
   if (body.question !== undefined && typeof body.question !== 'string') {
     return jsonError('Câu hỏi phải là chuỗi ký tự.', 400);
   }
+  // Tên hai người là bắt buộc; làm sạch một lần ở đây để prompt, tool và bản lưu dùng cùng một tên.
+  const nameA = cleanPersonName(body.chartA.birthInfo.name);
+  const nameB = cleanPersonName(body.chartB.birthInfo.name);
+  if (!nameA || !nameB) {
+    return jsonError('Vui lòng nhập tên của cả hai người.', 400);
+  }
+  body.chartA.birthInfo.name = nameA;
+  body.chartB.birthInfo.name = nameB;
   const store = getChatStore();
   // Đọc song song version prompt và lời người dùng đã kể ở /chart của từng người.
   const [version, notesA, notesB] = await Promise.all([
@@ -51,7 +61,9 @@ export async function POST(request: Request) {
       { role: 'assistant' as const, content: turn.answer.slice(0, 12000) },
     ]);
 
+  // Dựng prompt/tool trước khi trừ lượt: lỗi ở đây không mất lượt, không để lại lượt 'pending'.
   const systemPrompt = prompts.buildCompatibilitySystemPrompt(body.chartA, body.chartB, { a: notesA, b: notesB });
+  const tools = buildHemingTools(body.chartA.birthInfo, body.chartB.birthInfo);
   const charge = await chargeChat(request);
   if (!charge.ok) return charge.response;
   const { onFinish } = await beginTurn(store, {
@@ -70,6 +82,6 @@ export async function POST(request: Request) {
     { role: 'system', content: systemPrompt },
     ...history,
     { role: 'user', content: question },
-  ], request.signal, undefined, { onFinish: refundingOnFinish(onFinish, charge.refund) });
+  ], request.signal, tools, { onFinish: refundingOnFinish(onFinish, charge.refund) });
   return withQuotaHeader(response, charge.quota);
 }

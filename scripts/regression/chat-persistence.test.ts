@@ -39,7 +39,7 @@ async function main() {
   const { POST: interpret } = await import('../../app/api/interpret/route');
   const { POST: heming } = await import('../../app/api/heming/route');
   const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', name: 'Tên giả' } as never);
-  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
+  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female', name: 'Tên giả hai' } as never);
   const post = async (fn: (r: Request) => Promise<Response>, path: string, payload: unknown) => fn(new Request(`http://localhost${path}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json', cookie: await envUserCookie() }, body: JSON.stringify(payload),
   }));

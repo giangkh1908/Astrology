@@ -1,7 +1,13 @@
 'use client';
-/** Render AI markdown: **【Title】** → gold header, **bold** → strong */
-export default function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
-  const lines = text.split('\n');
+/** Render AI markdown: **【Title】** → gold header, **bold** → strong. Đang stream thì nhả chữ mượt (useSmoothText). */
+import { useEffect } from 'react';
+import { useSmoothText } from './useSmoothText';
+
+export default function AiContent({ text, streaming, onReveal }: { text: string; streaming?: boolean; onReveal?: () => void }) {
+  const shown = useSmoothText(text, !!streaming);
+  // Báo cho khung chat cuộn theo chữ vừa hiện (chữ hiện chậm hơn lúc dữ liệu về).
+  useEffect(() => { onReveal?.(); }, [shown]); // eslint-disable-line react-hooks/exhaustive-deps
+  const lines = shown.split('\n');
   return (
     <div className="space-y-0.5">
       {lines.map((line, i) => {

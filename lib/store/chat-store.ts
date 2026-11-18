@@ -87,7 +87,11 @@ export interface TurnResult {
   asked?: boolean;
   firstTokenMs?: number;
   durationMs: number;
-  usage?: { promptTokens?: number; completionTokens?: number; costUsd?: number };
+  usage?: {
+    promptTokens?: number; completionTokens?: number; costUsd?: number;
+    /** Token prompt đọc từ cache / ghi vào cache, token suy luận (nếu nhà cung cấp báo). Chưa có cột DB. */
+    cachedTokens?: number; cacheWriteTokens?: number; reasoningTokens?: number;
+  };
 }
 
 export interface ChartSummary {
@@ -132,6 +136,8 @@ export interface RequestLog {
   promptTokens: number | null;
   completionTokens: number | null;
   costUsd: number | null;
+  /** Token prompt trúng cache; chỉ store bộ nhớ có (Neon chưa có cột, không migration). */
+  cachedTokens?: number | null;
   chartId: string | null;
 }
 

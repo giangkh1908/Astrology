@@ -7,10 +7,11 @@ import { generateChart as buildChart } from '@/lib/ziwei/algorithm';
 import type { BirthInfo, ZiweiChart } from '@/lib/ziwei/types';
 import { useTheme } from '@/components/ThemeProvider';
 import PageTopBar from '@/components/PageTopBar';
+import { useSmoothText } from '@/components/useSmoothText';
 
 // ─── AiContent 渲染器（与 InsightPanel 一致）────────────────
 function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
-  const lines = text.split('\n');
+  const lines = useSmoothText(text, !!streaming).split('\n');
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
       {lines.map((line, i) => {
@@ -48,6 +49,22 @@ function AiContent({ text, streaming }: { text: string; streaming?: boolean }) {
   );
 }
 
+/** Các bước tra cứu AI đã làm (như InsightPanel): đang chạy thì liệt kê ✓ từng bước, xong thì gọn một dòng. */
+function ToolSteps({ steps, running }: { steps: string[]; running: boolean }) {
+  const unique = steps
+    .filter((s, i) => steps.indexOf(s) === i)
+    .map(s => s.replace(/^Đang\s+/, '').replace(/…$/, ''));
+  const style = { fontSize: '10px', lineHeight: 1.6, color: 'var(--tx-3)', marginBottom: '8px' };
+  if (running) {
+    return (
+      <div style={style}>
+        {unique.map(s => <div key={s}>✓ {s.charAt(0).toUpperCase() + s.slice(1)}</div>)}
+      </div>
+    );
+  }
+  return <p style={style}>Đã tra: {unique.map(s => s.charAt(0).toLowerCase() + s.slice(1)).join(' · ')}</p>;
+}
+
 /** Các lượt hợp bàn đã luận của tài khoản này cho cặp lá số (lỗi mạng/DB → coi như chưa có). */
 async function loadSavedTurns(a: ZiweiChart, b: ZiweiChart): Promise<HemingTurn[]> {
   try {
@@ -75,6 +92,7 @@ interface HemingTurn {
   answer: string;
   error?: boolean;
   errorMessage?: string; // lời nhắn từ máy chủ (vd. hết lượt hỏi)
+  steps?: string[]; // các bước tra cứu AI đã làm (như InsightPanel)
 }
 
 export default function HemingPage() {
@@ -118,6 +136,10 @@ export default function HemingPage() {
     setFormError(null);
     if (!isFormReady(formA) || !isFormReady(formB)) {
       setFormError('Vui lòng điền đầy đủ thông tin ngày giờ sinh của cả hai người');
+      return;
+    }
+    if (!formA!.name?.trim() || !formB!.name?.trim()) {
+      setFormError('Vui lòng nhập tên của cả hai người');
       return;
     }
     setAnalysisError(false);
@@ -178,6 +200,7 @@ export default function HemingPage() {
       let text = '';
       let pendingLine = '';
       let interrupted = false; // máy chủ báo đứt giữa chừng
+      const steps: string[] = [];
 
       while (true) {
         const { done, value } = await reader.read();
@@ -194,11 +217,12 @@ export default function HemingPage() {
           try {
             const event = JSON.parse(data);
             if (typeof event.error === 'string') interrupted = true;
+            if (typeof event.status === 'string') { steps.push(event.status); changed = true; }
             const delta = event.delta?.text ?? '';
             if (delta) { text += delta; changed = true; }
           } catch { /* skip */ }
         }
-        if (changed) commit({ ...current, answer: text });
+        if (changed) commit({ ...current, answer: text, ...(steps.length ? { steps: [...steps] } : {}) });
       }
       if (!text || interrupted) throw new Error();
     } catch (e) {
@@ -254,9 +278,10 @@ export default function HemingPage() {
           className="heming-grid">
           {/* 甲方 */}
           <div style={cardStyle}>
-            <span style={labelStyle}>Người A</span>
+            <span style={labelStyle}>{formA?.name?.trim() || 'Người thứ nhất'}</span>
             <BirthForm
               hideSubmit
+              requireName
               onSubmit={() => {}}
               onFormSave={setFormA}
             />
@@ -264,9 +289,10 @@ export default function HemingPage() {
 
           {/* 乙方 */}
           <div style={cardStyle}>
-            <span style={labelStyle}>Người B</span>
+            <span style={labelStyle}>{formB?.name?.trim() || 'Người thứ hai'}</span>
             <BirthForm
               hideSubmit
+              requireName
               onSubmit={() => {}}
               onFormSave={setFormB}
             />
@@ -335,6 +361,7 @@ export default function HemingPage() {
                     </div>
                   </div>
                 )}
+                {turn.steps?.length ? <ToolSteps steps={turn.steps} running={isLast && analyzing && !turn.answer} /> : null}
                 {isLast && analyzing && !turn.answer && (
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '28px 0', color: 'var(--tx-3)', fontSize: '13px' }}>
                     <div style={{

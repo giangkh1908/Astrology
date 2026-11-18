@@ -55,6 +55,7 @@ export function createMemoryChatStore(): ChatStore {
       Object.assign(req, {
         status: r.status as TurnStatus, error: r.error ?? null, firstTokenMs: r.firstTokenMs ?? null, durationMs: r.durationMs,
         toolCalls: r.toolCalls, promptTokens: r.usage?.promptTokens ?? null, completionTokens: r.usage?.completionTokens ?? null, costUsd: r.usage?.costUsd ?? null,
+        cachedTokens: r.usage?.cachedTokens ?? null,
       });
     },
     async listCharts(page) {

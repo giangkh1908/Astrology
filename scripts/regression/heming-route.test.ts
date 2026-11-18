@@ -22,8 +22,9 @@ async function main() {
 
   const { POST } = await import('../../app/api/heming/route');
   const { generateChart } = await import('../../lib/ziwei/algorithm');
-  const chartA = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male' } as never);
-  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
+  const chartA = generateChart({ name: 'Minh', year: 1990, month: 3, day: 5, hour: 2, gender: 'male' } as never);
+  const chartB = generateChart({ name: 'Lan', year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
+  assert.equal(chartA.birthInfo.name, 'Minh', 'lá số phải giữ tên trong birthInfo');
   const call = async (payload: unknown) => POST(new Request('http://localhost/api/heming', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', cookie: await envUserCookie() },
@@ -34,6 +35,15 @@ async function main() {
   assert.equal((await call({ chartA })).status, 400);
   assert.equal(sentBody, null);
   assert.equal((await call({ chartA, chartB, question: 42 })).status, 400);
+  // Bắt buộc tên cả hai người (tên rỗng / chỉ ký tự điều khiển cũng tính là thiếu) → 400, không gọi AI
+  const noName = (c: typeof chartA, name: unknown) => ({ ...c, birthInfo: { ...c.birthInfo, name } });
+  for (const bad of [undefined, '', '   ', '\n\t\u0000', 42]) {
+    const r = await call({ chartA: noName(chartA, bad), chartB });
+    assert.equal(r.status, 400, `tên ${JSON.stringify(bad)} phải bị từ chối`);
+    assert.match((await r.json()).error, /tên/i);
+  }
+  assert.equal((await call({ chartA, chartB: noName(chartB, undefined) })).status, 400);
+  assert.equal(sentBody, null);
 
   // Phân tích mặc định
   const res = await call({ chartA, chartB });
@@ -42,7 +52,8 @@ async function main() {
   const first = sentBody!;
   assert.deepEqual(first.reasoning, { enabled: false });
   assert.equal(first.messages[0].role, 'system');
-  assert.ok(first.messages[0].content.includes('Người A') && first.messages[0].content.includes('Người B'));
+  assert.ok(first.messages[0].content.includes('"Minh"') && first.messages[0].content.includes('"Lan"'), 'prompt phải gọi tên hai người');
+  assert.doesNotMatch(first.messages[0].content, /Người [AB]\b/, 'prompt không còn Người A/B');
   assert.equal(first.messages[1].role, 'user');
 
   // Câu hỏi riêng được chuyển nguyên văn
@@ -59,12 +70,50 @@ async function main() {
     history: [{ answer: 'Tổng quan' }, { question: 'Hợp làm ăn?', answer: 'Có' }, { answer: '' }, 'rác'],
   })).text();
   assert.deepEqual(sentBody!.messages.slice(1).map(m => [m.role, m.content]), [
-    ['user', 'Hãy phân tích mức độ hợp duyên giữa Người A và Người B, nêu căn cứ cụ thể từ hai lá số.'],
+    ['user', 'Hãy phân tích mức độ hợp duyên giữa hai người, nêu căn cứ cụ thể từ hai lá số.'],
     ['assistant', 'Tổng quan'],
     ['user', 'Hợp làm ăn?'],
     ['assistant', 'Có'],
     ['user', 'Còn kết hôn?'],
   ]);
+
+  // Hợp bàn có tool: lượt đầu gửi danh sách tool hai người, model gọi tool → kết quả gửi lại → trả lời.
+  const tools = (first as unknown as { tools?: { function: { name: string } }[] }).tools?.map(t => t.function.name) ?? [];
+  for (const name of ['xem_van_han', 'xem_cung', 'xem_cac_thang', 'quet_cac_nam', 'xem_tu_hoa', 'doi_chieu_hai_la_so']) {
+    assert.ok(tools.includes(name), `heming chưa gửi tool ${name}`);
+  }
+  assert.ok(!tools.includes('hoi_nguoi_dung'), 'hợp bàn không có thẻ hỏi lại');
+  const vanHanDef = (first as unknown as { tools: { function: { name: string; parameters: { properties: { nguoi: { enum: string[] } } } } }[] })
+    .tools.find(t => t.function.name === 'xem_van_han')!;
+  assert.deepEqual(vanHanDef.function.parameters.properties.nguoi.enum, ['Minh', 'Lan']);
+
+  // Lịch sử hợp bàn cũ (câu hỏi tự động có "Người A/B") vẫn được nhận là câu hỏi tự động để ẩn khi nạp lại.
+  const { autoQuestionsOf } = await import('../../lib/store/history-request');
+  const auto = autoQuestionsOf('heming', 'heming');
+  assert.ok(auto.has('Hãy phân tích mức độ hợp duyên giữa Người A và Người B, nêu căn cứ cụ thể từ hai lá số.'));
+  assert.ok(auto.has('Hãy phân tích mức độ hợp duyên giữa hai người, nêu căn cứ cụ thể từ hai lá số.'));
+
+  const bodies: { messages: Record<string, unknown>[] }[] = [];
+  const encoder = new TextEncoder();
+  const sse = (events: unknown[]) => new Response(new ReadableStream({
+    start(c) { for (const e of events) c.enqueue(encoder.encode(`data: ${JSON.stringify(e)}\n\n`)); c.enqueue(encoder.encode('data: [DONE]\n\n')); c.close(); },
+  }), { status: 200 });
+  globalThis.fetch = (async (_url: unknown, init?: RequestInit) => {
+    bodies.push(JSON.parse(String(init?.body)));
+    return bodies.length === 1
+      ? sse([{ choices: [{ delta: { tool_calls: [{ index: 0, id: 't1', type: 'function', function: { name: 'xem_van_han', arguments: '{"nguoi":"Lan","nam":2026}' } }] } }] }])
+      : sse([{ choices: [{ delta: { content: 'Năm nay Lan thuận.' } }] }]);
+  }) as typeof fetch;
+  const toolRes = await call({ chartA, chartB, question: 'Năm nay Lan thế nào?' });
+  const toolText = await toolRes.text();
+  assert.equal(bodies.length, 2);
+  assert.match(toolText, /"status":"[^"]*của Lan"/, 'phải phát trạng thái tra cứu cho UI, gọi bằng tên');
+  assert.ok(toolText.includes('"text":"Năm nay Lan thuận."'));
+  const toolMsg = bodies[1].messages.at(-1)!;
+  assert.equal(toolMsg.role, 'tool');
+  const result = JSON.parse(String(toolMsg.content));
+  assert.equal(result.năm_âm_lịch, 2026);
+  assert.ok(result.dương_lịch, 'kết quả tool phải kèm dương lịch');
 
   console.log('heming-route: ok');
 }

@@ -37,8 +37,8 @@ async function main() {
   const { POST: interpret } = await import('../../app/api/interpret/route');
   const { POST: heming } = await import('../../app/api/heming/route');
 
-  const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male' } as never);
-  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
+  const chart = generateChart({ name: 'Minh', year: 1990, month: 3, day: 5, hour: 2, gender: 'male' } as never);
+  const chartB = generateChart({ name: 'Lan', year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
   const keyA = chartRef(chart.birthInfo).key;
   const label = (k: string) => threadLabel(k, chart);
 
@@ -98,15 +98,15 @@ async function main() {
   assert.deepEqual(await loadPriorNotes(hanging, { kind: 'interpret', chartKey: keyA, userId: null }, { label, timeoutMs: 50 }), []);
   assert.ok(Date.now() - t0 < 1000);
 
-  // 5. Prompt: có khối khi có ghi chú, không có khi rỗng; hợp bàn có riêng cho A và B.
+  // 5. Prompt: có khối khi có ghi chú, không có khi rỗng; hợp bàn có riêng cho từng người.
   for (const v of ['v1', 'v2'] as const) {
     const p = getPromptSet(v);
     const intent = { type: 'topic' as const, key: 'career' };
     assert.ok(p.buildInterpretationSystemPrompt(chart, intent, {}, notes).includes('Tôi đã có vợ, đang sống ở Đà Nẵng'));
     assert.ok(!p.buildInterpretationSystemPrompt(chart, intent, {}, []).includes('các mục khác'));
     const c = p.buildCompatibilitySystemPrompt(chart, chartB, { a: notes, b: [] });
-    assert.ok(c.includes('Người A đã tự kể'));
-    assert.ok(!c.includes('Người B đã tự kể'));
+    assert.ok(c.includes('lá số của "Minh" đã tự kể'));
+    assert.ok(!c.includes('lá số của "Lan" đã tự kể'));
   }
 
   // 6. Route luận: mục Sự nghiệp thấy điều đã kể ở mục Tình cảm.
@@ -120,7 +120,7 @@ async function main() {
   assert.ok(lastSystem.includes('Tôi đã có vợ, đang sống ở Đà Nẵng'));
   assert.ok(!lastSystem.includes('Đang hỏi ở mục này'), 'không lặp mục hiện tại');
 
-  // 7. Route hợp bàn: đọc lời kể ở /chart của Người A.
+  // 7. Route hợp bàn: đọc lời kể ở /chart của người thứ nhất.
   await drain(await post(heming, '/api/heming', { chartA: chart, chartB }));
   assert.ok(lastSystem.includes('Tôi đã có vợ, đang sống ở Đà Nẵng'));
 

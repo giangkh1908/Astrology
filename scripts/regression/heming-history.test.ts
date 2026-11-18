@@ -24,7 +24,7 @@ new Function('exports', 'setTimeout', ts.transpileModule(body, {
 
 type Turn = { question: string | null; answer: string; error?: boolean };
 const noop = () => {};
-const form = { year: '1990', month: '1', day: '1', gender: 'male', clockHour: '8', clockMinute: '0' };
+const form = { name: 'Minh', year: '1990', month: '1', day: '1', gender: 'male', clockHour: '8', clockMinute: '0' };
 let year = 1990;
 let chartA: unknown = null;
 let chartB: unknown = null;
@@ -95,6 +95,20 @@ async function main() {
   await run(undefined, true);
   assert.deepEqual(requests[before + 1].history, []);
   assert.equal(turns.length, 1);
+
+  // Bắt buộc tên cả hai người: thiếu tên (hoặc chỉ khoảng trắng) thì báo lỗi tiếng Việt, không gọi AI.
+  for (const formB of [{ ...form, name: '' }, { ...form, name: '   ' }, { ...form, name: undefined }]) {
+    let formError: string | null = null;
+    const n = requests.length;
+    await moduleExports.makeRun({
+      chartA, chartB, formA: form, formB, generateChart: async () => ({ birthInfo: { year } }), formToBirthInfo: () => ({}),
+      setChartA: noop, setChartB: noop, setFormError: (v: string | null) => { formError = v ?? formError; },
+      setAnalyzing: noop, setAnalysisError: noop, setTurns: noop, turnsRef, lastTurnRef: { current: null }, analysisRef: { current: null },
+      fetch: async () => { throw new Error('không được gọi'); },
+    })();
+    assert.match(String(formError), /tên/i);
+    assert.equal(requests.length, n);
+  }
 
   console.log('Heming history regression passed');
 }

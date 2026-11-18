@@ -32,7 +32,7 @@ export async function recordTurnEndSql(sql: Sql, requestId: string, r: TurnResul
         first_token_ms = ${r.firstTokenMs ?? null}, duration_ms = ${r.durationMs},
         tool_calls = ${JSON.stringify(toolCalls)}::jsonb,
         prompt_tokens = ${r.usage?.promptTokens ?? null}, completion_tokens = ${r.usage?.completionTokens ?? null},
-        cost_usd = ${r.usage?.costUsd ?? null}
+        cost_usd = ${r.usage?.costUsd ?? null}, cached_tokens = ${r.usage?.cachedTokens ?? null}
       where id = ${requestId}::uuid and status = 'pending'
       returning id, conversation_id, prompt_version
     )
@@ -185,6 +185,7 @@ export function createNeonChatStore(databaseUrl: string, opts: NeonStoreOptions 
         firstTokenMs: numOrNull(r.first_token_ms), durationMs: numOrNull(r.duration_ms),
         toolCalls: opened[i].toolCalls,
         promptTokens: numOrNull(r.prompt_tokens), completionTokens: numOrNull(r.completion_tokens), costUsd: numOrNull(r.cost_usd),
+        cachedTokens: numOrNull(r.cached_tokens),
         chartId: r.chart_id ? String(r.chart_id) : null,
       }));
     },

@@ -33,6 +33,8 @@ export default function KinhDichApp() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [cast, setCast] = useState<Cast | null>(null);
   const [streaming, setStreaming] = useState(false);
+  /** Trạng thái server gửi trong lúc model suy luận, trước khi có chữ (vd. "Đang xét vị trí các hào…"). */
+  const [thinking, setThinking] = useState<string | null>(null);
   const [input, setInput] = useState('');
   const [quota, setQuota] = useState<string | null>(null);
   const [history, setHistory] = useState<CastListItem[] | null>(null);
@@ -66,6 +68,7 @@ export default function KinhDichApp() {
   }, []);
   // Chat cuộn xuống cuối khi có tin / chữ mới (cuộn trong khung, không cuộn cả trang)
   useEffect(() => { const el = scrollRef.current; if (el) el.scrollTop = el.scrollHeight; }, [messages]);
+  const followReveal = () => { const el = scrollRef.current; if (el) el.scrollTop = el.scrollHeight; };
 
   /** Gửi một lượt và đọc luồng trả lời. body: phần riêng của lượt (castId/lines/answering do caller quyết định). */
   const stream = async (body: Record<string, unknown>) => {
@@ -73,6 +76,7 @@ export default function KinhDichApp() {
     const c = new AbortController();
     ctrl.current = c;
     setStreaming(true);
+    setThinking(null);
     let started = false;
     try {
       const res = await apiRequest('/api/kinh-dich', {
@@ -96,7 +100,8 @@ export default function KinhDichApp() {
       started = true;
       const set = () => { const snap = text; update(m => [...m.slice(0, -1), { role: 'assistant', content: snap }]); };
       await readSse(res.body, {
-        delta: t => { text += t; set(); },
+        delta: t => { text += t; setThinking(null); set(); },
+        status: s => { if (!text) setThinking(s); },
         ask: a => { if (a && typeof a === 'object') { text = encodeAsk(a as Parameters<typeof encodeAsk>[0]); set(); } },
         error: e => { streamError = e; },
       });
@@ -112,7 +117,7 @@ export default function KinhDichApp() {
         update(m => [...(started && !m.at(-1)?.content ? m.slice(0, -1) : m), { role: 'assistant', content: msg, error: true }]);
       }
     } finally {
-      if (ctrl.current === c) { ctrl.current = null; setStreaming(false); }
+      if (ctrl.current === c) { ctrl.current = null; setStreaming(false); setThinking(null); }
     }
   };
 
@@ -151,6 +156,17 @@ export default function KinhDichApp() {
     void stream(castId ? { castId, lines, messages: [] } : { lines, messages: apiHistory(before) });
   }, [castId]);
 
+  /** Bài luận đầu thất bại (lỗi / AI suy nghĩ hết lượt chữ): luận lại bằng quẻ đã gieo. Có DB: server dùng quẻ đã lưu, miễn phí. */
+  const retryReading = () => {
+    if (!cast || streaming) return;
+    const list = messagesRef.current;
+    const at = list.findIndex(m => m.hidden && m.content === READING_QUESTION);
+    const kept = (at >= 0 ? list.slice(0, at + 1) : list).filter(m => !m.error);
+    update(() => kept);
+    const before = at >= 0 ? kept.slice(0, -1) : kept;
+    void stream(castId ? { castId, lines: cast.lines, messages: [] } : { lines: cast.lines, messages: apiHistory(before) });
+  };
+
   const reset = () => {
     ctrl.current?.abort();
     setCastId(null); setQuestion(''); setCast(null); setInput('');
@@ -169,7 +185,12 @@ export default function KinhDichApp() {
       setQuestion(d.cast.question);
       setCast(d.reading);
       setCasterKey(k => k + 1);
-      update(() => (d.cast.messages.length ? d.cast.messages : [{ role: 'user', content: d.cast.question }]));
+      const msgs: Msg[] = d.cast.messages.length ? d.cast.messages : [{ role: 'user', content: d.cast.question }];
+      // Đã gieo mà bài luận đầu chưa xong (lỗi giữa chừng): hiện lỗi + nút "Luận lại".
+      const noReading = d.reading && !msgs.some(m => m.hidden && m.content === READING_QUESTION);
+      update(() => (noReading
+        ? [...msgs, { role: 'user', content: READING_QUESTION, hidden: true }, { role: 'assistant', content: 'Bài luận cho quẻ này chưa hoàn thành.', error: true }]
+        : msgs));
     } catch { /* bỏ qua: danh sách vẫn còn để thử lại */ }
   };
 
@@ -180,14 +201,21 @@ export default function KinhDichApp() {
   const hasReply = messages.some(m => m.role === 'assistant' && !m.error && m.content);
   const started = messages.length > 0;
   const canCast = started && !cast && !streaming && !lastAsk && (castId !== null || hasReply);
-  const canType = !started || !cast || hasReply;
+  // Đã gieo mà chưa có bài luận (lượt luận lỗi): chỉ cho bấm "Luận lại", chưa cho hỏi tiếp.
+  const readingAt = messages.findIndex(m => m.hidden && m.content === READING_QUESTION);
+  const hasReading = readingAt >= 0 && messages.slice(readingAt + 1).some(m => m.role === 'assistant' && !m.error && m.content);
+  const readingFailed = !!cast && !streaming && readingAt >= 0 && !hasReading && last?.role === 'assistant' && !!last.error;
+  const canType = (!started || !cast || hasReply) && !readingFailed;
   const send = () => (started ? say(input) : start(input));
   // Lượt dùng chung với chat Tử Vi (cùng bộ đếm trên tài khoản)
   const quotaText = (() => {
     const m = quota?.match(/^(\d+)\/(\d+)$/);
     if (!m) return null;
     const left = Number(m[2]) - Number(m[1]);
-    return left <= 0 ? 'Đã hết lượt hỏi — liên hệ admin để mở thêm' : `Còn ${left}/${m[2]} câu`;
+    if (left <= 0) return 'Đã hết lượt hỏi — liên hệ admin để mở thêm';
+    return left < 3
+      ? `Còn ${left}/${m[2]} lượt — mỗi câu Kinh Dịch cần 3 lượt, liên hệ admin để mở thêm`
+      : `Còn ${left}/${m[2]} lượt · mỗi câu Kinh Dịch tính 3 lượt`;
   })();
 
   return (
@@ -291,7 +319,7 @@ export default function KinhDichApp() {
                   );
                 }
                 const live = streaming && msg === last;
-                if (!msg.content) return live ? <p key={i} className="animate-pulse text-[11px]" style={{ color: 'var(--t-faint)' }}>Đang suy nghĩ…</p> : null;
+                if (!msg.content) return live ? <p key={i} className="animate-pulse text-[11px]" style={{ color: 'var(--t-faint)' }} aria-live="polite">{thinking ?? 'Đang suy nghĩ…'}</p> : null;
                 const { text: lead, ask } = msg.error ? { text: '', ask: null } : extractAsk(msg.content);
                 if (ask) {
                   const next = visible[i + 1];
@@ -310,11 +338,23 @@ export default function KinhDichApp() {
                   <div key={i}>
                     {msg.error
                       ? <p className="text-[11px]" style={{ color: 'var(--t-text2)' }} role="alert">{msg.content}</p>
-                      : <AiContent text={msg.content} streaming={live} />}
+                      : <AiContent text={msg.content} streaming={live} onReveal={followReveal} />}
                     {msg.note && <p className="mt-2 text-[10px] italic" style={{ color: 'var(--t-faint)' }}>{msg.note}</p>}
                   </div>
                 );
               })}
+              {readingFailed && (
+                <div className="text-center">
+                  <button
+                    type="button"
+                    onClick={retryReading}
+                    className="rounded-lg px-3 py-1.5 text-[11px] font-medium"
+                    style={{ background: 'var(--t-card)', border: '1px solid var(--t-border)', color: 'var(--t-gold)' }}
+                  >
+                    Luận lại quẻ này
+                  </button>
+                </div>
+              )}
               {canCast && hasReply && (
                 <p className="text-center text-[10px]" style={{ color: 'var(--t-faint)' }}>Câu hỏi đã sẵn sàng — gieo quẻ ở khung bên cạnh.</p>
               )}

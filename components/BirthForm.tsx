@@ -33,6 +33,8 @@ interface BirthFormProps {
   onFormSave?: (data: BirthFormState) => void;
   /** 隐藏内部「立即起盘」按钮（合盘等场景由父级统一触发） */
   hideSubmit?: boolean;
+  /** Bắt buộc nhập tên (Hợp bàn: AI gọi hai người bằng tên). */
+  requireName?: boolean;
 }
 
 const SHICHEN_NAMES = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
@@ -50,7 +52,7 @@ function isValidDate(y: number, m: number, d: number): boolean {
   return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
 }
 
-export default function BirthForm({ onSubmit, loading, initialData, onFormSave, hideSubmit }: BirthFormProps) {
+export default function BirthForm({ onSubmit, loading, initialData, onFormSave, hideSubmit, requireName }: BirthFormProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -247,10 +249,12 @@ export default function BirthForm({ onSubmit, loading, initialData, onFormSave, 
 
       {/* ── 姓名 ── */}
       <div style={{ marginBottom: '16px' }}>
-        <label style={{ display: 'block', fontSize: '11px', color: labelClr, marginBottom: '6px', letterSpacing: '0.05em' }}>Họ tên (không bắt buộc)</label>
+        <label style={{ display: 'block', fontSize: '11px', color: labelClr, marginBottom: '6px', letterSpacing: '0.05em' }}>{requireName ? 'Tên (bắt buộc)' : 'Họ tên (không bắt buộc)'}</label>
         <input
           type="text"
-          placeholder="Nhập họ tên"
+          placeholder={requireName ? 'Nhập tên để AI gọi đúng tên' : 'Nhập họ tên'}
+          required={requireName}
+          maxLength={requireName ? 40 : undefined}
           value={form.name}
           onChange={e => setForm({ ...form, name: e.target.value })}
           style={inputStyle}

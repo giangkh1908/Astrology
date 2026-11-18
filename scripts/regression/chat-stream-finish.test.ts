@@ -114,6 +114,69 @@ async function main() {
     assert.match(out, /\[DONE\]/);
   }
 
+
+  // 7. finish_reason=length mà chưa có chữ: lượt lỗi (để hoàn quota) + báo lỗi tiếng Việt cho người dùng
+  {
+    const { TRUNCATED_EMPTY_ERROR } = await import('../../lib/ai/chat-stream');
+    const f = capture();
+    queue = [() => sse([{ choices: [{ delta: { reasoning: 'nghĩ mãi…' } }] }, { choices: [{ delta: {}, finish_reason: 'length' }] }, '[DONE]'])];
+    const out = await readAll(await streamChatResponse(msgs, new AbortController().signal, undefined, { onFinish: f.onFinish }));
+    assert.equal(f.calls.length, 1);
+    assert.equal(f.calls[0].status, 'error');
+    assert.ok(out.includes(JSON.stringify({ error: TRUNCATED_EMPTY_ERROR })), 'gửi lỗi cho client');
+  }
+  // 7b. Bị cắt sau khi đã có chữ: vẫn ok, giữ phần đã viết
+  {
+    const f = capture();
+    queue = [() => sse([text('Đã viết một đoạn'), { choices: [{ delta: {}, finish_reason: 'length' }] }, '[DONE]'])];
+    await readAll(await streamChatResponse(msgs, new AbortController().signal, undefined, { onFinish: f.onFinish }));
+    assert.equal(f.calls[0].status, 'ok');
+    assert.equal(f.calls[0].text, 'Đã viết một đoạn');
+  }
+
+  // 8. Dòng trạng thái theo đồng hồ: dòng đầu gửi ngay khi kết nối (kể cả model không gửi mảnh suy luận), dừng khi có chữ
+  {
+    const f = capture();
+    queue = [() => sse([text('Trả lời')])];
+    const out = await readAll(await streamChatResponse(msgs, new AbortController().signal, undefined, { onFinish: f.onFinish, reasoningStatus: ['Đang ngẫm…', 'Đang soát…'] }));
+    const statuses = out.split('\n').filter(l => l.includes('"status"'));
+    assert.equal(statuses.length, 1, 'một dòng trạng thái trước chữ đầu');
+    assert.ok(out.indexOf('Đang ngẫm') < out.indexOf('Trả lời'));
+    assert.ok(!out.includes('Đang soát'), 'có chữ rồi thì không gửi trạng thái nữa');
+    queue = [() => sse([text('x')])];
+    const none = await readAll(await streamChatResponse(msgs, new AbortController().signal, undefined, {}));
+    assert.ok(!none.includes('"status"'), 'không truyền reasoningStatus thì không có trạng thái');
+  }
+
+  // 9. textFilter: lọc cả chữ gửi đi lẫn chữ lưu (mảnh bị cắt ngang được nối lại khi flush)
+  {
+    const f = capture();
+    const { createHanStripper } = await import('../../lib/kinh-dich/strip-han');
+    queue = [() => sse([text('Quẻ Tỉnh ('), text('井：改'), text(') nói về **'), text('giếng**.'), '[DONE]'])];
+    const out = await readAll(await streamChatResponse(msgs, new AbortController().signal, undefined, { onFinish: f.onFinish, textFilter: createHanStripper }));
+    assert.equal(f.calls[0].text, 'Quẻ Tỉnh nói về **giếng**.');
+    assert.ok(!/[\u4e00-\u9fff]/.test(out), 'không gửi chữ Hán cho client');
+  }
+
+
+  // 10. Nhịp trạng thái: xoay các dòng, giữ dòng cuối, quá 30 giây gửi "sắp xong" một lần rồi dừng
+  {
+    const { statusTick, REASONING_STATUS_LATE_MS } = await import('../../lib/ai/chat-stream');
+    const st = { next: 1, lateSent: false }; // dòng 0 đã gửi lúc kết nối
+    const L = ['A', 'B', 'C'];
+    assert.deepEqual(statusTick(L, 'Sắp xong', st, 6000), { send: 'B', stop: false });
+    assert.deepEqual(statusTick(L, 'Sắp xong', st, 12000), { send: 'C', stop: false });
+    assert.deepEqual(statusTick(L, 'Sắp xong', st, 18000), { stop: false }, 'giữ dòng cuối, chờ mốc sắp xong');
+    assert.deepEqual(statusTick(L, 'Sắp xong', st, REASONING_STATUS_LATE_MS), { send: 'Sắp xong', stop: false });
+    assert.deepEqual(statusTick(L, 'Sắp xong', st, REASONING_STATUS_LATE_MS + 6000), { stop: true });
+    const st2 = { next: 1, lateSent: false };
+    assert.deepEqual(statusTick(['A', 'B'], undefined, st2, 6000), { send: 'B', stop: false });
+    assert.deepEqual(statusTick(['A', 'B'], undefined, st2, 12000), { stop: true }, 'không có dòng sắp xong thì dừng sau dòng cuối');
+    const st3 = { next: 1, lateSent: false };
+    assert.deepEqual(statusTick(['A', 'B'], 'Sắp xong', st3, 40000), { send: 'Sắp xong', stop: false }, 'quá mốc thì ưu tiên dòng sắp xong');
+    assert.deepEqual(statusTick(['A', 'B'], 'Sắp xong', st3, 46000), { stop: true }, 'sau dòng sắp xong không quay lại dòng cũ');
+  }
+
   console.log('chat-stream-finish: ok');
 }
 

@@ -6,6 +6,30 @@
 - `judgment` (Thoán) và `image` (Đại Tượng): nguyên văn kinh văn cổ (phạm vi công cộng) kèm phần tóm ý của dự án dich-so.
 - `modernShort` và `lines[].modern`: diễn giải hiện đại của dự án dich-so, giấy phép **CC BY 4.0** (https://creativecommons.org/licenses/by/4.0/). **Không phải lời Ngô Tất Tố.** Ứng dụng này không sửa nội dung, chỉ chọn trường và đổi định dạng sang JSON.
 
+## `classics.json` — kinh văn và chú giải chữ Hán (phạm vi công cộng)
+
+Dựng bằng `scripts/kinh-dich/build-classics.ts` từ **Wikisource tiếng Trung** (các trang gắn nhãn `{{PD-old}}`); giữ nguyên chữ phồn thể và dị thể như nguồn, chỉ bỏ mã wiki, chú thích dị bản và chữ nhỏ song hành.
+
+| Trường | Nội dung | Nguồn |
+|---|---|---|
+| `tuan`, `xiaoXiang`, `yong.xiaoXiang`, `wenyan` | 彖傳, 小象, 文言 (Thập Dực, tương truyền Khổng Tử, thời Xuân Thu – Chiến Quốc) | https://zh.wikisource.org/wiki/周易 (trang con `周易/<quẻ>`) |
+| `xugua` | 序卦傳 | https://zh.wikisource.org/wiki/易傳/序卦 |
+| `zagua` | 雜卦傳 (nguyên câu chứa quẻ) | https://zh.wikisource.org/wiki/易傳/雜卦 |
+| `judgment`, `lines`, `yong` → `cheng` | 程傳 (伊川易傳) của **Trình Di** 程頤 (1033–1107) | https://zh.wikisource.org/wiki/周易傳義大全_(四庫全書本) |
+| `judgment`, `lines`, `yong` → `benyi` | 周易本義 của **Chu Hy** 朱熹 (1130–1200) | như trên |
+
+- **周易傳義大全** do Hồ Quảng 胡廣 và các cộng sự biên soạn theo sắc nhà Minh, hoàn thành năm **1415**; bản trên Wikisource chép từ 景印文淵閣四庫全書 (冊 28). Tác giả các văn bản đều mất từ nhiều thế kỷ trước nên toàn bộ thuộc **phạm vi công cộng**. Chỉ lấy phần 程傳 và 本義; lời 諸儒 (chữ nhỏ) bị bỏ.
+- Bản chép 四庫全書 trên Wikisource phần lớn **chưa hiệu đính** (proofread level 1), nên có thể sót hoặc sai chữ (ví dụ thiếu chữ 惕 ở vài chỗ). Không sửa tay để giữ đúng nguồn; nếu cần độ chính xác cao, đối chiếu bản in.
+- Không dùng dữ liệu từ ctext.org.
+
+## `hanviet.json` — bảng âm Hán Việt (dùng để đối chiếu cụm trích)
+
+Dựng bằng `scripts/kinh-dich/build-hanviet.ts` từ trường `kVietnamese` của cơ sở dữ liệu **Unihan** (Unicode Character Database), https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip. Copyright © Unicode, Inc. Dùng theo **Unicode License v3**: https://www.unicode.org/license.txt.
+
+- Thêm một bảng bổ sung tay nhỏ (`SUPPLEMENT` trong script) cho các âm đọc kinh điển mà Unihan thiếu (ví dụ 未 "vị", 主 "chủ", 二 "nhị", 予 "dư / dữ"); file JSON hiện tại đã được vá trực tiếp theo bảng này.
+
+---
+
 Nguyên văn giấy phép nội dung của dich-so (`LICENSE-CONTENT.md`) chép dưới đây.
 
 ---

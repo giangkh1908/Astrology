@@ -47,22 +47,22 @@ export function createNeonUserStore(databaseUrl: string): UserStore {
       await sql`update users set last_login_at = now() where id = ${id}::uuid`;
     },
 
-    async consumeChat(id) {
+    async consumeChat(id, cost = 1) {
       if (!UUID_RE.test(id)) return { ok: false, reason: 'missing' };
       // Một câu UPDATE có điều kiện: hai request đồng thời không thể cùng lấy lượt cuối.
-      const rows = await sql`update users set chat_used = chat_used + 1
-        where id = ${id}::uuid and status = 'approved' and (chat_limit is null or chat_used < chat_limit)
+      const rows = await sql`update users set chat_used = chat_used + ${cost}
+        where id = ${id}::uuid and status = 'approved' and (chat_limit is null or chat_used + ${cost} <= chat_limit)
         returning chat_used, chat_limit`;
       if (rows.length) return { ok: true, used: Number(rows[0].chat_used), limit: limitOf(rows[0].chat_limit) };
       const cur = await sql`select status, chat_used, chat_limit from users where id = ${id}::uuid`;
       if (!cur.length) return { ok: false, reason: 'missing' };
       if (cur[0].status !== 'approved') return { ok: false, reason: 'inactive' };
-      return { ok: false, reason: 'quota', used: Number(cur[0].chat_used), limit: limitOf(cur[0].chat_limit) };
+      return { ok: false, reason: 'quota', used: Number(cur[0].chat_used), limit: limitOf(cur[0].chat_limit), cost };
     },
 
-    async refundChat(id) {
+    async refundChat(id, cost = 1) {
       if (!UUID_RE.test(id)) return;
-      await sql`update users set chat_used = greatest(chat_used - 1, 0) where id = ${id}::uuid`;
+      await sql`update users set chat_used = greatest(chat_used - ${cost}, 0) where id = ${id}::uuid`;
     },
 
     async listUsers(status) {

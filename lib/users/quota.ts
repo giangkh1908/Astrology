@@ -37,15 +37,15 @@ const deny = (error: string, status: number, quota?: Quota) => ({
   }),
 });
 
-/** Trừ 1 câu trước khi gọi AI. Lỗi DB → từ chối (không cho chat miễn phí khi không đếm được). */
-export async function chargeChat(request: Request, store: UserStore = getUserStore()): Promise<Charge> {
+/** Trừ `cost` lượt (mặc định 1) trước khi gọi AI. Lỗi DB → từ chối (không cho chat miễn phí khi không đếm được). */
+export async function chargeChat(request: Request, store: UserStore = getUserStore(), cost = 1): Promise<Charge> {
   const caller = await callerOf(request);
   if (!caller) return deny('Chưa đăng nhập.', 401);
   if (caller.kind === 'env') return { ok: true, userId: null, quota: { used: 0, limit: null }, refund: async () => undefined };
 
   let result;
   try {
-    result = await store.consumeChat(caller.userId);
+    result = await store.consumeChat(caller.userId, cost);
   } catch (error) {
     console.error('consumeChat failed:', error instanceof Error ? error.message : 'unknown error');
     return deny('Không kiểm tra được lượt hỏi, vui lòng thử lại sau.', 503);
@@ -64,7 +64,7 @@ export async function chargeChat(request: Request, store: UserStore = getUserSto
     refund: async () => {
       if (refunded) return;
       refunded = true;
-      try { await store.refundChat(userId); } catch (error) {
+      try { await store.refundChat(userId, cost); } catch (error) {
         console.error('refundChat failed:', error instanceof Error ? error.message : 'unknown error');
       }
     },

@@ -33,17 +33,17 @@ export function createMemoryUserStore(): UserStore {
       const u = byId(id);
       if (u) u.lastLoginAt = now();
     },
-    async consumeChat(id) {
+    async consumeChat(id, cost = 1) {
       const u = byId(id);
       if (!u) return { ok: false, reason: 'missing' };
       if (u.status !== 'approved') return { ok: false, reason: 'inactive' };
-      if (u.chatLimit !== null && u.chatUsed >= u.chatLimit) return { ok: false, reason: 'quota', used: u.chatUsed, limit: u.chatLimit };
-      u.chatUsed++;
+      if (u.chatLimit !== null && u.chatUsed + cost > u.chatLimit) return { ok: false, reason: 'quota', used: u.chatUsed, limit: u.chatLimit, cost };
+      u.chatUsed += cost;
       return { ok: true, used: u.chatUsed, limit: u.chatLimit };
     },
-    async refundChat(id) {
+    async refundChat(id, cost = 1) {
       const u = byId(id);
-      if (u) u.chatUsed = Math.max(u.chatUsed - 1, 0);
+      if (u) u.chatUsed = Math.max(u.chatUsed - cost, 0);
     },
     async listUsers(status) {
       return users.filter(u => !status || u.status === status)

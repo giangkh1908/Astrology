@@ -3,6 +3,7 @@ import { callerOf } from '@/lib/users/quota';
 import { getPromptSet, PROMPT_VERSIONS, type InterpretationIntent } from '@/lib/prompts';
 import type { HistoryQuery, HistoryThread } from './chat-store';
 import { chartRef } from './persist-turn';
+import { LEGACY_COMPATIBILITY_QUESTIONS } from '@/lib/prompts/shared';
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const MAX_THREAD_KEY = 100;
@@ -64,8 +65,10 @@ export function markAutoQuestions(kind: HistoryQuery['kind'], threads: HistoryTh
 
 /** Các câu hỏi tự động (mọi version prompt) của một mục. */
 export function autoQuestionsOf(kind: HistoryQuery['kind'], threadKey: string): Set<string> {
-  return new Set(PROMPT_VERSIONS.map(v => {
+  const current = PROMPT_VERSIONS.map(v => {
     const p = getPromptSet(v.id);
     return kind === 'heming' ? p.defaultCompatibilityQuestion : p.initialInterpretationQuestion(intentOfThread(threadKey));
-  }));
+  });
+  // Hợp bàn: câu hỏi tự động đời cũ vẫn phải nhận ra để ẩn khi nạp lại lịch sử đã lưu.
+  return new Set(kind === 'heming' ? [...current, ...LEGACY_COMPATIBILITY_QUESTIONS] : current);
 }

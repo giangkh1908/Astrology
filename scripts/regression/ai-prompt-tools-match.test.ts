@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { buildChartTools } from '../../lib/ai/tools/ziwei-tools';
+import { buildHemingTools } from '../../lib/ai/tools/heming-tools';
 import { chartFacts, getPromptSet, PROMPT_VERSIONS } from '../../lib/prompts';
 import { generateChart } from '../../lib/ziwei/algorithm';
 
@@ -35,6 +36,33 @@ for (const { id } of PROMPT_VERSIONS) {
   const timeHint = id === 'v3' ? /khung 3 tháng âm lịch/ : /năm âm lịch hiện tại/;
   assert.match(set.initialInterpretationQuestion({ type: 'topic', key: 'love' }), timeHint);
   assert.doesNotMatch(set.initialInterpretationQuestion({ type: 'topic', key: 'personality' }), timeHint);
+}
+
+// Hợp bàn: prompt phải hướng dẫn đủ tool hai lá số, tham số đúng schema, và luôn nói rõ người nào (nguoi).
+{
+  const infoA = { ...(birthInfo as object), name: 'Hoa' } as never;
+  const infoB = { name: 'Tuấn', year: 1992, month: 8, day: 20, hour: 7, gender: 'male', lunarTimeZone: 7 } as never;
+  const hemingTools = buildHemingTools(infoA, infoB);
+  const names = hemingTools.map(t => t.name);
+  for (const { id } of PROMPT_VERSIONS) {
+    const prompt = getPromptSet(id).buildCompatibilitySystemPrompt(generateChart(infoA), generateChart(infoB));
+    assert.doesNotMatch(prompt, /Người [AB]\b/, `${id} hợp bàn: không gọi Người A/B`);
+    assert.ok(prompt.includes('"Hoa"') && prompt.includes('"Tuấn"'), `${id} hợp bàn: phải giới thiệu tên hai người`);
+    assert.doesNotMatch(getPromptSet(id).defaultCompatibilityQuestion, /Người [AB]\b/);
+    for (const n of names) assert.ok(prompt.includes(n), `${id} hợp bàn: prompt chưa hướng dẫn tool ${n}`);
+    for (const [, name, args] of prompt.matchAll(/\b([a-z]+(?:_[a-z]+)+)\(([^)]*)\)/g)) {
+      const tool = hemingTools.find(t => t.name === name);
+      assert.ok(tool, `${id} hợp bàn: prompt nhắc tool không tồn tại: ${name}`);
+      const props = Object.keys((tool!.parameters as { properties: object }).properties);
+      for (const arg of args.split(',').map(a => a.trim().split(/[ =]/)[0]).filter(Boolean)) {
+        assert.ok(props.includes(arg), `${id} hợp bàn: ${name} dùng tham số "${arg}" không có trong schema`);
+      }
+    }
+    assert.match(prompt, /nguoi/);
+    assert.match(prompt, /dương_lịch/);
+    assert.doesNotMatch(prompt, /hoi_nguoi_dung/, 'hợp bàn không có tool hỏi lại');
+    assert.equal(prompt.match(/[㐀-鿿]/), null, 'prompt hợp bàn còn chữ Hán');
+  }
 }
 
 const v2 = getPromptSet('v2');

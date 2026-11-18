@@ -71,11 +71,12 @@ export function createNeonKinhDichStore(databaseUrl: string, cipher: MessageCiph
       return Promise.all(rows.map(r => toSummary(r, cipher)));
     },
 
-    async saveLines(owner, castId, lines) {
+    async saveLines(owner, castId, lines, castAt) {
       if (!UUID_RE.test(castId) || !parseLines(lines)) return false;
+      const at = castAt && !Number.isNaN(Date.parse(castAt)) ? new Date(castAt).toISOString() : new Date().toISOString();
       const rows = await sql`
         update conversations
-        set meta = meta || jsonb_build_object('lines', ${JSON.stringify(lines)}::jsonb, 'castAt', to_jsonb(now())), updated_at = now()
+        set meta = meta || jsonb_build_object('lines', ${JSON.stringify(lines)}::jsonb, 'castAt', ${at}::text), updated_at = now()
         where kind = 'kinhdich' and thread_key = ${castId} and user_id is not distinct from ${ownerId(owner)}::uuid
           and (meta->'lines' is null or jsonb_typeof(meta->'lines') = 'null')
         returning id`;

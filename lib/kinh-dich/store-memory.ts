@@ -40,11 +40,11 @@ export function createMemoryKinhDichStore(): KinhDichStore {
     async listCasts(owner, limit) {
       return newestFirst(owner).slice(0, Math.max(0, limit)).map(summary);
     },
-    async saveLines(owner, castId, lines) {
+    async saveLines(owner, castId, lines, castAt) {
       const c = find(owner, castId);
       if (!c || c.lines) return false;
       c.lines = [...lines];
-      c.castAt = now();
+      c.castAt = castAt ?? now();
       return true;
     },
     async recordTurnStart(owner, castId, t) {

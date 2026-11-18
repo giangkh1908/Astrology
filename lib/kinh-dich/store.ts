@@ -35,8 +35,8 @@ export interface KinhDichStore {
   getCast(owner: Owner, castId: string): Promise<CastRecord | null>;
   /** Mới nhất trước. */
   listCasts(owner: Owner, limit: number): Promise<CastSummary[]>;
-  /** Ghi 6 hào một lần duy nhất (nguyên tử): true nếu lần này ghi được. */
-  saveLines(owner: Owner, castId: string, lines: LineValue[]): Promise<boolean>;
+  /** Ghi 6 hào một lần duy nhất (nguyên tử): true nếu lần này ghi được. castAt (ISO) = giờ gieo, cũng là giờ dùng trong prompt luận. */
+  saveLines(owner: Owner, castId: string, lines: LineValue[], castAt?: string): Promise<boolean>;
   recordTurnStart(owner: Owner, castId: string, t: KdTurnStart): Promise<{ requestId: string }>;
   recordTurnEnd(requestId: string, r: TurnResult): Promise<void>;
   /** Dữ liệu cho memory: các lần gieo khác và tin người dùng tự gõ (không ẩn) trong đó, mới nhất trước. */

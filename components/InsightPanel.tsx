@@ -382,6 +382,12 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
     if (el && stickRef.current) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
+  /** Chữ stream hiện dần: nếu người dùng đang ở cuối thì bám theo. */
+  const followReveal = () => {
+    const el = scrollRef.current;
+    if (el && stickRef.current) el.scrollTop = el.scrollHeight;
+  };
+
   const onScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -569,7 +575,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
               {msg.steps?.length ? <ToolSteps steps={msg.steps} running={live && !msg.content} /> : null}
               {msg.content && (msg.error
                 ? <p className="text-[11px]" style={{ color: 'var(--t-text2)' }}>{msg.content}</p>
-                : <AiContent text={msg.content} streaming={live} />)}
+                : <AiContent text={msg.content} streaming={live} onReveal={followReveal} />)}
               {msg.note && <p className="text-[10px] mt-2 italic" style={{ color: 'var(--t-faint)' }}>{msg.note}</p>}
             </div>
           );

@@ -76,7 +76,7 @@ async function main() {
   setChatStoreForTest(store);
 
   const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', name: 'Tên giả' } as never);
-  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female' } as never);
+  const chartB = generateChart({ year: 1992, month: 8, day: 20, hour: 7, gender: 'female', name: 'Tên giả hai' } as never);
   const ORIGIN = 'http://localhost';
   const call = (fn: (r: Request) => Promise<Response>, path: string, cookie: string | null, payload: unknown, origin = true) => fn(new Request(`${ORIGIN}${path}`, {
     method: 'POST',

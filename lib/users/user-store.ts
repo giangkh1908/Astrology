@@ -23,7 +23,7 @@ export type PublicUser = Omit<UserRecord, 'passwordHash'>;
 
 export type ConsumeResult =
   | { ok: true; used: number; limit: number | null }
-  | { ok: false; reason: 'missing' | 'inactive' | 'quota'; used?: number; limit?: number | null };
+  | { ok: false; reason: 'missing' | 'inactive' | 'quota'; used?: number; limit?: number | null; cost?: number };
 
 export type UserUpdate =
   | { action: 'approve' }
@@ -40,10 +40,10 @@ export interface UserStore {
   findByUsername(username: string): Promise<UserRecord | null>;
   getById(id: string): Promise<PublicUser | null>;
   markLogin(id: string): Promise<void>;
-  /** Trừ 1 câu nguyên tử: chỉ khi tài khoản đã duyệt và còn lượt. */
-  consumeChat(id: string): Promise<ConsumeResult>;
-  /** Hoàn 1 câu (lượt lỗi trước khi AI kịp trả lời). */
-  refundChat(id: string): Promise<void>;
+  /** Trừ `cost` lượt (mặc định 1) nguyên tử: chỉ khi tài khoản đã duyệt và còn đủ lượt. */
+  consumeChat(id: string, cost?: number): Promise<ConsumeResult>;
+  /** Hoàn `cost` lượt (lượt lỗi trước khi AI kịp trả lời). */
+  refundChat(id: string, cost?: number): Promise<void>;
   listUsers(status?: UserStatus): Promise<PublicUser[]>;
   countByStatus(): Promise<Record<UserStatus, number>>;
   updateUser(id: string, update: UserUpdate): Promise<PublicUser | null>;
@@ -74,7 +74,11 @@ export function parseUserUpdate(body: unknown): UserUpdate | null {
 
 /** Thông báo cho người dùng khi không trừ được lượt. */
 export function consumeErrorMessage(r: Extract<ConsumeResult, { ok: false }>): string {
-  if (r.reason === 'quota') return `Bạn đã dùng hết ${r.limit ?? 0} câu hỏi. Liên hệ admin để được mở thêm.`;
+  if (r.reason === 'quota') {
+    const left = Math.max((r.limit ?? 0) - (r.used ?? 0), 0);
+    if ((r.cost ?? 1) > 1 && left > 0) return `Câu hỏi này cần ${r.cost} lượt, bạn chỉ còn ${left} lượt. Liên hệ admin để được mở thêm.`;
+    return `Bạn đã dùng hết ${r.limit ?? 0} câu hỏi. Liên hệ admin để được mở thêm.`;
+  }
   if (r.reason === 'inactive') return 'Tài khoản chưa được duyệt hoặc đã bị khóa.';
   return 'Phiên đăng nhập không còn hợp lệ, vui lòng đăng nhập lại.';
 }

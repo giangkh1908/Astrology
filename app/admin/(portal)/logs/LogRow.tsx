@@ -22,6 +22,8 @@ export function LogRow({ log, time }: { log: RequestLog; time: string }) {
   const [open, setOpen] = useState(false);
   const tokens = log.promptTokens != null || log.completionTokens != null ? `${log.promptTokens ?? 0}/${log.completionTokens ?? 0}` : '–';
   const cost = log.costUsd != null ? `$${log.costUsd.toFixed(4)}` : '';
+  // Số token prompt trúng cache (chỉ có khi store lưu được); hiện dạng "· cache 1200/1500".
+  const cached = log.cachedTokens != null && log.promptTokens != null ? ` · cache ${log.cachedTokens}/${log.promptTokens}` : '';
 
   return (
     <Fragment>
@@ -32,7 +34,7 @@ export function LogRow({ log, time }: { log: RequestLog; time: string }) {
         <td><span className={s.badge}>{log.promptVersion}</span></td>
         <td className={s.hideSm}>{log.model}</td>
         <td className={s.hideSm} style={{ whiteSpace: 'nowrap' }}>{seconds(log.firstTokenMs)} / {seconds(log.durationMs)}</td>
-        <td className={s.hideSm} style={{ whiteSpace: 'nowrap' }}>{tokens} {cost}</td>
+        <td className={s.hideSm} style={{ whiteSpace: 'nowrap' }}>{tokens} {cost}{cached}</td>
         <td><StatusBadge status={log.status} /></td>
       </tr>
       {open && (
@@ -40,7 +42,7 @@ export function LogRow({ log, time }: { log: RequestLog; time: string }) {
           <td colSpan={8} style={{ padding: 0 }}>
             <div className={s.detail}>
               <div className={s.small}>
-                {ROUTE_LABEL[log.route] ?? log.route} · {log.model} · chữ đầu {seconds(log.firstTokenMs)} · tổng {seconds(log.durationMs)} · token vào/ra {tokens} {cost}
+                {ROUTE_LABEL[log.route] ?? log.route} · {log.model} · chữ đầu {seconds(log.firstTokenMs)} · tổng {seconds(log.durationMs)} · token vào/ra {tokens} {cost}{cached}
                 {log.chartId && <> · <Link className={s.link} href={`/admin/charts/${log.chartId}`}>Xem lá số</Link></>}
               </div>
               <div><strong className={s.small}>Câu hỏi</strong><p className={s.text}>{log.question || '(trống)'}</p></div>
