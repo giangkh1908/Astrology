@@ -25,6 +25,34 @@ export async function recordTurnEndSql(sql: Sql, requestId: string, r: TurnResul
   if (!UUID_RE.test(requestId)) return;
   const text = await cipher.seal(r.text);
   const toolCalls = await Promise.all(r.toolCalls.map(async t => ({ name: t.name, arguments: await cipher.seal(t.arguments) })));
+  try {
+    await recordTurnEndStatement(sql, requestId, r, text, toolCalls, true);
+  } catch (error) {
+    // DB chưa chạy migration 005 (chưa có cột cached_tokens): câu lệnh hỏng thì cả tin trả lời cũng không được lưu.
+    // Ghi lại không có cột đó để lịch sử chat không mất.
+    if (!/cached_tokens/i.test(error instanceof Error ? error.message : String(error))) throw error;
+    console.error('ai_requests.cached_tokens missing (run migration 005); saving without it');
+    await recordTurnEndStatement(sql, requestId, r, text, toolCalls, false);
+  }
+}
+
+async function recordTurnEndStatement(sql: Sql, requestId: string, r: TurnResult, text: string, toolCalls: unknown[], withCached: boolean): Promise<void> {
+  if (!withCached) {
+    await sql`
+    with req as (
+      update ai_requests set
+        status = ${r.status}, error = ${r.error ?? null},
+        first_token_ms = ${r.firstTokenMs ?? null}, duration_ms = ${r.durationMs},
+        tool_calls = ${JSON.stringify(toolCalls)}::jsonb,
+        prompt_tokens = ${r.usage?.promptTokens ?? null}, completion_tokens = ${r.usage?.completionTokens ?? null},
+        cost_usd = ${r.usage?.costUsd ?? null}
+      where id = ${requestId}::uuid and status = 'pending'
+      returning id, conversation_id, prompt_version
+    )
+    insert into messages (conversation_id, role, content, prompt_version, request_id, status)
+    select conversation_id, 'assistant', ${text}, prompt_version, id, ${r.asked ? 'asked' : r.status} from req`;
+    return;
+  }
   await sql`
     with req as (
       update ai_requests set

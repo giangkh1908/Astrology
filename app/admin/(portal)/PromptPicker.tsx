@@ -5,7 +5,7 @@ import { useState } from 'react';
 import s from '@/app/admin/admin.module.css';
 
 /** Nút chọn version prompt; đổi xong tải lại dữ liệu trang. */
-export function PromptPicker({ version, active, disabled }: { version: string; active: boolean; disabled: boolean }) {
+export function PromptPicker({ version, active, disabled, endpoint = '/api/admin/prompt-version' }: { version: string; active: boolean; disabled: boolean; endpoint?: string }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
@@ -16,7 +16,7 @@ export function PromptPicker({ version, active, disabled }: { version: string; a
     setPending(true);
     setError('');
     try {
-      const res = await fetch('/api/admin/prompt-version', {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ version }),

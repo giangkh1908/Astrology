@@ -9,10 +9,12 @@
  */
 import { askToPlainText, MAX_CONSECUTIVE_ASKS, trailingAsks } from '@/lib/ai/ask-user';
 import { currentModel, jsonError, streamChatResponse, type ChatStreamMessage } from '@/lib/ai/chat-stream';
-import { kinhDichCallOptions, reasoningOn, reasoningPolicy, type KinhDichTurn } from '@/lib/kinh-dich/call-options';
+import { reasoningOn, reasoningPolicy, type KinhDichTurn } from '@/lib/kinh-dich/call-options';
 import { computeCast, parseLines } from '@/lib/kinh-dich/core';
 import { loadKinhDichMemory } from '@/lib/kinh-dich/memory';
-import { askerRoleFrom, buildPreparePrompt, buildReadingPrompt, PREPARE_VERSION, READING_QUESTION, READING_VERSION } from '@/lib/kinh-dich/prompt';
+import { askerRoleFrom, READING_QUESTION } from '@/lib/kinh-dich/prompt';
+import { kinhDichPromptSet, resolveKinhDichVersion, type KinhDichPromptSet } from '@/lib/kinh-dich/versions';
+import { getChatStore } from '@/lib/store';
 import { createHanStripper } from '@/lib/kinh-dich/strip-han';
 import { getKinhDichStore, MAX_QUESTION_CHARS, type KinhDichStore, type Owner } from '@/lib/kinh-dich/store';
 import { beginTurnWith } from '@/lib/store/persist-turn';
@@ -40,8 +42,8 @@ export const REASONING_STATUS_LATE = 'Sắp xong, đang viết…';
 /** Bài luận đầu có suy luận có thể mất cả phút; để hàm chạy đủ lâu (Vercel Fluid Compute cho tới 300s). */
 export const maxDuration = 300;
 
-/** Lượt này có suy luận không (theo KINH_DICH_REASONING); prompt luận thêm danh sách tự soát khi có. */
-const thinks = (turn: KinhDichTurn) => reasoningOn(reasoningPolicy(process.env.KINH_DICH_REASONING), turn);
+/** Lượt này có suy luận không (theo KINH_DICH_REASONING; chỉ kd2); prompt luận thêm danh sách tự soát khi có. */
+const thinksFor = (p: KinhDichPromptSet) => (turn: KinhDichTurn) => p.supportsSelfCheck && reasoningOn(reasoningPolicy(process.env.KINH_DICH_REASONING), turn);
 
 interface ChatMessage { role: 'user' | 'assistant'; content: string }
 type Charge = { ok: true; userId: string | null; quota: Quota | null; refund: () => Promise<void> };
@@ -81,6 +83,8 @@ interface Turn {
   askUser: boolean;
   /** Loại lượt: quyết định có bật suy luận không. */
   turn: KinhDichTurn;
+  /** Version prompt đang chọn (kd1/kd2): quyết định tuỳ chọn gọi model. */
+  prompts: KinhDichPromptSet;
 }
 
 async function run(request: Request, t: Turn): Promise<Response> {
@@ -91,14 +95,14 @@ async function run(request: Request, t: Turn): Promise<Response> {
     () => t.store.recordTurnStart(t.owner, castId!, { question: t.question.slice(0, 6000), hidden: t.hidden, promptVersion: t.version, model: currentModel() }),
     (requestId, r) => t.store.recordTurnEnd(requestId, r),
   );
-  const call = kinhDichCallOptions(process.env, t.turn);
+  const call = t.prompts.callOptions(t.turn);
   const response = await streamChatResponse(
     [{ role: 'system', content: t.systemPrompt }, ...forModel(t.messages)],
     request.signal,
     undefined,
     {
       ...call,
-      ...(call.reasoning !== 'off' ? { reasoningStatus: REASONING_STATUS, reasoningStatusLate: REASONING_STATUS_LATE } : {}),
+      ...(call.reasoning && call.reasoning !== 'off' ? { reasoningStatus: REASONING_STATUS, reasoningStatusLate: REASONING_STATUS_LATE } : {}),
       askUser: t.askUser,
       // Lưới chặn cuối: chữ Hán lọt vào bài bị bỏ trước khi gửi / lưu.
       textFilter: createHanStripper,
@@ -130,6 +134,15 @@ export async function POST(request: Request) {
   if (!caller) return jsonError('Chưa đăng nhập.', 401);
   const owner: Owner = caller.kind === 'member' ? caller.userId : null;
   const store = getKinhDichStore();
+  // Version prompt admin chọn (đọc một lần cho cả request; lỗi/chậm → kd2).
+  const prompts = kinhDichPromptSet(await resolveKinhDichVersion(getChatStore()));
+  const { buildPreparePrompt, buildReadingPrompt } = prompts;
+  const PREPARE_VERSION = prompts.prepareVersion;
+  const READING_VERSION = prompts.readingVersion;
+  const thinks = thinksFor(prompts);
+  // kd2 chỉ hỏi lại một vòng khi làm rõ; kd1 giữ luật cũ (tối đa MAX_CONSECUTIVE_ASKS thẻ liên tiếp).
+  const prepareAsk = (msgs: ChatMessage[], history: ChatMessage[]) =>
+    prompts.id === 'kd1' ? trailingAsks(msgs) < MAX_CONSECUTIVE_ASKS : !history.some(m => m.role === 'assistant');
   const messages = sanitize(body.messages);
   const lastUser = [...messages].reverse().find(m => m.role === 'user')?.content.trim();
 
@@ -153,11 +166,11 @@ export async function POST(request: Request) {
       version = READING_VERSION;
     } else {
       systemPrompt = buildPreparePrompt([], question);
-      askUser = !messages.some(m => m.role === 'assistant');
+      askUser = prepareAsk(messages, messages);
     }
     const charge = await chargeChat(request, undefined, KINH_DICH_COST);
     if (!charge.ok) return charge.response;
-    return run(request, { store, owner, castId: null, charge, systemPrompt, messages: history, question: history.at(-1)!.content, hidden: false, version, askUser, turn });
+    return run(request, { store, owner, castId: null, charge, systemPrompt, messages: history, question: history.at(-1)!.content, hidden: false, version, askUser, turn, prompts });
   }
 
   // ── Mở lần gieo mới ──
@@ -177,7 +190,7 @@ export async function POST(request: Request) {
     }
     return run(request, {
       store, owner, castId, charge, systemPrompt, messages: [{ role: 'user', content: question }],
-      question, hidden: false, version: PREPARE_VERSION, askUser: true, turn: 'prepare',
+      question, hidden: false, version: PREPARE_VERSION, askUser: true, turn: 'prepare', prompts,
     });
   }
 
@@ -211,7 +224,7 @@ export async function POST(request: Request) {
     if (!saved) return jsonError('Quẻ này đã được gieo rồi.', 409);
     return run(request, {
       store, owner, castId, charge: FREE, systemPrompt, messages: [...history, { role: 'user', content: READING_QUESTION }],
-      question: READING_QUESTION, hidden: true, version: READING_VERSION, askUser: false, turn: 'first',
+      question: READING_QUESTION, hidden: true, version: READING_VERSION, askUser: false, turn: 'first', prompts,
     });
   }
 
@@ -222,7 +235,7 @@ export async function POST(request: Request) {
     const systemPrompt = buildReadingPrompt(computeCast(cast.lines), cast.question, memory, { castAt: new Date(cast.castAt ?? cast.createdAt), role: askerRoleFrom(history), selfCheck: thinks('first') });
     return run(request, {
       store, owner, castId, charge: FREE, systemPrompt, messages: [...history, { role: 'user', content: READING_QUESTION }],
-      question: READING_QUESTION, hidden: true, version: READING_VERSION, askUser: false, turn: 'first',
+      question: READING_QUESTION, hidden: true, version: READING_VERSION, askUser: false, turn: 'first', prompts,
     });
   }
   // Gieo lại một lần gieo đã có bài luận (không kèm câu hỏi tiếp): báo rõ thay vì "tin nhắn trống".
@@ -237,7 +250,7 @@ export async function POST(request: Request) {
     return run(request, {
       store, owner, castId, charge: FREE, systemPrompt: buildPreparePrompt(memory, cast.question), messages: turnMessages,
       // Làm rõ chỉ hỏi lại MỘT lần: đã có lượt trả lời của AI thì tắt tool hỏi, AI phải tóm tắt câu hỏi + dòng vai.
-      question: lastUser, hidden: false, version: PREPARE_VERSION, askUser: !history.some(m => m.role === 'assistant'), turn: 'prepare',
+      question: lastUser, hidden: false, version: PREPARE_VERSION, askUser: prepareAsk(turnMessages, history), turn: 'prepare', prompts,
     });
   }
 
@@ -249,7 +262,7 @@ export async function POST(request: Request) {
   if (!charge.ok) return charge.response;
   return run(request, {
     store, owner, castId, charge, systemPrompt, messages: turnMessages,
-    question: lastUser, hidden: false, version: READING_VERSION, askUser: trailingAsks(turnMessages) < MAX_CONSECUTIVE_ASKS, turn: 'followup',
+    question: lastUser, hidden: false, version: READING_VERSION, askUser: trailingAsks(turnMessages) < MAX_CONSECUTIVE_ASKS, turn: 'followup', prompts,
   });
 }
 
