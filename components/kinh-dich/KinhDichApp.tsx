@@ -261,7 +261,7 @@ export default function KinhDichApp() {
                     <li>Gieo 3 đồng xu 6 lần, từ hào dưới lên hào trên.</li>
                     <li>Xem quẻ chính, hào động, quẻ biến và bài luận theo lời kinh.</li>
                   </ol>
-                  <p className="text-[10px]" style={{ color: 'var(--t-faint)' }}>Dùng chung lượt với chat Tử Vi: mở một lần gieo trừ 1 lượt; làm rõ câu hỏi và bài luận đầu không tính thêm, mỗi câu hỏi tiếp trừ 1 lượt.</p>
+                  <p className="text-[10px]" style={{ color: 'var(--t-faint)' }}>Dùng chung lượt với chat Tử Vi: mở một lần gieo trừ 3 lượt; làm rõ câu hỏi và bài luận đầu không tính thêm, mỗi câu hỏi tiếp trừ 3 lượt.</p>
                 </div>
               )}
             </section>
@@ -386,7 +386,7 @@ export default function KinhDichApp() {
                 )}
               </div>
               <p className="mt-1.5 text-right text-[10px]" style={{ color: 'var(--t-faint)' }} aria-live="polite">
-                {cast ? 'Mỗi câu hỏi tiếp trừ 1 lượt' : !started ? 'Mở một lần gieo trừ 1 lượt' : 'Làm rõ câu hỏi không tính thêm lượt'}
+                {cast ? 'Mỗi câu hỏi tiếp trừ 3 lượt' : !started ? 'Mở một lần gieo trừ 3 lượt' : 'Làm rõ câu hỏi không tính thêm lượt'}
                 {quotaText ? ` · ${quotaText}` : ''}
               </p>
             </div>

@@ -1,6 +1,6 @@
 /**
  * Kinh Dịch: một lần gieo = một hội thoại. Giai đoạn do trạng thái ĐÃ LƯU quyết định (không tin client):
- *   chưa có castId           → mở lần gieo (trừ 1 lượt), làm rõ câu hỏi (AI có thể hỏi lại bằng thẻ)
+ *   chưa có castId           → mở lần gieo (trừ KINH_DICH_COST = 3 lượt), làm rõ câu hỏi (AI có thể hỏi lại bằng thẻ)
  *   chưa gieo, không lines   → tiếp tục làm rõ (miễn phí, tối đa MAX_PREPARE_TURNS lượt AI)
  *   chưa gieo, có lines      → lưu quẻ (một lần) rồi luận (miễn phí)
  *   đã gieo, chưa có bài luận → gửi lại lines = luận lại (miễn phí; lần trước lỗi/hết token trước khi có chữ)
