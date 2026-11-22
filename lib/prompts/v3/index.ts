@@ -14,7 +14,7 @@ import {
 } from '../shared';
 import { promptSetV2, v2AnswerRules, V2_COMPATIBILITY_PRESENTATION, v2YesNoRule } from '../v2';
 
-const ASK_RULE = [
+export const ASK_RULE = [
   'Hỏi lại người dùng (tool hoi_nguoi_dung):',
   '- TRƯỚC khi viết, tự xét: có hoàn cảnh nào chưa biết mà làm thay đổi hẳn kết luận không (đã lập gia đình chưa, đang đi làm hay kinh doanh, đang có người yêu không, việc cụ thể đang tính là gì…)? Nếu có, và điều đó chưa có trong cuộc trò chuyện lẫn lời kể ở mục khác, thì gọi hoi_nguoi_dung NGAY, chưa viết bài luận. Người dùng trả lời xong mới luận.',
   '- Không hỏi điều đã biết; không hỏi chuyện chỉ làm bài hay hơn chút ít. Người dùng đã chọn bỏ qua câu hỏi thì luận luôn theo dữ kiện hiện có, nêu cả hai khả năng nếu cần.',

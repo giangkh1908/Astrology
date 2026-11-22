@@ -89,6 +89,10 @@ assert.ok(!p4k.includes('Dữ kiện lưu nguyệt khung 3 tháng'));
 assert.equal(v4.initialInterpretationQuestion({ type: 'topic', key: 'kiem_chung' }), VERIFY_QUESTION);
 assert.ok(!p3.includes('Gói luật'), 'v3 không đổi');
 assert.deepEqual(['v1', 'v2', 'v3', 'v4'].map(usesTimeWindow), [false, false, true, true]);
+const NO_ASK = 'mở mục tự động (người dùng chưa gõ gì) thì không hỏi lại';
+assert.ok(!p4k.includes(NO_ASK), 'v4 kiem_chung không tự mâu thuẫn về hỏi khi mở tự động');
+assert.ok(p4l.includes(NO_ASK));
+assert.ok(p3k.includes(NO_ASK));
 assert.equal(defaultPromptVersion({}), 'v2');
 
 console.log('prompt-versions: ok');
