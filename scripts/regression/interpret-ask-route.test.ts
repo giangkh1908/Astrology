@@ -58,7 +58,8 @@ async function main() {
   const store = createMemoryChatStore();
   setChatStoreForTest(store);
 
-  // v2 (mặc định): không có tool hỏi lại; header báo version
+  // v2: không có tool hỏi lại; header báo version
+  await store.setSetting(ACTIVE_PROMPT_KEY, 'v2');
   const r0 = await post({ messages: turn('Tình duyên?') });
   assert.ok(!toolNames(bodies[0]).includes('hoi_nguoi_dung'));
   assert.equal(r0.headers.get('X-Prompt-Version'), 'v2');

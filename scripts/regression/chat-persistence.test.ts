@@ -59,7 +59,7 @@ async function main() {
   assert.equal(detail.conversations[0].threadKey, 'career');
   const [log] = await store.listRequests({});
   assert.equal(log.status, 'ok');
-  assert.equal(log.promptVersion, 'v2');
+  assert.equal(log.promptVersion, 'v4');
   assert.equal(log.model, 'fake/model');
   // birthInfo lưu chỉ gồm trường đã biết (không lưu dữ liệu tùy ý từ client).
   assert.equal((summary.birthInfo as Record<string, unknown>).palaces, undefined);

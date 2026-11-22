@@ -107,7 +107,7 @@ export async function runChatStoreContract(store: ChatStore, tag: string, adminV
   await store.setSetting(ACTIVE_PROMPT_KEY, 'v1');
   assert.equal(await resolvePromptVersion(store, {}), 'v1');
   await store.setSetting(ACTIVE_PROMPT_KEY, 'v9');
-  assert.equal(await resolvePromptVersion(store, {}), 'v2', 'giá trị lạ → mặc định');
+  assert.equal(await resolvePromptVersion(store, {}), 'v4', 'giá trị lạ → mặc định');
   await store.setSetting(ACTIVE_PROMPT_KEY, 'v2');
 }
 
@@ -115,7 +115,7 @@ async function main() {
   await runChatStoreContract(createMemoryChatStore(), 'mem');
 
   const broken = { ...createMemoryChatStore(), getSetting: async () => { throw new Error('db down'); } } as ChatStore;
-  assert.equal(await resolvePromptVersion(broken, {}), 'v2');
+  assert.equal(await resolvePromptVersion(broken, {}), 'v4');
   assert.equal(await resolvePromptVersion(broken, { DEFAULT_PROMPT_VERSION: 'v1' }), 'v1');
 
   assert.equal(chartKey({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', lunarTimeZone: 7 } as never), '1990-3-5-2-male-7');

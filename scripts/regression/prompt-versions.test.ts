@@ -42,9 +42,9 @@ for (const set of [v1, v2]) {
   assert.ok(set.buildInterpretationSystemPrompt(twin, intent, {}).includes('lá_số_sinh_đôi'));
 }
 
-assert.equal(defaultPromptVersion({}), 'v2');
+assert.equal(defaultPromptVersion({}), 'v4');
 assert.equal(defaultPromptVersion({ DEFAULT_PROMPT_VERSION: 'v1' }), 'v1');
-assert.equal(defaultPromptVersion({ DEFAULT_PROMPT_VERSION: 'v9' }), 'v2');
+assert.equal(defaultPromptVersion({ DEFAULT_PROMPT_VERSION: 'v9' }), 'v4');
 
 // v3: hỏi lại TRƯỚC khi luận (tool hoi_nguoi_dung), luận khung 3 tháng âm lịch, có tính sẵn lưu nguyệt.
 const v3 = getPromptSet('v3');
@@ -93,6 +93,6 @@ const NO_ASK = 'mở mục tự động (người dùng chưa gõ gì) thì khô
 assert.ok(!p4k.includes(NO_ASK), 'v4 kiem_chung không tự mâu thuẫn về hỏi khi mở tự động');
 assert.ok(p4l.includes(NO_ASK));
 assert.ok(p3k.includes(NO_ASK));
-assert.equal(defaultPromptVersion({}), 'v2');
+assert.equal(defaultPromptVersion({}), 'v4');
 
 console.log('prompt-versions: ok');

@@ -33,5 +33,5 @@ export function getPromptSet(id: PromptVersionId): PromptSet {
 
 export function defaultPromptVersion(env: Record<string, string | undefined> = process.env): PromptVersionId {
   const v = env.DEFAULT_PROMPT_VERSION?.trim();
-  return isPromptVersionId(v) ? v : 'v2';
+  return isPromptVersionId(v) ? v : 'v4';
 }
