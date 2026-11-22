@@ -118,7 +118,7 @@ export function askToPlainText(content: string): string {
 export function formatAnswers(ask: AskPayload, answers: Array<string[] | null>): string {
   const lines = ask.cau_hoi.map((q, i) => {
     const a = answers[i]?.map(s => s.trim()).filter(Boolean);
-    return `- ${q.nhan}: ${a?.length ? a.join(', ') : 'bỏ qua'}`;
+    return `- ${q.nhan} — ${q.noi_dung}: ${a?.length ? a.join(', ') : 'bỏ qua'}`;
   });
   return `Trả lời câu hỏi:\n${lines.join('\n')}`;
 }

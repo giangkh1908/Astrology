@@ -60,8 +60,8 @@ assert.ok(plain.includes('Đã kết hôn'));
 assert.equal(askToPlainText('Không có thẻ'), 'Không có thẻ');
 
 // Câu trả lời của người dùng
-assert.equal(formatAnswers(p, [['Đã kết hôn'], null]), 'Trả lời câu hỏi:\n- Hôn nhân: Đã kết hôn\n- Con cái: bỏ qua');
-assert.equal(formatAnswers(p, [['Đã kết hôn', 'Đang ly thân'], ['Có']]), 'Trả lời câu hỏi:\n- Hôn nhân: Đã kết hôn, Đang ly thân\n- Con cái: Có');
+assert.equal(formatAnswers(p, [['Đã kết hôn'], null]), 'Trả lời câu hỏi:\n- Hôn nhân — ' + p.cau_hoi[0].noi_dung + ': Đã kết hôn\n- Con cái — ' + p.cau_hoi[1].noi_dung + ': bỏ qua');
+assert.equal(formatAnswers(p, [['Đã kết hôn', 'Đang ly thân'], ['Có']]), 'Trả lời câu hỏi:\n- Hôn nhân — ' + p.cau_hoi[0].noi_dung + ': Đã kết hôn, Đang ly thân\n- Con cái — ' + p.cau_hoi[1].noi_dung + ': Có');
 
 // Đếm số lần hỏi liên tiếp ở cuối lịch sử
 const u = { role: 'user', content: 'hỏi' };
