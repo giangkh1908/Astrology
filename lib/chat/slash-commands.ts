@@ -11,6 +11,7 @@ export const TOPICS = [
   { key: 'wealth',      name: 'tai-van',    label: 'Tài vận',   hint: 'Tiền bạc, của cải' },
   { key: 'health',      name: 'suc-khoe',   label: 'Sức khỏe',  hint: 'Thể chất, bệnh tật' },
   { key: 'personality', name: 'tinh-cach',  label: 'Tính cách', hint: 'Con người, tâm tính' },
+  { key: 'kiem_chung',  name: 'kiem-chung', label: 'Kiểm chứng', hint: 'Đối chiếu chuyện đã qua' },
 ] as const;
 
 export const TOPIC_KEYS: readonly string[] = TOPICS.map(t => t.key);

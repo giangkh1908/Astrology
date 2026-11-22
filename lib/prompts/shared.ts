@@ -140,6 +140,7 @@ function intentGuidance(chart: ZiweiChart, intent: InterpretationIntent): string
     wealth: 'Tài chính; ưu tiên cung Tài Bạch, Điền Trạch, Quan Lộc và tứ hóa liên quan.',
     health: 'Sức khỏe theo cách luận truyền thống; diễn đạt thận trọng, không chẩn đoán bệnh hoặc khuyên bỏ điều trị.',
     personality: 'Tính cách; tập trung vào tổ hợp sao cụ thể ở Mệnh, Thân và tam phương tứ chính.',
+    kiem_chung: 'Kiểm chứng lá số với chuyện đã qua: tra các năm đã qua bằng quet_cac_nam, chọn vài năm có tín hiệu mạnh nhất và hỏi người dùng năm đó có đúng chuyện ấy không. Không khẳng định quá khứ; chỉ hỏi.',
   };
   return topics[intent.key ?? 'overview'] ?? `Chủ đề người dùng chọn: ${intent.key ?? 'tổng quan'}. Bám vào dữ kiện lá số và câu hỏi gần nhất.`;
 }
@@ -229,9 +230,12 @@ export interface InitialQuestions {
   topics: Record<string, string>;
 }
 
+export const VERIFY_QUESTION = 'Hãy kiểm chứng lá số này với những chuyện đã qua của tôi.';
+
 export function pickInitialQuestion(intent: InterpretationIntent, q: InitialQuestions): string {
   if (intent.type === 'palace') return q.palace;
   if (intent.type === 'sihua') return q.sihua;
+  if (intent.key === 'kiem_chung') return VERIFY_QUESTION;
   const timely = ['overview', 'love', 'career', 'wealth', 'health'];
   const base = q.topics[intent.key ?? 'overview'] ?? 'Hãy phân tích câu hỏi theo dữ kiện cụ thể trong lá số này.';
   return timely.includes(intent.key ?? 'overview')

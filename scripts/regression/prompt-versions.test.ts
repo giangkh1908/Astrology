@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { defaultPromptVersion, getPromptSet, PROMPT_VERSIONS } from '../../lib/prompts';
+import { VERIFY_QUESTION } from '../../lib/prompts/shared';
 import { generateChart } from '../../lib/ziwei/algorithm';
 
 // v1 = prompt trước khi đổi cách trình bày (nêu tên sao làm căn cứ); v2 = nói theo cung, kết luận chi tiết.
@@ -25,6 +26,7 @@ for (const p of [p1, p2]) {
   assert.ok(p.includes('Dữ kiện lá số (JSON):'));
 }
 
+for (const v of [v1, v2]) assert.equal(v.initialInterpretationQuestion({ type: 'topic', key: 'kiem_chung' }), VERIFY_QUESTION);
 assert.ok(v1.initialInterpretationQuestion(intent).includes('nêu cấu hình cung và sao cụ thể làm căn cứ'));
 assert.ok(v2.initialInterpretationQuestion(intent).includes('tam phương tứ chính cung Quan Lộc'));
 assert.ok(v1.initialInterpretationQuestion({ type: 'palace', branch: 3 }).includes('chỉ ra các sao và liên hệ tam phương tứ chính làm căn cứ'));

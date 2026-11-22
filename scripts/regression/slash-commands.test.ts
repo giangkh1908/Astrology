@@ -15,11 +15,12 @@ assert.equal(slugVi('Sự nghiệp'), 'su-nghiep');
 assert.equal(slugVi('Điền Trạch'), 'dien-trach');
 assert.equal(slugVi('Huynh_Đệ'), 'huynh-de');
 
-// đủ 6 chủ đề + 12 cung + cung Thân + 2 thao tác, tên không trùng
-assert.equal(cmds.length, 6 + 12 + 1 + 2);
+// đủ 7 chủ đề + 12 cung + cung Thân + 2 thao tác, tên không trùng
+assert.equal(cmds.length, 7 + 12 + 1 + 2);
 assert.equal(new Set(names).size, names.length);
 for (const t of TOPICS) assert.ok(names.includes(t.name), t.name);
 assert.ok(names.includes('su-nghiep'));
+assert.deepEqual(cmds.find(c => c.name === 'kiem-chung')?.action, { type: 'open', key: 'kiem_chung', label: 'Kiểm chứng' });
 assert.ok(names.includes('cung-quan-loc'));
 assert.ok(names.includes('cung-menh'));
 assert.ok(names.includes('luan-lai'));
