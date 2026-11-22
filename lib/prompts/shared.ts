@@ -157,6 +157,8 @@ export interface InterpretationStyle {
   timeRules?: string;
   /** Có và trả về khác undefined thì thêm khối "Dữ kiện lưu nguyệt khung 3 tháng (JSON):". */
   windowFacts?: (chart: ZiweiChart, intent: InterpretationIntent, time: InterpretationTimeContext) => unknown;
+  /** Có và trả về khác undefined thì chèn thành một đoạn riêng ngay sau dòng "Yêu cầu phân tích". */
+  topicPack?: (chart: ZiweiChart, intent: InterpretationIntent) => string | undefined;
 }
 
 export function buildInterpretationPrompt(
@@ -186,6 +188,7 @@ export function buildInterpretationPrompt(
     style.askRule ?? 'Không dùng các lời khuyên mẫu, bài tập thử nghiệm, checklist, hoặc câu hỏi kết thúc theo khuôn. Hỏi lại tối đa một câu, chỉ khi hoàn cảnh người dùng chưa kể làm thay đổi hẳn cách luận; luôn trả lời phần có thể kết luận trước.',
     'Tử vi là hệ thống diễn giải truyền thống, không phải kết luận khoa học hay cam kết sự kiện. Với y tế, pháp lý, tài chính, tránh chẩn đoán hoặc chỉ dẫn rủi ro; khuyến khích chuyên gia phù hợp khi cần.',
     `Yêu cầu phân tích: ${intentGuidance(chart, intent)}`,
+    ...(style.topicPack?.(chart, intent) ? [style.topicPack(chart, intent)!] : []),
     [
       'Cách làm việc với công cụ tra cứu (mọi số liệu vận hạn đều do công cụ tính theo đúng phái của lá số này):',
       '- Dữ kiện bên dưới chỉ có lá số gốc và đại hạn hiện tại. Câu hỏi về một năm, một tháng hay một giai đoạn PHẢI tra trước khi trả lời; không tự suy vận hạn trong đầu.',
