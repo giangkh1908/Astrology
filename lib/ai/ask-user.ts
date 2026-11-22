@@ -6,6 +6,7 @@
 
 export const ASK_TOOL_NAME = 'hoi_nguoi_dung';
 export const MAX_CONSECUTIVE_ASKS = 2;
+export const ANSWER_PREFIX = 'Trả lời câu hỏi:';
 export const SKIP_ANSWER = 'Bỏ qua câu hỏi, hãy luận theo dữ kiện hiện có.';
 
 const DEFAULT_LEAD = 'Để luận đúng chuyện của bạn, cho mình hỏi thêm:';
@@ -120,7 +121,7 @@ export function formatAnswers(ask: AskPayload, answers: Array<string[] | null>):
     const a = answers[i]?.map(s => s.trim()).filter(Boolean);
     return `- ${q.nhan} — ${q.noi_dung}: ${a?.length ? a.join(', ') : 'bỏ qua'}`;
   });
-  return `Trả lời câu hỏi:\n${lines.join('\n')}`;
+  return `${ANSWER_PREFIX}\n${lines.join('\n')}`;
 }
 
 /**
@@ -129,7 +130,7 @@ export function formatAnswers(ask: AskPayload, answers: Array<string[] | null>):
  */
 export function parseAnswers(ask: AskPayload, answered: string): string[] {
   if (answered.trim() === SKIP_ANSWER) return ask.cau_hoi.map(() => 'bỏ qua');
-  if (!answered.startsWith('Trả lời câu hỏi:')) return ask.cau_hoi.map(() => 'bỏ qua (bạn đã nhắn trực tiếp)');
+  if (!answered.startsWith(ANSWER_PREFIX)) return ask.cau_hoi.map(() => 'bỏ qua (bạn đã nhắn trực tiếp)');
   const lines = answered.split('\n').slice(1).map(l => l.replace(/^-\s*/, ''));
   return ask.cau_hoi.map((q, i) => {
     const line = lines[i] ?? '';

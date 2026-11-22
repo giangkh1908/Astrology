@@ -20,6 +20,7 @@ assert.equal(describeBirth({ year: 1990, month: 3, day: 5, hour: 99, gender: 'ma
 // Tên luồng chat.
 assert.equal(threadLabel('overview'), 'Tổng quan · Mệnh cách');
 assert.equal(threadLabel('career'), 'Sự nghiệp');
+assert.equal(threadLabel('kiem_chung'), 'Kiểm chứng');
 assert.equal(threadLabel('topic-career'), 'Sự nghiệp');
 assert.equal(threadLabel('heming'), 'Hợp bàn');
 assert.equal(threadLabel('palace:2'), 'Cung tại Dần');

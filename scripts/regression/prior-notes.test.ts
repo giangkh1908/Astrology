@@ -88,6 +88,12 @@ async function main() {
   assert.ok(trimmed.reduce((n, x) => n + x.lời_kể.length, 0) <= MAX_PRIOR_CHARS);
   assert.ok(trimmed.length >= 1 && trimmed.at(-1)!.lời_kể.startsWith('19 '));
 
+  const longAnswer = `Trả lời câu hỏi:\n${'- a: '.padEnd(880, 'y')}`;
+  const [answerNote] = collectPriorNotes(newestFirst(1, () => longAnswer), { label });
+  assert.equal(answerNote.lời_kể, longAnswer, 'câu trả lời thẻ dài ~900 ký tự giữ nguyên');
+  const [plainNote] = collectPriorNotes(newestFirst(1, () => 'z'.repeat(900)), { label });
+  assert.equal(plainNote.lời_kể.length, 500, 'lời kể thường vẫn cắt ở 500');
+
   // 4. Store tắt, lỗi hoặc treo → rỗng, không chờ lâu.
   const off = { ...createMemoryChatStore(), enabled: false };
   assert.deepEqual(await loadPriorNotes(off, { kind: 'interpret', chartKey: keyA, userId: null }, { label }), []);

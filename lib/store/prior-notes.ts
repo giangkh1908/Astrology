@@ -4,6 +4,7 @@
  */
 import type { PriorNote } from '@/lib/prompts';
 import { TOPICS } from '@/lib/chat/slash-commands';
+import { ANSWER_PREFIX } from '@/lib/ai/ask-user';
 import { callerOf } from '@/lib/users/quota';
 import { viPalace, viSiHua, viStar } from '@/lib/vn/terms';
 import type { ZiweiChart } from '@/lib/ziwei/types';
@@ -14,6 +15,8 @@ import { chartRef } from './persist-turn';
 export const MAX_PRIOR_NOTES = 30;
 export const MAX_PRIOR_CHARS = 4000;
 const MAX_NOTE_CHARS = 500;
+/** Câu trả lời thẻ hỏi lại (kèm nội dung câu hỏi) dài hơn lời kể thường, nhất là ở mục Kiểm chứng. */
+const MAX_ANSWER_NOTE_CHARS = 1200;
 /** Đọc dư một chút để còn đủ câu sau khi bỏ mục hiện tại và câu tự động của dữ liệu cũ. */
 const FETCH_LIMIT = 80;
 const DEFAULT_TIMEOUT_MS = 1500;
@@ -55,7 +58,7 @@ export function collectPriorNotes(
     if (picked.length >= MAX_PRIOR_NOTES) break;
     const text = q.content.trim();
     if (!text || q.threadKey === opts.excludeThreadKey || autoQuestionsOf(opts.kind ?? 'interpret', q.threadKey).has(q.content)) continue;
-    const note = text.slice(0, MAX_NOTE_CHARS);
+    const note = text.slice(0, text.startsWith(ANSWER_PREFIX) ? MAX_ANSWER_NOTE_CHARS : MAX_NOTE_CHARS);
     chars += note.length;
     if (chars > MAX_PRIOR_CHARS) break;
     picked.push({ mục: opts.label(q.threadKey), ngày: vnDate(q.createdAt), lời_kể: note });

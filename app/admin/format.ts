@@ -44,6 +44,7 @@ const TOPIC_LABELS: Record<string, string> = {
   wealth: 'Tài vận',
   health: 'Sức khỏe',
   personality: 'Tính cách',
+  kiem_chung: 'Kiểm chứng',
 };
 const VIEW_LABELS: Record<string, string> = { mingpan: 'Mệnh bàn', daxian: 'Đại hạn', liunian: 'Lưu niên' };
 
