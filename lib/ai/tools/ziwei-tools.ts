@@ -5,6 +5,7 @@
  */
 import { createHoroscopeReader, generateChart } from '@/lib/ziwei/algorithm';
 import { BRANCHES, STEMS } from '@/lib/ziwei/constants';
+import { boshiShenName } from '@/lib/ziwei/shier-shen';
 import type { BirthInfo, Palace, ZiweiChart } from '@/lib/ziwei/types';
 import { currentVnLunarYear, lunarMonthsVN, type LunarMonthRangeVN } from '@/lib/vn/lunar-vn';
 import { detectSelfSihua, getSiHuaByStem } from '@/lib/ziwei/sihua';
@@ -50,6 +51,21 @@ const FLOW_BAD = new Set(['羊', '陀']);
 /** iztro xếp 12 cung bắt đầu từ Dần: chỉ số i ↔ địa chi (i + 2) mod 12 */
 const branchOfIndex = (i: number) => (i + 2) % 12;
 const indexOfBranch = (b: number) => (b + 10) % 12;
+
+/** Vị trí địa chi `b` so với cung `focus`: vào bản cung / xung chiếu / tam hợp, ngoài ra null */
+const relation = (b: number, focus: number) =>
+  b === focus ? 'vào bản cung' : b === (focus + 6) % 12 ? 'xung chiếu' : (b === (focus + 4) % 12 || b === (focus + 8) % 12) ? 'tam hợp' : null;
+
+/** Địa chi (0 = Tý) của Lưu Đào Hoa (咸池 trong vòng tướng tiền 12 thần của lớp lưu niên); không có thì undefined */
+export function peachBranchOfLayer(layer: unknown): number | undefined {
+  const list = (layer as { yearlyDecStar?: { jiangqian12?: unknown } } | null | undefined)?.yearlyDecStar?.jiangqian12;
+  if (!Array.isArray(list)) return undefined;
+  const i = list.indexOf('咸池');
+  return i < 0 ? undefined : branchOfIndex(i);
+}
+
+/** Nhóm sao hỷ tinh lá số gốc dùng cho tín hiệu hỷ tín (khóa Trung) */
+const HY_TIN_STARS = ['咸池', '红鸾', '天喜', '天姚', '龙池', '凤阁', '左辅', '右弼'];
 
 const fmt = (d: { day: number; month: number; year: number }) =>
   `${String(d.day).padStart(2, '0')}/${String(d.month).padStart(2, '0')}/${d.year}`;
@@ -133,7 +149,7 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
    * Chỉ là đếm dữ kiện có thật để AI so sánh giữa các tháng/năm, không phải kết luận.
    */
   const signals = (layer: Layer, layerName: string, focus: number) => {
-    const where = (b: number) => b === focus ? 'vào bản cung' : b === (focus + 6) % 12 ? 'xung chiếu' : (b === (focus + 4) % 12 || b === (focus + 8) % 12) ? 'tam hợp' : null;
+    const where = (b: number) => relation(b, focus);
     const facts: string[] = [];
     let good = 0;
     let bad = 0;
@@ -157,7 +173,32 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
         if (FLOW_BAD.has(base)) bad += weight;
       }
     });
+    const peach = peachBranchOfLayer(layer);
+    const pw = peach === undefined ? null : where(peach);
+    if (pw && pw !== 'tam hợp') {
+      facts.push(`Lưu Đào Hoa ${pw}`);
+      good += pw === 'vào bản cung' ? 2 : 1;
+    }
     return { facts, good, bad };
+  };
+
+  /** Hỷ tín hội về cung tiểu hạn `focus`: sao hỷ lá số gốc + Hỷ Thần/Thanh Long (vòng Bác Sĩ) ở tam phương tứ chính */
+  const hyTin = (focus: number) => {
+    const c = chart();
+    const sao: string[] = [];
+    let điểm = 0;
+    const add = (name: string, b: number) => {
+      const w = relation(b, focus);
+      if (!w) return;
+      sao.push(`${viStar(name)} (${w})`);
+      điểm += w === 'vào bản cung' ? 2 : 1;
+    };
+    for (const p of c.palaces) for (const st of p.stars) if (HY_TIN_STARS.includes(st.name)) add(st.name, p.branch);
+    for (let b = 0; b < 12; b++) {
+      const shen = boshiShenName(c.lunarInfo.yearStem, birthInfo.gender, b);
+      if (shen === '喜神' || shen === '青龙') add(shen, b);
+    }
+    return { sao, điểm };
   };
 
   /** Sao nhận hóa ở từ hai tầng trở lên (gốc / đại hạn / lưu niên / lưu nguyệt): điểm nóng của vận. */
@@ -220,7 +261,15 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
             return { cung_lưu_niên: layerPalace(h.yearly, b), ...describe(b), cung_đại_hạn: layerPalace(h.decadal, b) };
           }),
           tứ_hóa_lưu_niên: siHua(h.yearly, 'cung_lưu_niên'),
-          sao_lưu: flowStars(h.yearly, 'cung_lưu_niên'),
+          sao_lưu: [
+            ...flowStars(h.yearly, 'cung_lưu_niên'),
+            ...(peachBranchOfLayer(h.yearly) === undefined ? [] : [{
+              sao: 'Lưu Đào Hoa',
+              địa_chi: viBranch(peachBranchOfLayer(h.yearly)!),
+              cung_gốc: viPalace(palaceAt(peachBranchOfLayer(h.yearly)!)?.name ?? ''),
+              cung_lưu_niên: layerPalace(h.yearly, peachBranchOfLayer(h.yearly)!),
+            }]),
+          ],
           vòng_thái_tuế: (h.yearly.yearlyDecStar?.suiqian12 as string[] | undefined)?.map((name, i) => ({ thần: viStar(name), địa_chi: viBranch(branchOfIndex(i)) })),
         },
         hóa_chồng_tầng: stackedHua([['đại hạn', h.decadal.mutagen], ['lưu niên', h.yearly.mutagen], ...(month ? [['lưu nguyệt', h.monthly.mutagen] as [string, string[]]] : [])]),
@@ -350,7 +399,7 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
     name: 'quet_cac_nam',
     description:
       'Quét nhiều năm âm lịch liên tiếp (tối đa 15 năm) cho một chủ đề: mỗi năm kèm khoảng dương lịch, can chi, tuổi âm, đại hạn, '
-      + 'cung chủ đề lưu niên, và tín hiệu tứ hóa/sao lưu của lưu niên và đại hạn tác động lên cung đó (đếm tốt/xấu). '
+      + 'cung chủ đề lưu niên, tiểu hạn, Lưu Đào Hoa, và tín hiệu tứ hóa/sao lưu của lưu niên và đại hạn tác động lên cung đó (đếm tốt/xấu); với phu_the có thêm hỷ tín hội tiểu hạn. '
       + 'Dùng cho câu hỏi "bao giờ / năm nào… (cưới, có con, đổi việc, mua nhà…)". Sau đó gọi xem_van_han cho 1–2 năm nổi bật để soi kỹ.',
     parameters: {
       type: 'object',
@@ -370,13 +419,16 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
       return {
         chủ_đề: viPalace(PALACE_KEYS[key]),
         cung_chủ_đề_gốc: describe(natalFocus),
-        cách_đọc: 'tín_hiệu đếm tứ hóa/sao lưu của lưu niên và tứ hóa đại hạn chiếu cung chủ đề lưu niên (bản cung tính 2, xung chiếu/tam hợp tính 1). Chỉ để so sánh các năm.',
+        cách_đọc: 'tín_hiệu đếm tứ hóa/sao lưu của lưu niên và tứ hóa đại hạn chiếu cung chủ đề lưu niên (bản cung tính 2, xung chiếu/tam hợp tính 1). Chỉ để so sánh các năm. hỷ_tín_tiểu_hạn (chỉ có với phu_the) đếm sao hỷ của lá số gốc hội về cung tiểu hạn; đại_hạn_ở_tam_hợp_phu_thê = đại hạn đang ở Phu Thê/Thiên Di/Phúc Đức gốc.',
         các_năm: Array.from({ length: to - from + 1 }, (_, i) => {
           const year = from + i;
           const h = horoscope(year);
           const focus = layerTopicBranch(h.yearly, key);
           const y = signals(h.yearly, 'lưu niên', focus);
           const d = signals({ mutagen: h.decadal.mutagen, stars: [] }, 'đại hạn', focus);
+          const smallBranch = branchOfIndex(h.age.index);
+          const peach = peachBranchOfLayer(h.yearly);
+          const phuThe = natalTopicBranch('phu_the');
           return {
             năm_âm_lịch: year,
             dương_lịch: yearSolar(year),
@@ -384,6 +436,12 @@ export function buildChartTools(birthInfo: BirthInfo): ChartTool[] {
             tuổi_âm: h.age.nominalAge,
             đại_hạn: `${viBranch(branchOfIndex(h.decadal.index))} (cung gốc ${viPalace(palaceAt(branchOfIndex(h.decadal.index))?.name ?? '')})`,
             cung_chủ_đề_lưu_niên: `${viBranch(focus)} (cung gốc ${viPalace(palaceAt(focus)?.name ?? '')}, chính tinh ${majorStars(focus).join(', ')})`,
+            tiểu_hạn: `${viBranch(smallBranch)} (cung gốc ${viPalace(palaceAt(smallBranch)?.name ?? '')})`,
+            ...(peach === undefined ? {} : { lưu_đào_hoa: viBranch(peach) }),
+            ...(key === 'phu_the' ? {
+              hỷ_tín_tiểu_hạn: hyTin(smallBranch),
+              đại_hạn_ở_tam_hợp_phu_thê: relation(branchOfIndex(h.decadal.index), phuThe) !== null && relation(branchOfIndex(h.decadal.index), phuThe) !== 'xung chiếu',
+            } : {}),
             mệnh_lưu_niên_hoặc_tiểu_hạn_vào_cung_chủ_đề_gốc: branchOfIndex(h.yearly.index) === natalFocus || branchOfIndex(h.age.index) === natalFocus,
             tín_hiệu: [...y.facts, ...d.facts],
             tốt: y.good + d.good,
