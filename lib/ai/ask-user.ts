@@ -123,6 +123,24 @@ export function formatAnswers(ask: AskPayload, answers: Array<string[] | null>):
   return `Trả lời câu hỏi:\n${lines.join('\n')}`;
 }
 
+/**
+ * Đọc lại đáp án từng câu từ tin trả lời (đối ngược của formatAnswers).
+ * Hiểu cả định dạng mới "- nhãn — nội dung: đáp án" lẫn định dạng cũ "- nhãn: đáp án" đã lưu trong lịch sử.
+ */
+export function parseAnswers(ask: AskPayload, answered: string): string[] {
+  if (answered.trim() === SKIP_ANSWER) return ask.cau_hoi.map(() => 'bỏ qua');
+  if (!answered.startsWith('Trả lời câu hỏi:')) return ask.cau_hoi.map(() => 'bỏ qua (bạn đã nhắn trực tiếp)');
+  const lines = answered.split('\n').slice(1).map(l => l.replace(/^-\s*/, ''));
+  return ask.cau_hoi.map((q, i) => {
+    const line = lines[i] ?? '';
+    const next = `${q.nhan} — ${q.noi_dung}:`;
+    const legacy = `${q.nhan}:`;
+    if (line.startsWith(next)) return line.slice(next.length).trim() || 'bỏ qua';
+    if (line.startsWith(legacy)) return line.slice(legacy.length).trim() || 'bỏ qua';
+    return line || 'bỏ qua';
+  });
+}
+
 /** Số tin assistant có thẻ hỏi liên tiếp tính từ cuối lịch sử (bỏ qua tin user xen giữa). */
 export function trailingAsks(messages: { role: string; content: string }[]): number {
   let count = 0;

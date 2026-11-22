@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {
-  ASK_TOOL_NAME, askToolDefinition, askToPlainText, encodeAsk, extractAsk, formatAnswers, parseAskArgs, trailingAsks,
+  ASK_TOOL_NAME, askToolDefinition, askToPlainText, encodeAsk, extractAsk, formatAnswers, parseAnswers, parseAskArgs, trailingAsks,
   type AskPayload,
 } from '../../lib/ai/ask-user';
 
@@ -62,6 +62,12 @@ assert.equal(askToPlainText('Không có thẻ'), 'Không có thẻ');
 // Câu trả lời của người dùng
 assert.equal(formatAnswers(p, [['Đã kết hôn'], null]), 'Trả lời câu hỏi:\n- Hôn nhân — ' + p.cau_hoi[0].noi_dung + ': Đã kết hôn\n- Con cái — ' + p.cau_hoi[1].noi_dung + ': bỏ qua');
 assert.equal(formatAnswers(p, [['Đã kết hôn', 'Đang ly thân'], ['Có']]), 'Trả lời câu hỏi:\n- Hôn nhân — ' + p.cau_hoi[0].noi_dung + ': Đã kết hôn, Đang ly thân\n- Con cái — ' + p.cau_hoi[1].noi_dung + ': Có');
+
+// Đọc lại đáp án: định dạng mới, định dạng cũ, vòng khứ hồi
+assert.deepEqual(parseAnswers(p, 'Trả lời câu hỏi:\n- Hôn nhân — ' + p.cau_hoi[0].noi_dung + ': Đã kết hôn\n- Con cái — ' + p.cau_hoi[1].noi_dung + ': bỏ qua'), ['Đã kết hôn', 'bỏ qua']);
+assert.deepEqual(parseAnswers(p, 'Trả lời câu hỏi:\n- Hôn nhân: Đã kết hôn\n- Con cái: Có'), ['Đã kết hôn', 'Có']);
+const rt: Array<string[] | null> = [['Đã kết hôn', 'Đang ly thân'], null];
+assert.deepEqual(parseAnswers(p, formatAnswers(p, rt)), ['Đã kết hôn, Đang ly thân', 'bỏ qua']);
 
 // Đếm số lần hỏi liên tiếp ở cuối lịch sử
 const u = { role: 'user', content: 'hỏi' };

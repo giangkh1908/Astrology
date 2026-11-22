@@ -4,7 +4,7 @@
  * tab mỗi câu + tab Gửi, lựa chọn có giải thích, "Tự nhập…", chọn nhiều, phím tắt; khung chat bên dưới vẫn gõ được.
  */
 import { useEffect, useRef, useState } from 'react';
-import { formatAnswers, SKIP_ANSWER, type AskPayload } from '@/lib/ai/ask-user';
+import { formatAnswers, parseAnswers, SKIP_ANSWER, type AskPayload } from '@/lib/ai/ask-user';
 
 interface AskCardProps {
   ask: AskPayload;
@@ -18,17 +18,6 @@ interface AskCardProps {
 interface Pick { picked: number[]; custom: string; customOn: boolean }
 
 const ANSWER_PREFIX = 'Trả lời câu hỏi:';
-
-/** Đáp án từng câu đọc lại từ tin trả lời (theo thứ tự dòng "- nhãn: đáp án"). */
-function parseAnswered(ask: AskPayload, answered: string): string[] {
-  if (answered.trim() === SKIP_ANSWER) return ask.cau_hoi.map(() => 'bỏ qua');
-  if (!answered.startsWith(ANSWER_PREFIX)) return ask.cau_hoi.map(() => 'bỏ qua (bạn đã nhắn trực tiếp)');
-  const lines = answered.split('\n').slice(1).map(l => l.replace(/^-\s*/, ''));
-  return ask.cau_hoi.map((q, i) => {
-    const line = lines[i] ?? '';
-    return line.startsWith(`${q.nhan}:`) ? line.slice(q.nhan.length + 1).trim() : line || 'bỏ qua';
-  });
-}
 
 /** Tin người dùng ngay sau thẻ có cần hiện bong bóng không (thẻ thu gọn đã hiện đáp án thì thôi). */
 export function isCardAnswer(text: string): boolean {
@@ -47,7 +36,7 @@ export default function AskCard({ ask, answered, onSubmit, onSkip, disabled }: A
   useEffect(() => { if (tab < n && picks[tab].customOn) customRef.current?.focus(); }, [tab, picks, n]);
 
   if (answered !== undefined) {
-    const values = parseAnswered(ask, answered);
+    const values = parseAnswers(ask, answered);
     return (
       <div className="rounded-lg px-3 py-2 text-[11px]" style={{ border: '1px solid var(--t-border)', color: 'var(--t-faint)' }}>
         <p className="mb-1">{ask.loi_dan}</p>
