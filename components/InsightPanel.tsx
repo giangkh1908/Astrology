@@ -4,7 +4,7 @@ import { chartKey } from '@/lib/ziwei/chart-key';
 import { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo, useId } from 'react';
 import SlashMenu from './SlashMenu';
 import {
-  TOPIC_KEYS, topicLabel, buildCommands, filterCommands, parseSlash, resolveCommand, isTypingCommand,
+  TOPIC_KEYS, topicLabel, buildCommands, filterCommands, parseSlash, resolveCommand, isTypingCommand, isTimelessTopic,
   type SlashCommand,
 } from '@/lib/chat/slash-commands';
 import type { ZiweiChart, Palace } from '@/lib/ziwei/types';
@@ -168,7 +168,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chart, intent: intentFor(key), threadKey: key, messages: apiMessages,
-          timeContext: isV3Ref.current && key !== 'personality' ? { ...selectedTime, window: opts.window ?? windowOf(key) } : selectedTime,
+          timeContext: isV3Ref.current && !isTimelessTopic(key) ? { ...selectedTime, window: opts.window ?? windowOf(key) } : selectedTime,
           ...(opts.answering ? { answering: true } : {}),
         }),
         signal: ctrl.signal,
@@ -477,11 +477,11 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   const hasAnswer = (k: ThreadKey) => !!threads[k]?.some(m => m.role === 'assistant' && !m.error && m.content);
   const isDone = (cmd: SlashCommand) => cmd.action.type === 'open' && hasAnswer(cmd.action.key);
   const isEmpty = !messages.length && !activeStreaming;
-  const showWindowBar = isV3 && active !== 'personality' && !isEmpty;
+  const showWindowBar = isV3 && !isTimelessTopic(active) && !isEmpty;
   const activeWindow = windows[active] ?? defaultWindow();
   const activeWindowLabel = windowLabel(activeWindow);
   const showSuggestions = isV3 && !activeStreaming && lastMsg?.role === 'assistant' && !lastMsg.error && !!lastMsg.content
-    && !extractAsk(lastMsg.content).ask && active !== 'personality';
+    && !extractAsk(lastMsg.content).ask && !isTimelessTopic(active);
 
   return (
     <div className="ls-insight flex flex-col rounded-xl overflow-hidden card-glass">

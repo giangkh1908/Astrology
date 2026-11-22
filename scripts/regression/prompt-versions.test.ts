@@ -64,6 +64,9 @@ for (const p of [p1, p2]) {
 assert.ok(v3.initialInterpretationQuestion({ type: 'topic', key: 'career' }).includes('3 tháng'));
 assert.ok(v3.initialInterpretationQuestion({ type: 'palace', branch: 3 }).includes('3 tháng'));
 assert.ok(!v3.initialInterpretationQuestion({ type: 'topic', key: 'personality' }).includes('3 tháng'));
+assert.equal(v3.initialInterpretationQuestion({ type: 'topic', key: 'kiem_chung' }), VERIFY_QUESTION);
+const p3k = v3.buildInterpretationSystemPrompt(chart, { type: 'topic', key: 'kiem_chung' }, { window: { lunarYear: 2026, startMonth: 10 } });
+assert.ok(!p3k.includes('Dữ kiện lưu nguyệt khung 3 tháng (JSON):'));
 const p3p = v3.buildInterpretationSystemPrompt(chart, { type: 'topic', key: 'personality' }, { window: { lunarYear: 2026, startMonth: 10 } });
 assert.ok(!p3p.includes('Dữ kiện lưu nguyệt khung 3 tháng (JSON):'));
 assert.ok(p3p.includes('hoi_nguoi_dung'));

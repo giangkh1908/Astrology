@@ -4,11 +4,12 @@
  * - luận tương lai gần: khung 3 tháng âm lịch đang chọn, từng tháng một, lưu nguyệt tính sẵn trong prompt.
  * Mục Tính cách không có khái niệm thời gian nên không có khung tháng.
  */
+import { isTimelessTopic } from '@/lib/chat/slash-commands';
 import { buildChartTools } from '@/lib/ai/tools/ziwei-tools';
 import { defaultWindow, windowLabel, windowMonths } from '@/lib/ziwei/month-window';
 import type { ZiweiChart } from '@/lib/ziwei/types';
 import {
-  buildCompatibilityPrompt, buildInterpretationPrompt, DEFAULT_COMPATIBILITY_QUESTION,
+  buildCompatibilityPrompt, buildInterpretationPrompt, DEFAULT_COMPATIBILITY_QUESTION, VERIFY_QUESTION,
   type InterpretationIntent, type InterpretationStyle, type InterpretationTimeContext, type PromptSet,
 } from '../shared';
 import { promptSetV2, v2AnswerRules, V2_COMPATIBILITY_PRESENTATION, v2YesNoRule } from '../v2';
@@ -31,7 +32,7 @@ const TIME_RULES = [
   v2YesNoRule.replace('rồi luận chi tiết diễn biến và thời điểm nổi bật', 'rồi luận chi tiết diễn biến từng tháng trong khung'),
 ].join('\n');
 
-const isTimeless = (intent: InterpretationIntent) => intent.type === 'topic' && intent.key === 'personality';
+const isTimeless = (intent: InterpretationIntent) => intent.type === 'topic' && isTimelessTopic(intent.key ?? '');
 
 /** Lưu nguyệt 3 tháng của khung, cùng logic tool xem_van_han; mục Tính cách thì không có. */
 function windowFacts(chart: ZiweiChart, intent: InterpretationIntent, time: InterpretationTimeContext) {
@@ -67,6 +68,7 @@ const topics: Record<string, string> = {
 };
 
 function initialQuestion(intent: InterpretationIntent): string {
+  if (intent.type === 'topic' && intent.key === 'kiem_chung') return VERIFY_QUESTION;
   if (isTimeless(intent)) return promptSetV2.initialInterpretationQuestion(intent);
   if (intent.type === 'palace') return `Hãy luận giải cung được chọn ${WINDOW}. Căn cứ tóm ngắn theo tam phương tứ chính bằng tên cung, không nêu tên sao.`;
   if (intent.type === 'sihua') return `Hãy giải thích đường tứ hóa được chọn và cách nó ứng ${WINDOW}. Chỉ kết luận điều được dữ liệu xác nhận.`;

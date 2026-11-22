@@ -1,7 +1,7 @@
 /** Regression coverage for lib/chat/slash-commands.ts (lệnh "/" trong khung luận giải). */
 import assert from 'node:assert/strict';
 import {
-  buildCommands, filterCommands, parseSlash, resolveCommand, isTypingCommand, slugVi, TOPICS,
+  buildCommands, filterCommands, parseSlash, resolveCommand, isTypingCommand, slugVi, TOPICS, isTimelessTopic,
 } from '../../lib/chat/slash-commands';
 
 // 12 cung giả, theo thứ tự địa chi (không phải thứ tự truyền thống)
@@ -9,6 +9,10 @@ const zh = ['命', '父母', '福德', '田宅', '官禄', '仆役', '迁移', '
 const palaces = zh.map((name, i) => ({ branch: (i + 2) % 12, name: `${name}宫`, isShenGong: name === '官禄' }));
 const cmds = buildCommands(palaces);
 const names = cmds.map(c => c.name);
+
+assert.equal(isTimelessTopic('personality'), true);
+assert.equal(isTimelessTopic('kiem_chung'), true);
+assert.equal(isTimelessTopic('love'), false);
 
 // slug
 assert.equal(slugVi('Sự nghiệp'), 'su-nghiep');

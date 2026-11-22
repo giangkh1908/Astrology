@@ -16,6 +16,11 @@ export const TOPICS = [
 
 export const TOPIC_KEYS: readonly string[] = TOPICS.map(t => t.key);
 
+/** Chủ đề không gắn khung thời gian (không khung 3 tháng, không lưu nguyệt). */
+export function isTimelessTopic(key: string): boolean {
+  return key === 'personality' || key === 'kiem_chung';
+}
+
 export function topicLabel(key: string): string | undefined {
   return TOPICS.find(t => t.key === key)?.label;
 }
