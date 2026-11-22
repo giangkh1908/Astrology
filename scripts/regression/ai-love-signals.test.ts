@@ -12,7 +12,7 @@ const y = (n: number) => q.các_năm.find((x: Any) => x.năm_âm_lịch === n);
 
 // Tiểu hạn: Hợi Mão Mùi khởi Sửu, nam thuận → 28 tuổi Thìn, 29 Tị, 32 Thân
 assert.equal(y(1982).tiểu_hạn, 'Thìn (cung gốc Nô Bộc)');
-assert.equal(y(1983).tiểu_hạn, 'Tị (cung gốc Thiên Di)');
+assert.equal(y(1983).tiểu_hạn, 'Tỵ (cung gốc Thiên Di)');
 assert.equal(y(1986).tiểu_hạn, 'Thân (cung gốc Tử Tức)');
 // Lưu Đào Hoa theo chi năm: Tuất → Mão, Hợi → Tý, Dần → Mão
 assert.deepEqual([y(1982).lưu_đào_hoa, y(1983).lưu_đào_hoa, y(1986).lưu_đào_hoa], ['Mão', 'Tý', 'Mão']);
