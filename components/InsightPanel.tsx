@@ -10,6 +10,7 @@ import {
 import type { ZiweiChart, Palace } from '@/lib/ziwei/types';
 import type { TimeView } from './TimeNav';
 import { viStar, viPalace, viSiHua } from '@/lib/vn/terms';
+import { usesTimeWindow } from '@/lib/prompts/time-window';
 import AskCard, { isCardAnswer } from './AskCard';
 import AiContent from './AiContent';
 import { encodeAsk, extractAsk, SKIP_ANSWER } from '@/lib/ai/ask-user';
@@ -122,7 +123,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
   const [quota, setQuota] = useState<{ used: number; limit: number } | null>(null);
   // Version prompt đang chạy: v3 bật thẻ hỏi lại, khung 3 tháng và gợi ý câu hỏi
   const [promptVersion, setPromptVersion] = useState<string | null>(null);
-  const isV3 = promptVersion === 'v3';
+  const isV3 = usesTimeWindow(promptVersion ?? '');
   const isV3Ref = useRef(false);
   useEffect(() => { isV3Ref.current = isV3; }, [isV3]);
   // Khung 3 tháng âm lịch theo từng mục (v3); chưa chọn thì khung mặc định
@@ -175,7 +176,7 @@ export default function InsightPanel({ chart, selectedPalace, selectedSiHua, sel
       });
       readQuota(res.headers.get('X-Chat-Quota'));
       const version = res.headers.get('X-Prompt-Version');
-      if (version) { setPromptVersion(version); isV3Ref.current = version === 'v3'; }
+      if (version) { setPromptVersion(version); isV3Ref.current = usesTimeWindow(version); }
       if (!res.ok) {
         const err = await res.json().catch(() => null) as { error?: string } | null;
         throw new Error(err?.error ? `server:${err.error}` : 'Yêu cầu thất bại');

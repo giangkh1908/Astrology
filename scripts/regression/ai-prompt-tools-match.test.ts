@@ -33,7 +33,7 @@ for (const { id } of PROMPT_VERSIONS) {
   }
   assert.equal(prompt.match(/[㐀-鿿]/), null, 'prompt còn chữ Hán');
   // v1, v2 nhắc năm âm lịch hiện tại cuối bài; v3 luận khung 3 tháng âm lịch đang chọn.
-  const timeHint = id === 'v3' ? /khung 3 tháng âm lịch/ : /năm âm lịch hiện tại/;
+  const timeHint = ['v3', 'v4'].includes(id) ? /khung 3 tháng âm lịch/ : /năm âm lịch hiện tại/;
   assert.match(set.initialInterpretationQuestion({ type: 'topic', key: 'love' }), timeHint);
   assert.doesNotMatch(set.initialInterpretationQuestion({ type: 'topic', key: 'personality' }), timeHint);
 }

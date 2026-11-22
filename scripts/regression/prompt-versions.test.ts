@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { defaultPromptVersion, getPromptSet, PROMPT_VERSIONS } from '../../lib/prompts';
+import { defaultPromptVersion, getPromptSet, PROMPT_VERSIONS, usesTimeWindow } from '../../lib/prompts';
 import { VERIFY_QUESTION } from '../../lib/prompts/shared';
 import { generateChart } from '../../lib/ziwei/algorithm';
 
@@ -8,7 +8,7 @@ const chart = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'ma
 const twin = generateChart({ year: 1990, month: 3, day: 5, hour: 2, gender: 'male', twinMethod: 'huynh_de' } as never);
 const intent = { type: 'topic' as const, key: 'career' };
 
-assert.deepEqual(PROMPT_VERSIONS.map(v => v.id), ['v1', 'v2', 'v3']);
+assert.deepEqual(PROMPT_VERSIONS.map(v => v.id), ['v1', 'v2', 'v3', 'v4']);
 
 const v1 = getPromptSet('v1');
 const v2 = getPromptSet('v2');
@@ -76,5 +76,19 @@ const facts = JSON.parse(p3y.split('Dữ kiện lưu nguyệt khung 3 tháng (JS
 assert.ok(facts.khung_đang_chọn.startsWith('tháng 11/2026 – 1/2027 âm'));
 assert.deepEqual(facts.các_tháng.map((f: { năm_âm_lịch: number; tháng_âm: number }) => [f.năm_âm_lịch, f.tháng_âm]), [[2026, 11], [2026, 12], [2027, 1]]);
 assert.ok(facts.các_tháng[0].lưu_nguyệt.dương_lịch);
+
+// v4: như v3 + gói luật chủ đề; Kiểm chứng không có khung 3 tháng.
+const v4 = getPromptSet('v4');
+const win = { window: { lunarYear: 2026, startMonth: 10 } };
+const p4l = v4.buildInterpretationSystemPrompt(chart, { type: 'topic', key: 'love' }, win);
+assert.ok(p4l.includes('Gói luật Tình duyên'));
+assert.ok(p4l.includes('hoi_nguoi_dung'));
+const p4k = v4.buildInterpretationSystemPrompt(chart, { type: 'topic', key: 'kiem_chung' }, win);
+assert.ok(p4k.includes('Gói luật Kiểm chứng'));
+assert.ok(!p4k.includes('Dữ kiện lưu nguyệt khung 3 tháng'));
+assert.equal(v4.initialInterpretationQuestion({ type: 'topic', key: 'kiem_chung' }), VERIFY_QUESTION);
+assert.ok(!p3.includes('Gói luật'), 'v3 không đổi');
+assert.deepEqual(['v1', 'v2', 'v3', 'v4'].map(usesTimeWindow), [false, false, true, true]);
+assert.equal(defaultPromptVersion({}), 'v2');
 
 console.log('prompt-versions: ok');

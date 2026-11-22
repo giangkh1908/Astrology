@@ -49,7 +49,7 @@ function windowFacts(chart: ZiweiChart, intent: InterpretationIntent, time: Inte
   };
 }
 
-const style: InterpretationStyle = {
+export const v3Style: InterpretationStyle = {
   answerRules: v2AnswerRules,
   yesNoRule: v2YesNoRule,
   askRule: ASK_RULE,
@@ -76,7 +76,7 @@ function initialQuestion(intent: InterpretationIntent): string {
 }
 
 export const promptSetV3: PromptSet = {
-  buildInterpretationSystemPrompt: (chart, intent, time, priorNotes) => buildInterpretationPrompt(chart, intent, time, style, priorNotes),
+  buildInterpretationSystemPrompt: (chart, intent, time, priorNotes) => buildInterpretationPrompt(chart, intent, time, v3Style, priorNotes),
   initialInterpretationQuestion: initialQuestion,
   buildCompatibilitySystemPrompt: (a, b, notes) => buildCompatibilityPrompt(a, b, V2_COMPATIBILITY_PRESENTATION, notes),
   defaultCompatibilityQuestion: DEFAULT_COMPATIBILITY_QUESTION,

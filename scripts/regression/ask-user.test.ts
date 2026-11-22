@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {
-  ASK_TOOL_NAME, askToolDefinition, askToPlainText, encodeAsk, extractAsk, formatAnswers, parseAnswers, parseAskArgs, trailingAsks,
+  ASK_TOOL_NAME, askToolDefinition, askUserAllowed, askToPlainText, encodeAsk, extractAsk, formatAnswers, parseAnswers, parseAskArgs, trailingAsks,
   type AskPayload,
 } from '../../lib/ai/ask-user';
 
@@ -78,5 +78,11 @@ assert.equal(trailingAsks([u, a, u, a, u]), 2);
 assert.equal(trailingAsks([a, u, essay, u]), 0);
 assert.equal(trailingAsks([essay, u, a, u]), 1);
 assert.equal(trailingAsks([]), 0);
+
+assert.equal(askUserAllowed('v4', { hiddenQuestion: true, topicKey: 'kiem_chung', trailing: 0 }), true);
+assert.equal(askUserAllowed('v4', { hiddenQuestion: true, topicKey: 'love', trailing: 0 }), false);
+assert.equal(askUserAllowed('v3', { hiddenQuestion: true, topicKey: 'kiem_chung', trailing: 0 }), false);
+assert.equal(askUserAllowed('v4', { hiddenQuestion: false, trailing: 2 }), false);
+assert.equal(askUserAllowed('v2', { hiddenQuestion: false, trailing: 0 }), false);
 
 console.log('ask-user: ok');

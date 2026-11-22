@@ -152,3 +152,14 @@ export function trailingAsks(messages: { role: string; content: string }[]): num
   }
   return count;
 }
+
+/** Version nào, ở lượt nào thì AI được dùng tool hỏi lại. v4 cho hỏi cả khi mở mục Kiểm chứng (câu hỏi tự động). */
+export function askUserAllowed(
+  version: string,
+  opts: { hiddenQuestion: boolean; topicKey?: string; trailing: number },
+): boolean {
+  if (opts.trailing >= MAX_CONSECUTIVE_ASKS) return false;
+  if (version === 'v3') return !opts.hiddenQuestion;
+  if (version === 'v4') return !opts.hiddenQuestion || opts.topicKey === 'kiem_chung';
+  return false;
+}

@@ -50,7 +50,7 @@ async function main() {
   assert.deepEqual(await ok.json(), { active: 'v1' });
   const got = await (await GET(req('GET'))).json();
   assert.equal(got.active, 'v1');
-  assert.deepEqual(got.versions.map((v: { id: string }) => v.id), ['v1', 'v2', 'v3']);
+  assert.deepEqual(got.versions.map((v: { id: string }) => v.id), ['v1', 'v2', 'v3', 'v4']);
   assert.equal(got.dbEnabled, true);
 
   // Giá trị lạ / body hỏng.

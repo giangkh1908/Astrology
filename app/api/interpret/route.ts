@@ -7,7 +7,7 @@ import { buildChartTools } from '@/lib/ai/tools/ziwei-tools';
 import { chargeChat, refundingOnFinish, withQuotaHeader } from '@/lib/users/quota';
 import { priorNotesOf } from '@/lib/store/prior-notes';
 import type { ZiweiChart } from '@/lib/ziwei/types';
-import { askToPlainText, MAX_CONSECUTIVE_ASKS, trailingAsks } from '@/lib/ai/ask-user';
+import { askToPlainText, askUserAllowed, trailingAsks } from '@/lib/ai/ask-user';
 import { callerOf } from '@/lib/users/quota';
 import { parseWindow } from '@/lib/ziwei/month-window';
 import type { ChatStore } from '@/lib/store/chat-store';
@@ -84,8 +84,12 @@ export async function POST(request: Request) {
     messages.push({ role: 'user', content: prompts.initialInterpretationQuestion(intent) });
   }
 
-  // v3: AI được hỏi lại trước khi luận, trừ câu hỏi tự động và khi đã hỏi liên tiếp đủ số lần.
-  const askUser = version === 'v3' && !hiddenQuestion && trailingAsks(messages) < MAX_CONSECUTIVE_ASKS;
+  // v3/v4: AI được hỏi lại trước khi luận, trừ câu hỏi tự động (v4 vẫn hỏi ở mục Kiểm chứng) và khi đã hỏi liên tiếp đủ số lần.
+  const askUser = askUserAllowed(version, {
+    hiddenQuestion,
+    topicKey: intent.type === 'topic' ? intent.key : undefined,
+    trailing: trailingAsks(messages),
+  });
   const modelMessages = messages.map(m => (m.role === 'assistant' ? { ...m, content: askToPlainText(m.content) } : m));
 
   const lastQuestion = [...messages].reverse().find(m => m.role === 'user')?.content ?? '';
